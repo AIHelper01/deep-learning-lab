@@ -6,10 +6,10 @@
     {
       "notebook": "02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
       "status": "passed",
-      "seconds": 253.9,
+      "seconds": 2127.07,
       "code_cells": 7,
-      "output_items": 285,
-      "png_outputs": 1
+      "output_items": 13,
+      "png_outputs": 4
     }
   ]
 }

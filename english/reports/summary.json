@@ -3,9 +3,9 @@
   "original_files_unchanged": 93,
   "runtime_logs_with_cjk": [],
   "real_rps_dataset": "prepared by scripts/fetch_rps.py from the CC BY 4.0 mirror: train 1485 images/1973 boxes, valid 50/80, test 50/80; one mirrored box was clamped into the image; mirror cache kept in data/rps-mirror",
-  "full_training_and_gpu": "Classification and NLP ran with default classroom parameters on CPU. Detection ran one epoch as a pipeline check. GPU is not tested.",
+  "full_training_and_gpu": "Classification, NLP, and detection all ran with default classroom parameters on CPU. GPU is not tested.",
   "source_notebook_outputs": "All 13 notebooks executed end to end; saved-output-checks.json reports no unexecuted cells, no errors, and completed execution environments.",
-  "cleanup": "Unreferenced CIFAR-10 download fragments remain in 01-image-classification/data/cifar10 (59.9 MB), and three superseded run folders remain in 02-object-detection/outputs/runs. reports/README.md lists the exact removal commands; the agent sandbox blocks recursive deletion.",
+  "cleanup": "Unreferenced CIFAR-10 download fragments remain in 01-image-classification/data/cifar10 (59.9 MB), and superseded folders remain in 02-object-detection/outputs/runs. reports/README.md lists the exact removal commands; the agent sandbox blocks recursive deletion. None of these paths are tracked by Git.",
   "run_status": "completed",
   "environment_manager": "uv 0.13.1",
   "python": "3.12.15",
@@ -13,12 +13,13 @@
   "paddlepaddle": "3.3.1",
   "jupyterlab_http_check": "passed",
   "notebooks_passed": 13,
-  "detection_prediction": "real test-split image after one epoch: scissors at 0.293 confidence; test mAP50 0.5927 and mAP50-95 0.2839",
+  "detection_prediction": "real test-split image from the ten-epoch run: paper at 0.708 confidence; test mAP50 0.9045 and mAP50-95 0.5236",
   "notebooks_total": 13,
   "static_checks": {
     "files": 75,
     "problems": 0
   },
   "saved_output_problems": 0,
-  "detection_scope": "saved notebook outputs are a COURSE_EPOCHS=1 end-to-end check on the real dataset; the ten-epoch classroom run at 320 pixels needs about 35 CPU minutes and was not executed"
+  "detection_scope": "full ten-epoch classroom run at 320 pixels on the real Rock Paper Scissors export; 2127 CPU seconds; run folder rps-yolo26n-5 with evaluation-8; the run reproduced identical metrics from seed=42 and deterministic=True",
+  "detection_training_seconds": 2127.07
 }

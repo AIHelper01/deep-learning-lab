@@ -96,9 +96,9 @@ Only per-file downloads work on the mirror
 the usual `/archive/main.zip` endpoint returns HTTP 404, so there is no single-zip download.
 Retain the CC BY 4.0 attribution in any classroom bundle. The resulting splits are 1,485
 training images with 1,973 boxes, 50 validation images with 80 boxes, and 50 test images with
-80 boxes. The notebook was validated end to end on this export with `COURSE_EPOCHS=1`, which
-reached test mAP50 0.593 after one epoch; that score proves the pipeline, not model quality.
-Run the ten-epoch classroom setting without the override for a teaching result.
+80 boxes. The delivered notebook run uses the classroom ten-epoch setting on this export and
+reached test mAP50 0.904 and mAP50-95 0.524 in about 35 CPU minutes; `COURSE_EPOCHS=1` repeats
+the same path as a short check with a much lower score.
 
 The course checks the three English class names, preserves their ID order, checks label
 coordinates, and detects exact image duplicates across splits. A labeled classification

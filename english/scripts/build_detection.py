@@ -31,6 +31,7 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     import torch
     from ultralytics import YOLO, settings
     import ultralytics
+    from ultralytics.utils import set_logging
     import matplotlib.pyplot as plt
     from detection_data import prepare_rps
 
@@ -39,6 +40,9 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     settings.update({"datasets_dir": str(MODULE / "data"),
                      "weights_dir": str(OUTPUT / "weights"),
                      "runs_dir": str(OUTPUT / "runs")})
+    # Ultralytics redraws a per-iteration progress bar; inside a saved notebook every redraw
+    # becomes a stored output record, so raise its log level and read the curve from results.png.
+    set_logging(verbose=False)
     torch.set_num_threads(2)
     DEVICE = 0 if torch.cuda.is_available() else "cpu"
     print("Ultralytics version:", ultralytics.__version__)
@@ -73,7 +77,8 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     `workers=0` avoids notebook multiprocessing problems on Windows. The initial download
     needs internet. The smoke run uses a smaller image size and one epoch for speed. The
     classroom image size is 320 rather than 640 because one 640-pixel epoch measured over
-    twenty minutes on this CPU, while a 320-pixel epoch measured about 205 seconds.
+    twenty minutes on this CPU, while a 320-pixel epoch measured about 205 seconds. The cell
+    ends by displaying `results.png` from the run folder, so loss and mAP are visible inline.
     '''),code('''
     weights = OUTPUT / "weights" / "yolo26n.pt"
     weights.parent.mkdir(parents=True, exist_ok=True)
@@ -85,9 +90,11 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     EPOCHS = int(os.environ.get("COURSE_EPOCHS", 1 if SMOKE else 10))
     IMGSZ = 64 if SMOKE else 320
     print(f"Epochs: {EPOCHS}; image size: {IMGSZ}; smoke: {SMOKE}")
+    # verbose=False keeps the saved notebook readable: the per-iteration progress bar added
+    # about two thousand output records to the training cell without adding teaching value.
     results = model.train(data=DATA_CONFIG, epochs=EPOCHS, imgsz=IMGSZ,
                           batch=2 if SMOKE else 8, workers=0, device=DEVICE,
-                          seed=42, deterministic=True,
+                          seed=42, deterministic=True, verbose=False,
                           project=str(OUTPUT / "runs"),
                           name="coco8-smoke" if SMOKE else "rps-yolo26n",
                           exist_ok=False, plots=True, cache=False)
@@ -95,6 +102,16 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     if not best.exists():
         raise RuntimeError("Training did not produce a best checkpoint.")
     print("Saved checkpoint:", best.name)
+    # Show the curves this run wrote into its own folder before reading the metrics table.
+    curves = Path(model.trainer.save_dir) / "results.png"
+    if curves.exists():
+        figure, axis = plt.subplots(figsize=(12, 8))
+        axis.imshow(plt.imread(curves))
+        axis.axis("off")
+        axis.set_title("Training curves from this run")
+        plt.show()
+    else:
+        print("Expected plot not found:", curves)
     '''),md('''## 3. Validate the trained checkpoint
 
     Select model settings with validation data. Use the independent test split only after
@@ -114,6 +131,19 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
               "ultralytics_version": ultralytics.__version__}
     (OUTPUT / ("smoke-metrics.json" if SMOKE else "rps-metrics.json")).write_text(
         json.dumps(report, indent=2), encoding="utf-8")
+
+    # The evaluation folder explains those numbers: a normalized confusion matrix and validation
+    # crops with the predicted boxes drawn.
+    for name in ("confusion_matrix_normalized.png", "val_batch0_pred.jpg"):
+        figure_path = Path(metrics.save_dir) / name
+        if figure_path.exists():
+            figure, axis = plt.subplots(figsize=(10, 10))
+            axis.imshow(plt.imread(figure_path))
+            axis.axis("off")
+            axis.set_title(f"{name} on the {split} split")
+            plt.show()
+        else:
+            print("Expected plot not found:", figure_path)
     '''),md('## 4. Draw predictions with English labels'),code('''
     if SMOKE:
         from ultralytics.utils import ASSETS

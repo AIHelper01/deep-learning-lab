@@ -31,9 +31,8 @@ See the [adaptation map](docs/adaptation-map.md) for every original case and its
 The notebooks retain locally executed outputs, including charts and predictions.
 Use the uv launcher in [environment setup](docs/environment-setup.md) with Python 3.12.15,
 PyTorch 2.14.1, or PaddlePaddle 3.3.1. Classification and NLP use default classroom
-training parameters. The YOLO26 notebook now trains on the real Rock Paper Scissors export
-built by `scripts/fetch_rps.py`, and its saved outputs come from a one-epoch pipeline check
-because a full ten-epoch classroom run costs about thirty-five CPU minutes. See
-[execution reports](reports/README.md) for the measured results and scope. GPU execution has
-not been validated.
+training parameters. The YOLO26 notebook trains on the real Rock Paper Scissors export built
+by `scripts/fetch_rps.py`; the saved ten-epoch run finished in 2127 CPU seconds and reached
+test mAP50 0.904 and mAP50-95 0.524. See [execution reports](reports/README.md) for the
+measured results and scope. GPU execution has not been validated.
 

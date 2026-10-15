@@ -16,8 +16,10 @@ Image classification and NLP use the default classroom parameters, not smoke mod
 This means 3 epochs for classification and 5 for LSTM, using the documented course
 subsets rather than the entire source datasets. ResNet uses pretrained ImageNet weights.
 The optional DistilBERT notebook uses the downloaded English sentiment model.
-Detection trains on the real Rock Paper Scissors export, but its saved notebook outputs come
-from `COURSE_EPOCHS=1`, a one-epoch pipeline check, rather than the ten-epoch classroom run.
+Detection runs the same way on the real Rock Paper Scissors export: ten epochs at 320 pixels,
+2127 CPU seconds, test mAP50 0.904, and mAP50-95 0.524. The rerun reproduced the same metrics,
+which is the expected result under `seed=42` and `deterministic=True`. Set `COURSE_EPOCHS=1` to
+repeat the same path as a short check.
 These are CPU teaching runs, not GPU benchmarks or accuracy guarantees.
 
 ## Evidence
@@ -38,13 +40,11 @@ refuse to overwrite notebooks containing saved execution.
 
 ## Leftover downloads
 
-`01-image-classification/data/cifar10` still holds unreferenced CIFAR-10 download
-fragments from an earlier fetch implementation: `cifar-10-python.tar.gz`,
-`cifar-10-python.tar.part`, and `download-parts/` (41 files, 59.9 MB in total).
-The delivered loader only reads the checksummed `train-00000-of-00001.parquet` and
-`test-00000-of-00001.parquet` files with their provenance records, so deleting the
-fragments is safe. Automated cleanup is blocked by the agent sandbox policy; remove
-them from a terminal with:
+`01-image-classification/data/cifar10` still holds unreferenced CIFAR-10 download fragments
+from an earlier fetch implementation: `cifar-10-python.tar.gz`, `cifar-10-python.tar.part`, and
+`download-parts/` (41 files, 59.9 MB in total). The delivered loader only reads the checksummed
+`train-00000-of-00001.parquet` and `test-00000-of-00001.parquet` files with their provenance
+records, so deleting the fragments is safe.
 
 ```powershell
 Remove-Item -LiteralPath english\01-image-classification\data\cifar10\cifar-10-python.tar.gz -Force
@@ -55,15 +55,34 @@ Remove-Item -LiteralPath english\01-image-classification\data\cifar10\download-p
 The Rock Paper Scissors export under `02-object-detection/data` is complete and in use, and
 `02-object-detection/data/rps-mirror` is the mirror cache that `scripts\fetch_rps.py` keeps so
 re-runs only fetch missing files. Both stay out of Git through the existing `**/data/**` rule.
-Three folders under `02-object-detection\outputs\runs` are leftovers from measuring the
-classroom image size: `timing-probe` (a stopped 640-pixel run), `timing-probe-320`, and
-`rps-yolo26n` (the ten-epoch run stopped on request). The delivered run is `rps-yolo26n-2`
-plus the `evaluation` run. Delete the leftovers with:
+
+`02-object-detection\outputs\runs` keeps one delivered run, `rps-yolo26n-5` with its
+`evaluation-8` folder, and the notebook renders the training curves, the normalized confusion
+matrix, and a validation prediction crop from those folders. Ultralytics progress-bar redraws
+are suppressed, so the saved notebook holds 13 output records rather than two thousand. Every
+other folder there is superseded: the timing probes, the stopped and one-epoch attempts, and the
+historical COCO8 smoke runs with their evaluation folders. None of it is tracked by Git. Delete
+the superseded folders with:
 
 ```powershell
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\coco8-smoke -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\coco8-smoke-2 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\coco8-smoke-3 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\coco8-smoke-4 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-2 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-3 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-4 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-5 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-6 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-7 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\progress-probe -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\rps-yolo26n -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\rps-yolo26n-2 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\rps-yolo26n-3 -Recurse -Force
+Remove-Item -LiteralPath english\02-object-detection\outputs\runs\rps-yolo26n-4 -Recurse -Force
 Remove-Item -LiteralPath english\02-object-detection\outputs\runs\timing-probe -Recurse -Force
 Remove-Item -LiteralPath english\02-object-detection\outputs\runs\timing-probe-320 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\rps-yolo26n -Recurse -Force
 ```
 
 ## Earlier smoke checks

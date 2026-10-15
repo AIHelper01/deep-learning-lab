@@ -21,6 +21,6 @@
 
 ## 英文版教学课程
 
-[english/README.md](english/README.md) 是独立的英文教学版：13 个 Notebook 均已在本机 CPU 上逐格执行并保留真实输出，环境由 uv 管理，数据、词表、缓存与训练产物和中文课程完全隔离。其中 YOLO26 检测已改用 scripts/fetch_rps.py 抓取的剪刀石头布真实数据集，但保存的输出是 1 个 epoch 的管线验证；10 epoch 课堂完整训练约需 35 分钟 CPU 时间，尚未执行。执行证据见 [english/reports/README.md](english/reports/README.md)，改动映射见 [english/docs/adaptation-map.md](english/docs/adaptation-map.md)。
+[english/README.md](english/README.md) 是独立的英文教学版：13 个 Notebook 均已在本机 CPU 上按课堂默认参数逐格执行并保留真实输出，环境由 uv 管理，数据、词表、缓存与训练产物和中文课程完全隔离。其中 YOLO26 检测使用 scripts/fetch_rps.py 抓取的剪刀石头布真实数据集，10 epoch 完整训练耗时 2039 秒（CPU），test mAP50 0.904、mAP50-95 0.524，结果与检测可视化都保存在 Notebook 内。执行证据见 [english/reports/README.md](english/reports/README.md)，改动映射见 [english/docs/adaptation-map.md](english/docs/adaptation-map.md)。
 
 上一段的当前状态只描述中文课程；英文版的验证结论以 english/reports/ 为准。
