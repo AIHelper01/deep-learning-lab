@@ -1,0 +1,313 @@
+from pathlib import Path
+import json, re, shutil, zipfile, hashlib, datetime, os
+
+root = Path(__file__).resolve().parent
+stamp = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+backup = root.parent / f'deep-learning-lab-backup-{stamp}.zip'
+originals = [p for p in root.rglob('*') if p.is_file() and p != Path(__file__).resolve()]
+with zipfile.ZipFile(backup, 'x', zipfile.ZIP_DEFLATED) as z:
+    for p in originals:
+        z.write(p, p.relative_to(root).as_posix())
+
+mapping = {}
+for p in originals:
+    old = p.relative_to(root).as_posix()
+    parts = old.split('/')
+    if parts[0].startswith('2.1'):
+        base = '01-image-classification/'
+        if p.suffix == '.ipynb':
+            name = p.name
+            target = ('archive/01-lenet-mnist-copy1.ipynb' if 'Copy1' in name else
+                      'notebooks/extensions/04-lenet-custom-data.ipynb' if '进阶' in name else
+                      'notebooks/01-lenet-mnist.ipynb' if '规范' in name else
+                      'notebooks/03-resnet-cifar10.ipynb' if 'ResNet' in name else
+                      'notebooks/02-lenet-cifar10.ipynb')
+        elif 'DataSet' in parts:
+            target = 'data/' + '/'.join(parts[parts.index('DataSet')+1:])
+        elif p.suffix == '.py': target = 'scripts/create_txt.py'
+        elif 'images' in parts:
+            target = 'assets/' + ('resnet/' if 'ResNet' in parts else 'lenet/') + p.name
+        else: target = 'archive/environment/' + p.name
+        new = base + target
+    elif parts[0].startswith('2.2'):
+        base = '02-object-detection/'
+        names = {'理解卷积.md':'02-cnn-basics.md','CV基础_PPT内容梳理版.md':'01-cv-overview.md',
+                 'YOLO理论':'03-yolo-theory.md','YOLO实践':'04-yolo-practice.md'}
+        if p.suffix == '.ipynb': new = base + 'notebooks/01-yolo11-rock-paper-scissors.ipynb'
+        elif p.name in names: new = base + 'lessons/' + names[p.name]
+        else: new = base + 'assets/' + '/'.join(parts[1:])
+    elif parts[0].startswith('2.3'):
+        base = '03-sentiment-analysis/'
+        if p.suffix == '.ipynb':
+            framework = 'pytorch' if 'PyTorch' in p.name else 'paddle'
+            idx = int(p.name[:2]) % 10
+            new = base + framework + '/notebooks/' + {1:'01-nlp-overview.ipynb',2:'02-word-embeddings.ipynb',3:'03-lstm-sentiment.ipynb'}[idx]
+        elif p.name == 'vocab.json': new = base + 'assets/vocab-reference.json'
+        else: new = base + 'archive/environment/' + p.name
+    else:
+        new = 'docs/migration/original/' + p.name
+    mapping[old] = new
+
+assert len(set(mapping.values())) == len(mapping)
+for old, new in mapping.items():
+    src, dst = root / old, root / new
+    assert src.resolve().is_relative_to(root) and dst.resolve().is_relative_to(root)
+    assert not dst.exists(), dst
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.move(str(src), str(dst))
+
+def write(name, text):
+    p = root / name
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(text.rstrip() + '\n', encoding='utf-8')
+
+def rel(target, parent):
+    return Path(os.path.relpath(target, parent)).as_posix()
+
+def fix_links(s, old, new):
+    def change(m):
+        link = m.group(2)
+        clean = link.split('#')[0]
+        if not clean or re.match(r'\w+://|data:|attachment:',clean): return m.group(0)
+        absolute = (root / old).parent.joinpath(clean.replace('\\','/')).resolve()
+        if not absolute.is_relative_to(root): return m.group(0)
+        key = absolute.relative_to(root).as_posix()
+        if key not in mapping: return m.group(0)
+        suffix = '#' + link.split('#',1)[1] if '#' in link else ''
+        return m.group(1) + rel(root / mapping[key], (root / new).parent) + suffix + m.group(3)
+    s = re.sub(r'(\]\()([^\)]+)(\))',change,s)
+    def html(m):
+        target = (root / old).parent.joinpath(m.group(2)).resolve()
+        if target.is_relative_to(root) and target.relative_to(root).as_posix() in mapping:
+            return m.group(1)+rel(root/mapping[target.relative_to(root).as_posix()],(root/new).parent)+m.group(3)
+        return m.group(0)
+    return re.sub(r'(src=["\'])([^"\']+)(["\'])',html,s)
+
+for old,new in mapping.items():
+    p = root/new
+    if p.suffix == '.ipynb':
+        nb = json.loads(p.read_text(encoding='utf-8'))
+        for c in nb['cells']:
+            s = ''.join(c['source'])
+            if c['cell_type']=='markdown': s = fix_links(s,old,new)
+            if new.startswith('01-'):
+                module = root/'01-image-classification'
+                data = rel(module/'data',p.parent)
+                output = rel(module/'outputs',p.parent)
+                asset = rel(module/('assets/resnet' if '/ResNet/' in old else 'assets/lenet'),p.parent)
+                s = re.sub(r'(?<![\w/])(?:\./)?DataSet\b',data,s)
+                s = s.replace('./models',output)
+                if c['cell_type']=='code': s = s.replace('./images/',asset+'/')
+            elif new.startswith('03-'):
+                module = root/'03-sentiment-analysis'
+                framework = new.split('/')[1]
+                data = rel(module/'data',p.parent)
+                output = rel(module/'outputs'/framework,p.parent)
+                s = re.sub(r'(?<![\w/])(?:\./)?DataSet\b',data,s)
+                s = s.replace('./vocab.json',output+'/vocab.json').replace('./visualize',output+'/visualize').replace('./runs',output+'/runs')
+            c['source'] = s.splitlines(keepends=True)
+        if not new.startswith('02-'):
+            # Only establish paths; existing model and training cells stay intact.
+            module_name = new.split('/')[0]
+            out = module/'outputs' if new.startswith('01-') else module/'outputs'/new.split('/')[1]
+            paths = [rel(module/'data',p.parent),rel(out,p.parent)]
+            nb['cells'].insert(0, {'cell_type':'markdown','metadata':{},'source':[
+                '运行约定：以本 Notebook 所在目录作为工作目录，从第一单元顺序运行。首个代码单元仅建立数据与输出目录。历史输出保留，不代表当前环境已验证。\n']})
+            nb['cells'].insert(1, {'cell_type':'code','execution_count':None,'metadata':{},'outputs':[],
+                'source':['from pathlib import Path\n']+[f'Path({x!r}).mkdir(parents=True, exist_ok=True)\n' for x in paths]})
+        p.write_text(json.dumps(nb,ensure_ascii=False,indent=1)+'\n',encoding='utf-8')
+    elif new.startswith('02-') and p.suffix=='.md':
+        p.write_text(fix_links(p.read_text(encoding='utf-8'),old,new),encoding='utf-8')
+
+# The helper is executed from scripts/, matching the Notebook working-directory convention.
+p=root/'01-image-classification/scripts/create_txt.py'
+p.write_text(p.read_text(encoding='utf-8').replace('os.path.join("data",','os.path.join("..", "data",'),encoding='utf-8')
+
+deps = {
+ '01-image-classification': ('image-classification-lab','>=3.12', ['torch==2.8.0','torchvision==0.23.0','numpy==2.2.6','matplotlib==3.10.5','pillow==11.3.0','opencv-python==4.12.0.88','jupyterlab','ipykernel']),
+ '03-sentiment-analysis/pytorch': ('sentiment-pytorch-lab','>=3.10', ['torch==2.8.0','numpy==2.2.6','pandas==2.3.2','jieba==0.42.1','gensim==4.4.0','transformers>=4.40,<5','tensorboard','jupyterlab','ipykernel']),
+ '03-sentiment-analysis/paddle': ('sentiment-paddle-lab','>=3.10', ['paddlepaddle==2.6.2','paddlenlp==2.6.1','numpy<2','pandas==2.3.2','jieba==0.42.1','visualdl==2.5.3','jupyterlab','ipykernel'])
+}
+for folder,(name,python,packages) in deps.items():
+    write(folder+'/pyproject.toml','[project]\nname = '+json.dumps(name)+'\nversion = "0.1.0"\nrequires-python = '+json.dumps(python)+'\ndescription = "Deep learning teaching notebooks"\ndependencies = '+json.dumps(packages,indent=2)+'\n\n[tool.uv]\npackage = false')
+    write(folder+'/requirements.txt','# Generated from pyproject.toml dependencies; edit both together.\n'+'\n'.join(packages))
+    write(folder+'/.python-version','3.10' if folder.endswith('/paddle') else '3.12')
+
+write('README.md','''# 深度学习实验室
+
+围绕图像分类、目标检测与中文情感分析的 Notebook 教学项目。
+
+| 模块 | 入口 | 内容 |
+|---|---|---|
+| 01 图像分类 | [课程说明](01-image-classification/README.md) | MNIST → CIFAR-10 → ResNet → 自定义数据 |
+| 02 目标检测 | [课程说明](02-object-detection/README.md) | CV 与 CNN 基础 → YOLO → 剪刀石头布检测 |
+| 03 情感分析 | [课程说明](03-sentiment-analysis/README.md) | NLP → 词向量 → LSTM，Paddle/PyTorch 两条路线 |
+
+首次学习从 [MNIST 规范版](01-image-classification/notebooks/01-lenet-mnist.ipynb) 开始。完成基础训练流程后，可以分别进入目标检测或情感分析。
+
+- [学习路线](docs/learning-path.md)
+- [环境准备](docs/environment-setup.md)
+- [目录整理记录](docs/migration/reorganization.md)
+
+每个运行环境独立安装依赖，以 Notebook 所在目录作为工作目录。数据放在各模块 data/，训练产物放在 outputs/，讲解图片放在 assets/。
+
+当前状态：完成目录及路径整理和静态检查；未安装新环境、下载资源或执行训练。Notebook 历史输出原样保留，不能视为本次运行结果。
+''')
+write('01-image-classification/README.md','''# 图像分类
+
+采用 PyTorch，依次学习数据预处理、训练评估、模型保存与预测。
+
+1. [LeNet-MNIST 主课程](notebooks/01-lenet-mnist.ipynb)：先阅读分步正文，再阅读完整训练系统附录。
+2. [LeNet-CIFAR10](notebooks/02-lenet-cifar10.ipynb)：彩色图像分类。
+3. [ResNet-CIFAR10](notebooks/03-resnet-cifar10.ipynb)：预训练网络与迁移学习。
+4. [自定义数据扩展](notebooks/extensions/04-lenet-custom-data.ipynb)：保留原进阶版全部内容，包含 MNIST 与 LEDNUM。
+
+[Copy1 对照版](archive/01-lenet-mnist-copy1.ipynb) 保留供比较，不作为必修入口。
+
+## 数据与输出
+
+- data/MNIST/raw/：已保留原始解压数据。
+- data/CIFAR10/：首次运行下载；data/LEDNUM/：需要自行准备。
+- assets/lenet/ 与 assets/resnet/：示例图片。
+- outputs/：模型、checkpoint、曲线和日志。
+- scripts/create_txt.py：LEDNUM 索引辅助脚本，在 scripts 目录运行。
+
+以具体 Notebook 所在目录作为工作目录，包含 extensions 与 archive 中的 Notebook。路径已按各自位置调整。
+
+[环境准备](../docs/environment-setup.md)。旧依赖和锁文件保留在 archive/environment/；新依赖尚未安装验证。教程中的 /workspace 数据复制命令仍是旧环境示例，Windows 下应按实际数据来源准备，不能直接照抄。训练逻辑与历史输出保留。
+''')
+write('02-object-detection/README.md','''# 目标检测
+
+本模块为课程讲义和操作教程；训练、推理命令需要在外部 PaddleYOLO/PaddleDetection 工程中执行。
+
+1. [CV 总览](lessons/01-cv-overview.md)
+2. [CNN 基础](lessons/02-cnn-basics.md)
+3. [YOLO 理论](lessons/03-yolo-theory.md)
+4. [YOLO 实践](lessons/04-yolo-practice.md)
+5. [剪刀石头布检测](notebooks/01-yolo11-rock-paper-scissors.ipynb)
+
+## 运行前准备
+
+- 准备与教程命令相符的 PaddleYOLO/PaddleDetection 工程，并记录实际版本或提交号；本项目未验证具体版本。
+- 在外部工程准备剪刀石头布数据、VOC/COCO 标注、类别列表、训练配置和权重。
+- 教程中的 tools/train.py、tools/infer.py、configs/、deploy/ 等相对于外部工程。
+- /workspace、/home/aistudio 等路径及 Linux shell 命令是原环境示例。
+
+讲义图片位于 assets/。原教程链接中的五个 yolo11 配置文件及 ONNX 导出文档未随项目提供，仍保留外部引用；见[整理记录](../docs/migration/reorganization.md)。不创建空配置冒充可运行配置。
+''')
+write('03-sentiment-analysis/README.md','''# 中文情感分析
+
+学习顺序：NLP 基础 → 词向量 → LSTM 情感分类。选择一套框架完成全部实验，再对照另一套实现。
+
+- [PyTorch 路线](pytorch/README.md)：延续图像分类的框架知识。
+- [Paddle 路线](paddle/README.md)：PaddleNLP 与 VisualDL 实践。
+
+两条路线独立配置环境，原始评论数据共用 data/；产物分别写入 outputs/pytorch/ 与 outputs/paddle/。不要同时运行两套数据下载和解压流程，以免互相影响。
+
+assets/vocab-reference.json 为迁入词表，仅作参考；Paddle 实验重新生成的词表放入 outputs/paddle/。两套 NLP 概述 Notebook 原样保留，避免此次目录整理改变课程内容。
+
+旧说明、混合依赖及锁文件保存在 archive/environment/，不用于新环境安装。BERT/ERNIE 示例与 LSTM 训练属于不同实验。历史 Paddle pir 报错未在本次复现，当前不能标记为已修复。
+''')
+for fw in ['pytorch','paddle']:
+    write(f'03-sentiment-analysis/{fw}/README.md',f'''# {fw} 情感分析路线
+
+1. [自然语言处理综述](notebooks/01-nlp-overview.ipynb)
+2. [词向量](notebooks/02-word-embeddings.ipynb)
+3. [LSTM 情感分类](notebooks/03-lstm-sentiment.ipynb)
+
+使用本目录的独立环境；以 notebooks/ 为工作目录顺序运行。数据目录为 ../../data/，输出目录为 ../../outputs/{fw}/（均相对于 Notebook）。首次运行可能下载评论数据和预训练模型。
+
+[环境准备](../../docs/environment-setup.md)。新依赖依据代码导入整理，尚未安装验证、未生成新锁文件、未执行训练。
+''')
+write('docs/learning-path.md','''# 学习路线
+
+## 主线
+
+1. [MNIST](../01-image-classification/notebooks/01-lenet-mnist.ipynb)：数据观察、网络维度、训练评估、保存与重新加载预测。
+2. [CIFAR-10](../01-image-classification/notebooks/02-lenet-cifar10.ipynb)：彩色图像与更复杂任务。
+3. [ResNet](../01-image-classification/notebooks/03-resnet-cifar10.ipynb)：预训练网络和分类头适配。
+
+完成后，按兴趣进入[目标检测](../02-object-detection/README.md)或[情感分析](../03-sentiment-analysis/README.md)，两者不互为前置。
+
+## 扩展与对照
+
+LEDNUM 实验属于扩展，需要外部数据。MNIST Copy1 属于历史对照。情感分析选一套框架贯穿学习，另一套用于比较。CV 总览中的 ViT、Diffusion 等内容作为拓展阅读。
+
+## 实验完成标准
+
+能够说明输入与输出、复现数据处理和训练过程、记录评估指标，并解释失败样本。涉及模型保存的实验还应验证重新加载后的预测。比较不同模型前先对齐数据划分、预处理、训练轮数和预训练设置。
+
+后续优先级：先验证 MNIST 完整流程，再逐模块验证环境与数据，最后评估是否提取重复训练工具。当前没有执行这些训练验证。
+''')
+write('docs/environment-setup.md','''# 环境准备
+
+图像分类、PyTorch NLP、Paddle NLP 使用三个独立环境。目标检测按外部工程说明另建环境。
+
+## Windows 示例
+
+在选定环境目录运行（01-image-classification、03-sentiment-analysis/pytorch 或 03-sentiment-analysis/paddle）：
+
+```powershell
+python -m venv .venv
+.venv\\Scripts\\python.exe -m pip install -r requirements.txt
+.venv\\Scripts\\python.exe -m jupyterlab
+```
+
+请先确认 python 指向所需解释器。图像分类与 PyTorch NLP 的版本提示为 3.12，Paddle 的版本提示为 3.10；这些是准备环境的起点，尚未验证安装成功。也可使用 uv sync 解析 pyproject.toml，但当前未生成新 uv.lock，首次解析需要网络。
+
+在 JupyterLab 中打开实验；内核工作目录应为该 Notebook 所在目录。迁移后的数据、图片和输出路径均按此约定设置。首次路径单元只建立数据与输出目录。
+
+## 依赖状态
+
+- 新 pyproject.toml 与 requirements.txt 列出代码直接需要的库；两份内容应同步维护。
+- 图像分类使用原有 torch/torchvision 版本，去掉手工枚举的传递依赖与平台 GPU 包，交由安装器解析。
+- PyTorch NLP 补列 torch、transformers 与 tensorboard。
+- Paddle 保留原框架版本，将 NumPy 约束到 2 以下作为旧框架环境的候选方案；是否解决兼容问题需实际验证。
+- GPU 安装应按本机驱动和所选框架确定软件源。本轮没有安装或更改系统 Python 环境。
+- archive/environment/ 中的旧锁文件仅供追溯，不匹配新依赖，不应复制回新环境。
+
+环境验证后再生成并提交新的锁文件，记录 Python、框架、设备和验证日期。当前所有训练实验均处于未验证状态。
+''')
+write('.gitignore','''# Local Python environments and caches
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+
+# Datasets and generated experiment products
+**/data/**
+!**/data/README.md
+**/outputs/**
+!**/outputs/README.md
+!**/outputs/**/
+!**/outputs/**/README.md
+''')
+for module in ['01-image-classification','03-sentiment-analysis']:
+    write(module+'/data/README.md','此目录保存实验原始数据。图像分类已有 MNIST 解压数据；其他数据需按课程下载或准备。大型数据不纳入默认 Git 跟踪。')
+    write(module+'/outputs/README.md','此目录保存实验生成的模型、日志和可视化结果，不纳入默认 Git 跟踪。')
+for fw in ['pytorch','paddle']:
+    write(f'03-sentiment-analysis/outputs/{fw}/README.md',f'{fw} 路线的生成产物目录。')
+write('docs/migration/reorganization.md',f'''# 目录整理记录
+
+日期：2026-10-15。
+
+完整整理前备份：`{backup}`。
+
+- 所有原文件均保留，路径对应见 [文件映射](file-map.json)。旧依赖、README 和锁文件已归档。
+- [原迁移说明](original/迁移说明.md)与[原迁移清单](original/migration-manifest.json)是历史记录，其路径描述整理前状态。
+- 原项目导览保留在 original/，当前入口以根 README 和 docs/learning-path.md 为准。
+- 12 个 Notebook 的既有 cell metadata、execution_count 与历史输出保留；修改仅涉及路径、并为本地实验新增目录准备单元。
+- 所有原始图片、数据、词表与归档依赖保持字节内容不变。
+- 目标检测的外部工程命令、示例环境路径和原本缺失的配置文档引用保留。训练算法未作重构。
+- 新依赖文件尚未安装或锁定；未运行训练，不宣称已解决原有兼容问题。
+
+此次仅增加 Git 忽略规则，没有初始化 Git 仓库。
+''')
+manifest = {'backup':str(backup),'files':[{'old':a,'new':b} for a,b in mapping.items()]}
+write('docs/migration/file-map.json',json.dumps(manifest,ensure_ascii=False,indent=2))
+# Remove only empty directories within the verified workspace.
+for p in sorted(root.rglob('*'),key=lambda p:len(p.parts),reverse=True):
+    if p.is_dir() and p.resolve().is_relative_to(root) and not any(p.iterdir()): p.rmdir()
+print(json.dumps({'backup':str(backup),'mapped_files':len(mapping)},ensure_ascii=False))

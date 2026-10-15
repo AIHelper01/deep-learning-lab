@@ -1,0 +1,19 @@
+[project]
+name = "sentiment-paddle-lab"
+version = "0.1.0"
+requires-python = ">=3.10"
+description = "Deep learning teaching notebooks"
+dependencies = [
+  "paddlepaddle==2.6.2",
+  "paddlenlp==2.6.1",
+  "numpy<2",
+  "pandas==2.3.2",
+  "jieba==0.42.1",
+  "visualdl==2.5.3",
+  "requests==2.32.5",
+  "jupyterlab",
+  "ipykernel"
+]
+
+[tool.uv]
+package = false

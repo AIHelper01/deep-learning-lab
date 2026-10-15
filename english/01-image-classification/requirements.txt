@@ -1,0 +1,11 @@
+torch==2.14.1
+torchvision==0.29.1
+pyarrow>=18,<25
+pillow>=10,<13
+numpy>=1.26,<2
+matplotlib>=3.8,<4
+requests>=2.32,<3
+jupyterlab>=4,<5
+ipykernel>=6,<8
+nbclient>=0.10,<1
+nbformat>=5,<6

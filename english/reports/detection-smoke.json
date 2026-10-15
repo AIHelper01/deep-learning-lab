@@ -1,0 +1,13 @@
+{
+  "mode": "small-sample smoke execution of all code cells",
+  "python": "3.12.11",
+  "group": "detection",
+  "results": [
+    {
+      "notebook": "02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
+      "status": "passed",
+      "seconds": 29.54,
+      "log": "reports/logs/detection-01-yolo26-rock-paper-scissors.log"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "notebooks": 12,
+  "original_code_cells_path_only_verified": 143,
+  "notebook_syntax_errors": 0,
+  "original_assets_and_archives_byte_verified": 48,
+  "new_environment_dependency_pairs_verified": 3,
+  "local_links_checked": 80,
+  "known_external_references": [
+    {
+      "file": "02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb",
+      "target": "./yolo11_n_600e_coco.yml"
+    },
+    {
+      "file": "02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb",
+      "target": "./yolo11_s_600e_coco.yml"
+    },
+    {
+      "file": "02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb",
+      "target": "./yolo11_m_600e_coco.yml"
+    },
+    {
+      "file": "02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb",
+      "target": "./yolo11_l_600e_coco.yml"
+    },
+    {
+      "file": "02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb",
+      "target": "./yolo11_x_600e_coco.yml"
+    },
+    {
+      "file": "02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb",
+      "target": "../../deploy/EXPORT_ONNX_MODEL.md"
+    }
+  ],
+  "training_executed": false,
+  "dependency_installation_executed": false
+}

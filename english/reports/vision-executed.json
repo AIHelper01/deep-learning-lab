@@ -1,0 +1,47 @@
+{
+  "group": "vision",
+  "python": "3.12.15",
+  "executable": "E:\\deep-learning-lab\\english\\01-image-classification\\.venv\\Scripts\\python.exe",
+  "results": [
+    {
+      "notebook": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
+      "status": "passed",
+      "seconds": 75.14,
+      "code_cells": 8,
+      "output_items": 11,
+      "png_outputs": 2
+    },
+    {
+      "notebook": "01-image-classification/notebooks/01-lenet-mnist.ipynb",
+      "status": "passed",
+      "seconds": 19.72,
+      "code_cells": 9,
+      "output_items": 13,
+      "png_outputs": 3
+    },
+    {
+      "notebook": "01-image-classification/notebooks/02-lenet-cifar10.ipynb",
+      "status": "passed",
+      "seconds": 30.95,
+      "code_cells": 9,
+      "output_items": 13,
+      "png_outputs": 3
+    },
+    {
+      "notebook": "01-image-classification/notebooks/03-resnet-cifar10.ipynb",
+      "status": "passed",
+      "seconds": 1285.92,
+      "code_cells": 9,
+      "output_items": 13,
+      "png_outputs": 3
+    },
+    {
+      "notebook": "01-image-classification/notebooks/extensions/04-lenet-custom-data.ipynb",
+      "status": "passed",
+      "seconds": 49.75,
+      "code_cells": 9,
+      "output_items": 14,
+      "png_outputs": 3
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "mode": "small-sample smoke execution of all code cells",
+  "python": "3.12.11",
+  "group": "torch-nlp",
+  "results": [
+    {
+      "notebook": "03-sentiment-analysis/pytorch/notebooks/01-nlp-overview.ipynb",
+      "status": "passed",
+      "seconds": 0.66,
+      "log": "reports/logs/torch-nlp-01-nlp-overview.log"
+    },
+    {
+      "notebook": "03-sentiment-analysis/pytorch/notebooks/02-word-embeddings.ipynb",
+      "status": "passed",
+      "seconds": 16.3,
+      "log": "reports/logs/torch-nlp-02-word-embeddings.log"
+    },
+    {
+      "notebook": "03-sentiment-analysis/pytorch/notebooks/03-lstm-sentiment.ipynb",
+      "status": "passed",
+      "seconds": 11.42,
+      "log": "reports/logs/torch-nlp-03-lstm-sentiment.log"
+    }
+  ]
+}

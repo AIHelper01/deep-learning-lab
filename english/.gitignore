@@ -1,0 +1,10 @@
+.venv*/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+**/data/**
+!**/data/README.md
+**/outputs/**
+!**/outputs/README.md
+reports/executed/
+reports/logs/

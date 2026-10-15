@@ -1,0 +1,18 @@
+{
+  "tokenizer_and_padding": "passed",
+  "unique_reviews": 49578,
+  "class_counts": {
+    "train": {
+      "0": 9945,
+      "1": 9977
+    },
+    "validation": {
+      "0": 2486,
+      "1": 2494
+    },
+    "test": {
+      "0": 12265,
+      "1": 12411
+    }
+  }
+}

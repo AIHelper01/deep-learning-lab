@@ -1,0 +1,9 @@
+{
+  "test_type": "synthetic annotation fixture, not a detection dataset",
+  "checks": [
+    "preserved class-ID order",
+    "normalized box validation",
+    "cross-split exact duplicates"
+  ],
+  "status": "passed"
+}

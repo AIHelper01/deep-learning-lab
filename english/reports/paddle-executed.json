@@ -1,0 +1,31 @@
+{
+  "group": "paddle",
+  "python": "3.12.15",
+  "executable": "E:\\deep-learning-lab\\english\\03-sentiment-analysis\\paddle\\.venv\\Scripts\\python.exe",
+  "results": [
+    {
+      "notebook": "03-sentiment-analysis/paddle/notebooks/01-nlp-overview.ipynb",
+      "status": "passed",
+      "seconds": 16.88,
+      "code_cells": 3,
+      "output_items": 3,
+      "png_outputs": 0
+    },
+    {
+      "notebook": "03-sentiment-analysis/paddle/notebooks/02-word-embeddings.ipynb",
+      "status": "passed",
+      "seconds": 50.3,
+      "code_cells": 7,
+      "output_items": 9,
+      "png_outputs": 1
+    },
+    {
+      "notebook": "03-sentiment-analysis/paddle/notebooks/03-lstm-sentiment.ipynb",
+      "status": "passed",
+      "seconds": 140.64,
+      "code_cells": 8,
+      "output_items": 13,
+      "png_outputs": 1
+    }
+  ]
+}

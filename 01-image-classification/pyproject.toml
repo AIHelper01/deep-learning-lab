@@ -1,0 +1,18 @@
+[project]
+name = "image-classification-lab"
+version = "0.1.0"
+requires-python = ">=3.12"
+description = "Deep learning teaching notebooks"
+dependencies = [
+  "torch==2.8.0",
+  "torchvision==0.23.0",
+  "numpy==2.2.6",
+  "matplotlib==3.10.5",
+  "pillow==11.3.0",
+  "opencv-python==4.12.0.88",
+  "jupyterlab",
+  "ipykernel"
+]
+
+[tool.uv]
+package = false

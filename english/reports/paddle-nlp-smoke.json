@@ -1,0 +1,25 @@
+{
+  "mode": "small-sample smoke execution of all code cells",
+  "python": "3.12.11",
+  "group": "paddle-nlp",
+  "results": [
+    {
+      "notebook": "03-sentiment-analysis/paddle/notebooks/01-nlp-overview.ipynb",
+      "status": "passed",
+      "seconds": 0.32,
+      "log": "reports/logs/paddle-nlp-01-nlp-overview.log"
+    },
+    {
+      "notebook": "03-sentiment-analysis/paddle/notebooks/02-word-embeddings.ipynb",
+      "status": "passed",
+      "seconds": 5.1,
+      "log": "reports/logs/paddle-nlp-02-word-embeddings.log"
+    },
+    {
+      "notebook": "03-sentiment-analysis/paddle/notebooks/03-lstm-sentiment.ipynb",
+      "status": "passed",
+      "seconds": 3.7,
+      "log": "reports/logs/paddle-nlp-03-lstm-sentiment.log"
+    }
+  ]
+}

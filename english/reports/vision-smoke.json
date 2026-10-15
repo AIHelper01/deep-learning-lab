@@ -1,0 +1,37 @@
+{
+  "mode": "small-sample smoke execution of all code cells",
+  "python": "3.12.11",
+  "group": "vision",
+  "results": [
+    {
+      "notebook": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
+      "status": "passed",
+      "seconds": 10.79,
+      "log": "reports/logs/vision-01-lenet-mnist-copy1.log"
+    },
+    {
+      "notebook": "01-image-classification/notebooks/01-lenet-mnist.ipynb",
+      "status": "passed",
+      "seconds": 8.91,
+      "log": "reports/logs/vision-01-lenet-mnist.log"
+    },
+    {
+      "notebook": "01-image-classification/notebooks/extensions/04-lenet-custom-data.ipynb",
+      "status": "passed",
+      "seconds": 9.89,
+      "log": "reports/logs/vision-04-lenet-custom-data.log"
+    },
+    {
+      "notebook": "01-image-classification/notebooks/02-lenet-cifar10.ipynb",
+      "status": "passed",
+      "seconds": 38.58,
+      "log": "reports/logs/vision-02-lenet-cifar10.log"
+    },
+    {
+      "notebook": "01-image-classification/notebooks/03-resnet-cifar10.ipynb",
+      "status": "passed",
+      "seconds": 15.47,
+      "log": "reports/logs/vision-03-resnet-cifar10.log"
+    }
+  ]
+}

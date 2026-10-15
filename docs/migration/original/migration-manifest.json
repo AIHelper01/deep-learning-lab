@@ -1,0 +1,520 @@
+{
+  "source": "E:\\ai-showcase",
+  "destination": "E:\\deep-learning-lab",
+  "copied": [
+    {
+      "path": "2.1深度学习-ImageClassification\\.python-version",
+      "sha256": "8dfda54ba2f66ab3a8ebab460f4338bbeea1fb1e0f85ce06fe3530aa3c64679b",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\01_LeNet-MNIST手写数字识别分类器-规范版-Copy1.ipynb",
+      "sha256": "f72d80964baa7a68cfc8246326552542ba77ccd73b06062539d9d66e191427ec",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\01_LeNet-MNIST手写数字识别分类器-规范版.ipynb",
+      "sha256": "e321a513c8e19c69eeb673f754afee9331837dccac6e71e47e6338f9519e71e3",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\01_LeNet-MNIST手写数字识别分类器-进阶版.ipynb",
+      "sha256": "866e61fa52e8524e822b6086e56ab3fd3d3f5cdf4485f39e29d797ea66f51ba2",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\02_LeNet-CIFAR10分类器.ipynb",
+      "sha256": "0f9c399309a4cfe5d3a91a32b50b44f7c8c1049fc34d1ae11fa43d8505c0c61d",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\DataSet\\MNIST\\raw\\t10k-images-idx3-ubyte",
+      "sha256": "0fa7898d509279e482958e8ce81c8e77db3f2f8254e26661ceb7762c4d494ce7",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\DataSet\\MNIST\\raw\\t10k-labels-idx1-ubyte",
+      "sha256": "ff7bcfd416de33731a308c3f266cc351222c34898ecbeaf847f06e48f7ec33f2",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\DataSet\\MNIST\\raw\\train-images-idx3-ubyte",
+      "sha256": "ba891046e6505d7aadcbbe25680a0738ad16aec93bde7f9b65e87a2fc25776db",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\DataSet\\MNIST\\raw\\train-labels-idx1-ubyte",
+      "sha256": "65a50cbbf4e906d70832878ad85ccda5333a97f0f4c3dd2ef09a8a9eef7101c5",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\images\\cifar-10.png",
+      "sha256": "f1665f28bb60e10d30d60e01fb20e0b4d35f1ac1bd9508cfe78b919089f99fe4",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\images\\create_txt.py",
+      "sha256": "6f80357a3c65f897fcdc3731a12b4c775349671d03c8c6339c99a89690cc831d",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\images\\index.png",
+      "sha256": "edd35e1de8642eda7a3ba18f7afeb9e1d826addc06b5607b275aaf1435173612",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\images\\lednum.png",
+      "sha256": "139d7ee485bb01b56064df244a234a6c596b02ba8a78073168874139c48eec71",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\images\\mnist.jpg",
+      "sha256": "79e411b18ea2bbcf08f90af1dcf81fe66ffdf9733081076a708fab3206b2e4bd",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\images\\test_cifar10.png",
+      "sha256": "4c4ddbdb0af0ca30c400273b14006644ddf3d72595f7977f449941df46782d63",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\images\\test_led.jpg",
+      "sha256": "54ba2bd450b671715ff7241e56e853dccdd97bfd9311362785f5716b45e5eefd",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\images\\test_mnist.jpg",
+      "sha256": "86becfc3876d32da9316bb00d6da4a190143cd2c0eda931676ef7af1be8e86ce",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\pyproject.toml",
+      "sha256": "04dacc58c702ceb74d5ff53454131f011abfe7178571446f32421812a687b6e1",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\README.md",
+      "sha256": "cf4b82609aa2cb13d0406475ebdfe88cd42c2f3517befd2cdc12f3b8f8d0db72",
+      "modified": true
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\requirements.txt",
+      "sha256": "04841a8e73905746bf07c381376a8d11af7d68d4e0adda0efaf76e8e6364bbfa",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\01_ResNet-CIFAR-10.ipynb",
+      "sha256": "953944e1aead5b0c351fe87eda07ab1edb603a49f3eb1809252620cf124c9118",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\cifar-10.png",
+      "sha256": "f1665f28bb60e10d30d60e01fb20e0b4d35f1ac1bd9508cfe78b919089f99fe4",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\test_cifar10.png",
+      "sha256": "4c4ddbdb0af0ca30c400273b14006644ddf3d72595f7977f449941df46782d63",
+      "modified": false
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\uv.lock",
+      "sha256": "a2b90aedb6e3355c16fcd4a15c83753dec5318d2bbcc2141e8c4d43f8d07de52",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\assets\\image1.png",
+      "sha256": "753883b615412ec50590b40df2e6cf5394d899f6a59909ef8aead844a1b614b8",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\assets\\image2.png",
+      "sha256": "c0c96e785926097561f0115f38b2df2c86e951f55e418fd08c44bdb8a502530a",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\CV基础_PPT内容梳理版.md",
+      "sha256": "101b898d888a7737a5036fa0cda81f9e544d1aac49cfd93de268afaca58f75b4",
+      "modified": true
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\arXiv-2509.25164-v2.0-figure-1.png",
+      "sha256": "9e4fe42c37b387ac4cb20565fcb1e3cfd5570cc157ad3ee6d3190c94af7cd38b",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\arXiv-2509.25164-v2.0-figure-2.png",
+      "sha256": "b62231d28634ff21a5efe1af4b1bdfcb28bdcd9c4b0c62d35458b907efab5009",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\arXiv-2509.25164-v2.0-figure-3.png",
+      "sha256": "f7132cf17a2211a19ab5e5985f9cf773b1575cff3b320c6de508604d0c34a9d8",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\arXiv-2509.25164-v2.0-figure-4.png",
+      "sha256": "ca8eea67262d80f49ac90f5f9db92d5ca8bde047ba485c55dccae61208525c66",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_11_1.png",
+      "sha256": "dedadbbb9105ce65e8994ebf4e1b15268fbf360f8019e28be8f34f6c182a27d8",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_12_0.png",
+      "sha256": "12a4c48cba0b99949b96cf73a717448e6e0a134128aaba112d045a666e7aee68",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_14_0.png",
+      "sha256": "1eb35450d301a8af56a5aa83a3d0ffaa5beb468e3c088e229f635a2f7325ec97",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_14_1.png",
+      "sha256": "0dc8d9f56b993e4113564ccb0bbf1fdbe49d2ffad18a3bb840fa92c7dc4909b9",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_15_1.png",
+      "sha256": "521c0b3c07b232a6de114f23b5d48206f93e024125010753afde71f99ecf3c8c",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_16_0.png",
+      "sha256": "455cacbb9fecd03ba2d4c807ce3b75f4e9c3c2f12b58c37b48700d8a3d238d94",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_17_1.png",
+      "sha256": "1001822d3a963b242b89bdbe023b125728bf7eea8a60835f3a61cea237367421",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_19_1.png",
+      "sha256": "a03bbefdd3a11a2e5376847895faabaefbc976a2f818b974e734613049f05166",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_21_0.png",
+      "sha256": "7e55af638a4aba733a85a23dd8834a05cd3ef9c25d6630f4d441cc251f59d2e6",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_23_1.png",
+      "sha256": "a1ca8978fd06a14314801bbddaab5f35ecc55a099cf53c024b7a25d36c9e4a56",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_25_0.png",
+      "sha256": "b0acf012775e23e832b779c1c58675a2b2da95c358a19a715fbe4e009d35f89d",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_29_1.png",
+      "sha256": "fdae60a1e00ce8db1604d498645480573f7e3777877bbff8e3e672ce5f26ff15",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_4_1.png",
+      "sha256": "acaf66dc4f71c11733c50204462149a69ade6fb2eed1de3212dee1af4dc5af19",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\output_60_0.png",
+      "sha256": "42801f71fe9cc788bc84aa1ebb84b7fb80203ec632b6d5263f8c086e271fc990",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\YOLO实践",
+      "sha256": "91acf609e1e3387885d6da643c5c984d9a8ed61966df8b9ee56dc42e2817380b",
+      "modified": true
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\YOLO理论",
+      "sha256": "178c5488f316b5890d2f34d2dcdada9cd5ea0a7c35c053b1b86ad865a1e0e8d8",
+      "modified": true
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\基于YOLOv11完成剪刀石头布目标检测.ipynb",
+      "sha256": "11287e42a195e745388212091d93263befe9ac364fc26dc8a2a04790860376d1",
+      "modified": false
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\理解卷积.md",
+      "sha256": "21e8a4fa854d1f22e4790e6e02011f76976f43327601b6db392c6d8a14b3468a",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\.python-version",
+      "sha256": "8dfda54ba2f66ab3a8ebab460f4338bbeea1fb1e0f85ce06fe3530aa3c64679b",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\01_自然语言处理综述.ipynb",
+      "sha256": "a88c46329a424ed66e77b20373fb8d27f13d35b524f18427bad42cc7d64dde11",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\02_词向量：迈向NLP领域的第1步台阶.ipynb",
+      "sha256": "14096385be50333376d5aa58f7f6cb85e380fc6844276f8cfef2f6aa09c37934",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\03_基于LSTM的情感分类实践.ipynb",
+      "sha256": "52db41b304b9aaae4c7d139cb2f2ede336ade7c82b8c1cf59ef06f8b4cf8f2ff",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\11_自然语言处理综述-PyTorch版.ipynb",
+      "sha256": "f5ea71a38ad9e306dda9b73e5f6e949ea1a5bd5a19d721344c48bbecfcf20da7",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\12_词向量：迈向NLP领域的第1步台阶-PyTorch版.ipynb",
+      "sha256": "db2f3ae6f60030a70b33f2bb7a2d75733389f2ef63898e7b246eb7ea173efbe7",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\13_基于LSTM的情感分类实践-PyTorch版.ipynb",
+      "sha256": "f6bf3ef4bab8c1e72bfa31049fafd99fef9837f5ccfbfab262741a4ac55631d9",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\pyproject.toml",
+      "sha256": "5374ddadc3ed8e6d5cd8f3e836f8b282b9ef1315c40ebe0cbd9158f4e46f2743",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\README.md",
+      "sha256": "47ac7e96f60a8f23c8e795c330944f0b5c1f89142b949ba879504c94575d0344",
+      "modified": true
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\requirements.txt",
+      "sha256": "bbf34f9c5d382c2185eaa77801008c7ce49706bc49a55767846788b963aadbac",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\uv.lock",
+      "sha256": "8b12cd9a38c6dc023ff7daaa1605d31fca12f37262ab0a18bab75e2f1e4032ff",
+      "modified": false
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\vocab.json",
+      "sha256": "f0b8d41394e7c1f856c2e16f3955317a875652b0407ae9d29092e1d82efc6d4b",
+      "modified": false
+    }
+  ],
+  "excluded": [
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\DataSet\\MNIST\\raw\\t10k-images-idx3-ubyte.gz",
+      "reason": "已有内容相同的解压数据文件"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\DataSet\\MNIST\\raw\\t10k-labels-idx1-ubyte.gz",
+      "reason": "已有内容相同的解压数据文件"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\DataSet\\MNIST\\raw\\train-images-idx3-ubyte.gz",
+      "reason": "已有内容相同的解压数据文件"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\DataSet\\MNIST\\raw\\train-labels-idx1-ubyte.gz",
+      "reason": "已有内容相同的解压数据文件"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\main.py",
+      "reason": "仅输出 Hello from 的占位脚本"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\index-Copy1.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\index.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\lednum.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\mnist.jpg",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\padding.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\path.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\test_cat.jpg",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\test_dog.jpg",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\test_led.jpg",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\ResNet\\images\\test_mnist.jpg",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.3深度学习-SentimentAnalysis\\main.py",
+      "reason": "仅输出 Hello from 的占位脚本"
+    },
+    {
+      "path": "2.1深度学习-ImageClassification\\LeNet-5\\images\\padding.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\29755414bb1347bb834bd7835faa1320d91f98cefcd1468e85f8409238994879.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\368c6656e0364563b5d26e0f81b94755dba944a271c14b18bc112c3d6ea6d106.jfif",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\70d8475ed908487680057bf1f2760f10e367e7176acf43ebb380207b748b2377.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\8ba9786060524ccc9a71d1ba1f905f85701282afd36d4df9a46395ec197138e2.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\90513f72043a4ec3bb74560c1014822292211a27c39641f9b9b732b83cdb09bd.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\93476b373dd342d1aae22397aa24c58fc60ab68307fd448189f16c8284723e9d.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\93476b373dd342d1aae22397aa24c58fc60ab68307fd448189f16c8284723e9d2.png",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\d1468aff55cf4e68a504cd876b1e017c4d1cd2f9dc90494eaaff4c80ec03c32e.jfif",
+      "reason": "未被课程文档或代码引用的图片"
+    },
+    {
+      "path": "2.2深度学习-ObjectDetection\\image\\image-20260908224619680.png",
+      "reason": "未被课程文档或代码引用的图片"
+    }
+  ],
+  "missing_original_links": [
+    [
+      "2.2深度学习-ObjectDetection\\基于YOLOv11完成剪刀石头布目标检测.ipynb",
+      "./yolo11_n_600e_coco.yml"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\基于YOLOv11完成剪刀石头布目标检测.ipynb",
+      "./yolo11_s_600e_coco.yml"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\基于YOLOv11完成剪刀石头布目标检测.ipynb",
+      "./yolo11_m_600e_coco.yml"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\基于YOLOv11完成剪刀石头布目标检测.ipynb",
+      "./yolo11_l_600e_coco.yml"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\基于YOLOv11完成剪刀石头布目标检测.ipynb",
+      "./yolo11_x_600e_coco.yml"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\基于YOLOv11完成剪刀石头布目标检测.ipynb",
+      "../../deploy/EXPORT_ONNX_MODEL.md"
+    ]
+  ],
+  "repaired_paths": [
+    [
+      "2.2深度学习-ObjectDetection\\CV基础_PPT内容梳理版.md",
+      "output_11_1.png",
+      "image/output_11_1.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\CV基础_PPT内容梳理版.md",
+      "output_14_0.png",
+      "image/output_14_0.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\CV基础_PPT内容梳理版.md",
+      "output_16_0.png",
+      "image/output_16_0.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\CV基础_PPT内容梳理版.md",
+      "output_12_0.png",
+      "image/output_12_0.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\CV基础_PPT内容梳理版.md",
+      "output_15_1.png",
+      "image/output_15_1.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\YOLO实践",
+      "E:/ai-showcase/2.2深度学习-ObjectDetection/image/output_19_1.png",
+      "image/output_19_1.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\YOLO实践",
+      "E:/ai-showcase/2.2深度学习-ObjectDetection/image/output_21_0.png",
+      "image/output_21_0.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\YOLO实践",
+      "E:/ai-showcase/2.2深度学习-ObjectDetection/image/output_23_1.png",
+      "image/output_23_1.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\YOLO实践",
+      "E:/ai-showcase/2.2深度学习-ObjectDetection/image/output_25_0.png",
+      "image/output_25_0.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\YOLO实践",
+      "E:/ai-showcase/2.2深度学习-ObjectDetection/image/output_29_1.png",
+      "image/output_29_1.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\YOLO实践",
+      "E:/ai-showcase/2.2深度学习-ObjectDetection/image/output_60_0.png",
+      "image/output_60_0.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\YOLO理论",
+      "E:\\ai-showcase\\2.2深度学习-ObjectDetection\\image\\arXiv-2509.25164-v2.0-figure-1.png",
+      "image/arXiv-2509.25164-v2.0-figure-1.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\YOLO理论",
+      "E:\\ai-showcase\\2.2深度学习-ObjectDetection\\image\\arXiv-2509.25164-v2.0-figure-2.png",
+      "image/arXiv-2509.25164-v2.0-figure-2.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\YOLO理论",
+      "E:\\ai-showcase\\2.2深度学习-ObjectDetection\\image\\arXiv-2509.25164-v2.0-figure-3.png",
+      "image/arXiv-2509.25164-v2.0-figure-3.png"
+    ],
+    [
+      "2.2深度学习-ObjectDetection\\YOLO理论",
+      "E:\\ai-showcase\\2.2深度学习-ObjectDetection\\image\\arXiv-2509.25164-v2.0-figure-4.png",
+      "image/arXiv-2509.25164-v2.0-figure-4.png"
+    ]
+  ]
+}

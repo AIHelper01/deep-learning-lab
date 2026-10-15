@@ -1,0 +1,13 @@
+{
+  "mode": "small-sample smoke execution of all code cells",
+  "python": "3.12.11",
+  "group": "pretrained",
+  "results": [
+    {
+      "notebook": "03-sentiment-analysis/pytorch/notebooks/04-pretrained-english-sentiment.ipynb",
+      "status": "passed",
+      "seconds": 66.22,
+      "log": "reports/logs/pretrained-04-pretrained-english-sentiment.log"
+    }
+  ]
+}

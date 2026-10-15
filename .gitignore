@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------
+# Local environments, caches, and editor state
+# ---------------------------------------------------------------------------
+.venv*/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# ---------------------------------------------------------------------------
+# Datasets: never commit teaching data. Every download target and source URL is
+# documented in docs/datasets.md and english/docs/datasets.md instead.
+# ---------------------------------------------------------------------------
+**/data/**
+!**/data/README.md
+datasets/
+**/*.parquet
+**/*.cache
+**/labels.cache
+
+# ---------------------------------------------------------------------------
+# Generated experiment products: weights, plots, run folders, notebooks exports
+# ---------------------------------------------------------------------------
+**/outputs/**
+!**/outputs/README.md
+!**/outputs/**/
+!**/outputs/**/README.md
+*.pt
+*.pth
+*.onnx
+*.torchscript
+*.zip
+*.tar.gz
+
+# Ultralytics recreates its local config and font on first run.
+english/Ultralytics/

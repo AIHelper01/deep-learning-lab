@@ -1,0 +1,265 @@
+{
+  "backup": "E:\\deep-learning-lab-backup-20261015-092728.zip",
+  "files": [
+    {
+      "old": "migration-manifest.json",
+      "new": "docs/migration/original/migration-manifest.json"
+    },
+    {
+      "old": "README.md",
+      "new": "docs/migration/original/README.md"
+    },
+    {
+      "old": "迁移说明.md",
+      "new": "docs/migration/original/迁移说明.md"
+    },
+    {
+      "old": "项目导览.md",
+      "new": "docs/migration/original/项目导览.md"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/.python-version",
+      "new": "01-image-classification/archive/environment/.python-version"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/pyproject.toml",
+      "new": "01-image-classification/archive/environment/pyproject.toml"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/README.md",
+      "new": "01-image-classification/archive/environment/README.md"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/requirements.txt",
+      "new": "01-image-classification/archive/environment/requirements.txt"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/uv.lock",
+      "new": "01-image-classification/archive/environment/uv.lock"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/CV基础_PPT内容梳理版.md",
+      "new": "02-object-detection/lessons/01-cv-overview.md"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/YOLO实践",
+      "new": "02-object-detection/lessons/04-yolo-practice.md"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/YOLO理论",
+      "new": "02-object-detection/lessons/03-yolo-theory.md"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/基于YOLOv11完成剪刀石头布目标检测.ipynb",
+      "new": "02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/理解卷积.md",
+      "new": "02-object-detection/lessons/02-cnn-basics.md"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/.python-version",
+      "new": "03-sentiment-analysis/archive/environment/.python-version"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/01_自然语言处理综述.ipynb",
+      "new": "03-sentiment-analysis/paddle/notebooks/01-nlp-overview.ipynb"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/02_词向量：迈向NLP领域的第1步台阶.ipynb",
+      "new": "03-sentiment-analysis/paddle/notebooks/02-word-embeddings.ipynb"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/03_基于LSTM的情感分类实践.ipynb",
+      "new": "03-sentiment-analysis/paddle/notebooks/03-lstm-sentiment.ipynb"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/11_自然语言处理综述-PyTorch版.ipynb",
+      "new": "03-sentiment-analysis/pytorch/notebooks/01-nlp-overview.ipynb"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/12_词向量：迈向NLP领域的第1步台阶-PyTorch版.ipynb",
+      "new": "03-sentiment-analysis/pytorch/notebooks/02-word-embeddings.ipynb"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/13_基于LSTM的情感分类实践-PyTorch版.ipynb",
+      "new": "03-sentiment-analysis/pytorch/notebooks/03-lstm-sentiment.ipynb"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/pyproject.toml",
+      "new": "03-sentiment-analysis/archive/environment/pyproject.toml"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/README.md",
+      "new": "03-sentiment-analysis/archive/environment/README.md"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/requirements.txt",
+      "new": "03-sentiment-analysis/archive/environment/requirements.txt"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/uv.lock",
+      "new": "03-sentiment-analysis/archive/environment/uv.lock"
+    },
+    {
+      "old": "2.3深度学习-SentimentAnalysis/vocab.json",
+      "new": "03-sentiment-analysis/assets/vocab-reference.json"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/assets/image1.png",
+      "new": "02-object-detection/assets/assets/image1.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/assets/image2.png",
+      "new": "02-object-detection/assets/assets/image2.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/arXiv-2509.25164-v2.0-figure-1.png",
+      "new": "02-object-detection/assets/image/arXiv-2509.25164-v2.0-figure-1.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/arXiv-2509.25164-v2.0-figure-2.png",
+      "new": "02-object-detection/assets/image/arXiv-2509.25164-v2.0-figure-2.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/arXiv-2509.25164-v2.0-figure-3.png",
+      "new": "02-object-detection/assets/image/arXiv-2509.25164-v2.0-figure-3.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/arXiv-2509.25164-v2.0-figure-4.png",
+      "new": "02-object-detection/assets/image/arXiv-2509.25164-v2.0-figure-4.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_11_1.png",
+      "new": "02-object-detection/assets/image/output_11_1.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_12_0.png",
+      "new": "02-object-detection/assets/image/output_12_0.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_14_0.png",
+      "new": "02-object-detection/assets/image/output_14_0.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_14_1.png",
+      "new": "02-object-detection/assets/image/output_14_1.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_15_1.png",
+      "new": "02-object-detection/assets/image/output_15_1.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_16_0.png",
+      "new": "02-object-detection/assets/image/output_16_0.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_17_1.png",
+      "new": "02-object-detection/assets/image/output_17_1.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_19_1.png",
+      "new": "02-object-detection/assets/image/output_19_1.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_21_0.png",
+      "new": "02-object-detection/assets/image/output_21_0.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_23_1.png",
+      "new": "02-object-detection/assets/image/output_23_1.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_25_0.png",
+      "new": "02-object-detection/assets/image/output_25_0.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_29_1.png",
+      "new": "02-object-detection/assets/image/output_29_1.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_4_1.png",
+      "new": "02-object-detection/assets/image/output_4_1.png"
+    },
+    {
+      "old": "2.2深度学习-ObjectDetection/image/output_60_0.png",
+      "new": "02-object-detection/assets/image/output_60_0.png"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/01_LeNet-MNIST手写数字识别分类器-规范版-Copy1.ipynb",
+      "new": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/01_LeNet-MNIST手写数字识别分类器-规范版.ipynb",
+      "new": "01-image-classification/notebooks/01-lenet-mnist.ipynb"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/01_LeNet-MNIST手写数字识别分类器-进阶版.ipynb",
+      "new": "01-image-classification/notebooks/extensions/04-lenet-custom-data.ipynb"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/02_LeNet-CIFAR10分类器.ipynb",
+      "new": "01-image-classification/notebooks/02-lenet-cifar10.ipynb"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/ResNet/01_ResNet-CIFAR-10.ipynb",
+      "new": "01-image-classification/notebooks/03-resnet-cifar10.ipynb"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/ResNet/images/cifar-10.png",
+      "new": "01-image-classification/assets/resnet/cifar-10.png"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/ResNet/images/test_cifar10.png",
+      "new": "01-image-classification/assets/resnet/test_cifar10.png"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/images/cifar-10.png",
+      "new": "01-image-classification/assets/lenet/cifar-10.png"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/images/create_txt.py",
+      "new": "01-image-classification/scripts/create_txt.py"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/images/index.png",
+      "new": "01-image-classification/assets/lenet/index.png"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/images/lednum.png",
+      "new": "01-image-classification/assets/lenet/lednum.png"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/images/mnist.jpg",
+      "new": "01-image-classification/assets/lenet/mnist.jpg"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/images/test_cifar10.png",
+      "new": "01-image-classification/assets/lenet/test_cifar10.png"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/images/test_led.jpg",
+      "new": "01-image-classification/assets/lenet/test_led.jpg"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/images/test_mnist.jpg",
+      "new": "01-image-classification/assets/lenet/test_mnist.jpg"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/DataSet/MNIST/raw/t10k-images-idx3-ubyte",
+      "new": "01-image-classification/data/MNIST/raw/t10k-images-idx3-ubyte"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/DataSet/MNIST/raw/t10k-labels-idx1-ubyte",
+      "new": "01-image-classification/data/MNIST/raw/t10k-labels-idx1-ubyte"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/DataSet/MNIST/raw/train-images-idx3-ubyte",
+      "new": "01-image-classification/data/MNIST/raw/train-images-idx3-ubyte"
+    },
+    {
+      "old": "2.1深度学习-ImageClassification/LeNet-5/DataSet/MNIST/raw/train-labels-idx1-ubyte",
+      "new": "01-image-classification/data/MNIST/raw/train-labels-idx1-ubyte"
+    }
+  ]
+}
