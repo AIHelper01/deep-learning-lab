@@ -1,5 +1,6 @@
 """Check that every delivered notebook has complete, error-free saved execution."""
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -8,13 +9,14 @@ paths = sorted(p for folder in [ROOT/'01-image-classification/notebooks',
                                ROOT/'02-object-detection/notebooks',
                                ROOT/'03-sentiment-analysis/pytorch/notebooks',
                                ROOT/'03-sentiment-analysis/paddle/notebooks']
-               for p in folder.rglob('*.ipynb'))
+               for p in folder.rglob('*.ipynb') if '.ipynb_checkpoints' not in p.parts)
+paths.append(ROOT.parent/'02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb')
 rows, problems = [], []
 for path in paths:
     nb = json.loads(path.read_text(encoding='utf-8'))
     cells = [c for c in nb['cells'] if c['cell_type'] == 'code' and ''.join(c['source']).strip()]
     outputs = [o for c in cells for o in c.get('outputs', [])]
-    relative = path.relative_to(ROOT).as_posix()
+    relative = Path(os.path.relpath(path, ROOT)).as_posix()
     row = {'notebook': relative, 'code_cells': len(cells),
            'executed_cells': sum(c.get('execution_count') is not None for c in cells),
            'output_items': len(outputs),

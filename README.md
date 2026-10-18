@@ -1,26 +1,56 @@
-# 深度学习实验室
+# Deep Learning Lab
 
-围绕图像分类、目标检测与中文情感分析的 Notebook 教学项目。
+English-first deep learning lessons, with a separate Chinese course for Chinese explanations and datasets.
 
-| 模块 | 入口 | 内容 |
+**English (default)** · [中文课程与说明](README.zh-CN.md)
+
+## Start here
+
+From the repository root in PowerShell:
+
+```powershell
+.\start-notebooks.ps1
+```
+
+The default is **English image classification**. The launcher uses the module's locked uv environment and opens JupyterLab. Start with [LeNet on MNIST](english/01-image-classification/notebooks/01-lenet-mnist.ipynb).
+
+```powershell
+.\start-notebooks.ps1 -Module pytorch
+.\start-notebooks.ps1 -Module paddle
+.\start-notebooks.ps1 -Module detection
+.\start-notebooks.ps1 -Language zh-CN -Module vision
+```
+
+English requires uv (or `python -m uv`); first setup may download Python and dependencies. Chinese modules require a separately prepared `.venv`; see [Chinese setup](docs/environment-setup.zh-CN.md). Chinese YOLO26 detection shares the locked English detection environment; historical PaddleYOLO materials remain available for comparison.
+
+## Course
+
+| Module | Default English course | Chinese counterpart |
 |---|---|---|
-| 01 图像分类 | [课程说明](01-image-classification/README.md) | MNIST → CIFAR-10 → ResNet → 自定义数据 |
-| 02 目标检测 | [课程说明](02-object-detection/README.md) | CV 与 CNN 基础 → YOLO → 剪刀石头布检测 |
-| 03 情感分析 | [课程说明](03-sentiment-analysis/README.md) | NLP → 词向量 → LSTM，Paddle/PyTorch 两条路线 |
+| Image classification | [LeNet, MNIST, CIFAR-10, ResNet18, custom folders](english/01-image-classification/README.md) | [图像分类](01-image-classification/README.md) |
+| Object detection | [CNN, YOLO26, rock-paper-scissors detection](english/02-object-detection/README.md) | [CV、CNN 与 YOLO26](02-object-detection/README.md) |
+| Sentiment analysis | [IMDb, embeddings, LSTM, optional DistilBERT](english/03-sentiment-analysis/README.md) | [中文评论、词向量与 LSTM](03-sentiment-analysis/README.md) |
 
-首次学习从 [MNIST 规范版](01-image-classification/notebooks/01-lenet-mnist.ipynb) 开始。完成基础训练流程后，可以分别进入目标检测或情感分析。
+Follow the [learning path](docs/learning-path.md), [environment setup](docs/environment-setup.md), and [dataset guide](docs/datasets.md).
 
-- [学习路线](docs/learning-path.md)
-- [环境准备](docs/environment-setup.md)
-- [数据获取与放置路径](docs/datasets.md)
-- [目录整理记录](docs/migration/reorganization.md)
+## Language compatibility
 
-每个运行环境独立安装依赖，以 Notebook 所在目录作为工作目录。数据放在各模块 data/，训练产物放在 outputs/，讲解图片放在 assets/。
+English is the default documentation and launcher language. English lessons remain in `english/`; the Chinese modules retain their existing root-level paths so existing notebooks, environments, and local data continue to work. Choose a course by language; changing language does not translate a notebook or switch its dataset in place.
 
-当前状态：完成目录及路径整理和静态检查；未安装新环境、下载资源或执行训练。Notebook 历史输出原样保留，不能视为本次运行结果。
+Classification/NLP keep language-specific environments, data processing, vocabularies, and caches. Current detection shares its locked environment and verified dataset; model outputs remain separate by language. Sentiment datasets differ by language, while current detection shares YOLO26n and the official RPS v1 export; see the [adaptation map](english/docs/adaptation-map.md). Chinese runtime validation is incomplete and its saved historical outputs are not evidence of a new successful run.
 
-## 英文版教学课程
+## Validation and maintenance
 
-[english/README.md](english/README.md) 是独立的英文教学版：13 个 Notebook 均已在本机 CPU 上按课堂默认参数逐格执行并保留真实输出，环境由 uv 管理，数据、词表、缓存与训练产物和中文课程完全隔离。其中 YOLO26 检测使用 scripts/fetch_rps.py 抓取的剪刀石头布真实数据集，10 epoch 完整训练耗时 2039 秒（CPU），test mAP50 0.904、mAP50-95 0.524，结果与检测可视化都保存在 Notebook 内。执行证据见 [english/reports/README.md](english/reports/README.md)，改动映射见 [english/docs/adaptation-map.md](english/docs/adaptation-map.md)。
+The English course includes 13 notebooks with saved execution outputs. Current YOLO26n detection uses the official melikeavan RPS v1 export: a real one-epoch CPU run reached test mAP50 0.7266 and mAP50-95 0.4535. This is a full-data execution check; the lesson default remains ten epochs. Historical mirror scores describe a different dataset. GPU is unverified. See [execution evidence and limits](english/reports/README.md).
 
-上一段的当前状态只描述中文课程；英文版的验证结论以 english/reports/ 为准。
+- `english/common/`: shared data preparation.
+- `english/scripts/`: authoring, execution, and validation tools.
+- `english/reports/`: saved validation evidence.
+- `docs/migration/`: historical reorganization records; paths describe that migration.
+- Module `data/` and `outputs/`: local datasets and experiment artifacts, excluded from Git.
+
+Edit delivered notebooks in place to preserve their saved outputs. English authoring scripts are maintenance tools, not the course startup command.
+
+## Dataset formats and inspection
+
+[YOLO / VOC / COCO conversion and Xiaotudui Labs](04-dataset-formats/README.md) is a separate topic alongside model lessons.

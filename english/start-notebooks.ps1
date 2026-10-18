@@ -1,6 +1,9 @@
 param(
     [ValidateSet('paddle', 'pytorch', 'vision', 'detection')]
-    [string]$Module = 'paddle'
+    [string]$Module = 'vision',
+    [ValidateSet('en', 'zh-CN')]
+    [string]$Language = 'en',
+    [switch]$DryRun
 )
 $ErrorActionPreference = 'Stop'
 $modulePaths = @{
@@ -19,10 +22,26 @@ function Invoke-CourseUv {
     }
     if ($LASTEXITCODE -ne 0) { throw 'uv failed. Read the preceding error message.' }
 }
-Push-Location (Join-Path $PSScriptRoot $modulePaths[$Module])
+$moduleRoot = Join-Path $PSScriptRoot $modulePaths[$Module]
+$notebookRoot = Join-Path $moduleRoot 'notebooks'
+if ($Language -eq 'zh-CN') {
+    if ($Module -ne 'detection') { throw 'Only detection shares its environment across language editions.' }
+    $notebookRoot = Join-Path (Split-Path $PSScriptRoot -Parent) '02-object-detection/notebooks'
+}
+if ($DryRun) {
+    [pscustomobject]@{
+        Language = $Language
+        Module = $Module
+        ModuleRoot = $moduleRoot
+        WorkingDirectory = $moduleRoot
+        NotebookRoot = $notebookRoot
+    }
+    return
+}
+Push-Location $moduleRoot
 try {
-    Invoke-CourseUv -UvArguments @('sync', '--locked')
-    Invoke-CourseUv -UvArguments @('run', '--locked', 'jupyter', 'lab', '--notebook-dir', 'notebooks')
+    Invoke-CourseUv -UvArguments @('sync', '--locked', '--default-index', 'https://pypi.org/simple')
+    Invoke-CourseUv -UvArguments @('run', '--locked', '--default-index', 'https://pypi.org/simple', 'jupyter', 'lab', '--notebook-dir', $notebookRoot)
 } finally {
     Pop-Location
 }

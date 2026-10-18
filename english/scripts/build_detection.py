@@ -19,9 +19,11 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     COCO model does not know the three hand-gesture classes until it is fine-tuned.
 
     Prepare a **bounding-box detection** export, not a folder-only classification dataset.
-    Run `02-object-detection\\.venv\\Scripts\\python.exe scripts\\fetch_rps.py` from the
-    `english` directory, as the module README describes, to build the English Rock Paper
-    Scissors dataset this notebook trains on.
+    Prepare the official YOLO26 ZIP with `scripts/fetch_rps.py --archive <zip-path>`.
+    The reference source is melikeavan/rock-paper-scissors-ishcs. The user archive has
+    4,463 images with matching Roboflow v1 metadata; class IDs are visually verified as
+    0=paper, 1=rock, 2=scissors. Original splits and annotations are preserved and recorded
+    in provenance.json. Use RPS_DIRECTORY to isolate it from historical mirror data.
     '''),code(BOOT),code('''
     import json
     MODULE = COURSE / "02-object-detection"
@@ -33,7 +35,7 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     import ultralytics
     from ultralytics.utils import set_logging
     import matplotlib.pyplot as plt
-    from detection_data import prepare_rps
+    from detection_data import prepare_rps, RPS_DIRECTORY, RPS_SOURCE
 
     OUTPUT.mkdir(parents=True, exist_ok=True)
     SMOKE = os.environ.get("COURSE_SMOKE", "0") == "1"
@@ -43,7 +45,7 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     # Ultralytics redraws a per-iteration progress bar; inside a saved notebook every redraw
     # becomes a stored output record, so raise its log level and read the curve from results.png.
     set_logging(verbose=False)
-    torch.set_num_threads(2)
+    torch.set_num_threads(4)
     DEVICE = 0 if torch.cuda.is_available() else "cpu"
     print("Ultralytics version:", ultralytics.__version__)
     print("Device:", DEVICE)
@@ -63,7 +65,7 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
         print("SMOKE TEST ONLY: COCO8 pipeline check; not hand-gesture training.")
     else:
         DATA_CONFIG = OUTPUT / "rps-data.yaml"
-        config, counts = prepare_rps(MODULE / "data" / "rock-paper-scissors", DATA_CONFIG)
+        config, counts = prepare_rps(MODULE / "data" / RPS_DIRECTORY, DATA_CONFIG)
         print("English class mapping:", dict(enumerate(config["names"])))
         print("Validated split sizes:", counts)
         DATA_CONFIG = str(DATA_CONFIG)
@@ -83,9 +85,7 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     weights = OUTPUT / "weights" / "yolo26n.pt"
     weights.parent.mkdir(parents=True, exist_ok=True)
     model = YOLO(str(weights))
-    # Measured on this classroom CPU with two torch threads: one 320-pixel epoch takes about
-    # 205 seconds, while a 640-pixel epoch takes more than twenty minutes. The defaults below
-    # therefore keep a full run near thirty minutes. On a GPU, raise EPOCHS and IMGSZ.
+    # Defaults are teaching parameters; runtime depends on the current dataset and hardware.
     # COURSE_EPOCHS shortens a pipeline check; the classroom default stays at ten epochs.
     EPOCHS = int(os.environ.get("COURSE_EPOCHS", 1 if SMOKE else 10))
     IMGSZ = 64 if SMOKE else 320
@@ -96,7 +96,7 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
                           batch=2 if SMOKE else 8, workers=0, device=DEVICE,
                           seed=42, deterministic=True, verbose=False,
                           project=str(OUTPUT / "runs"),
-                          name="coco8-smoke" if SMOKE else "rps-yolo26n",
+                          name="coco8-smoke" if SMOKE else "rps-ishcs-v1-yolo26n",
                           exist_ok=False, plots=True, cache=False)
     best = Path(model.trainer.best)
     if not best.exists():
@@ -126,7 +126,8 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     print(f"{split} mAP50: {metrics.box.map50:.4f}")
     print(f"{split} mAP50-95: {metrics.box.map:.4f}")
     report = {"smoke_test": SMOKE, "evaluation_split": split,
-              "dataset": "COCO8" if SMOKE else "Rock Paper Scissors",
+              "dataset": "COCO8" if SMOKE else RPS_DIRECTORY,
+              "dataset_provenance": {} if SMOKE else json.loads((MODULE / "data" / RPS_DIRECTORY / "provenance.json").read_text(encoding="utf-8")),
               "map50": float(metrics.box.map50), "map50_95": float(metrics.box.map),
               "ultralytics_version": ultralytics.__version__}
     (OUTPUT / ("smoke-metrics.json" if SMOKE else "rps-metrics.json")).write_text(
@@ -149,7 +150,7 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
         from ultralytics.utils import ASSETS
         sample = ASSETS / "bus.jpg"
     else:
-        directory = MODULE / "data" / "rock-paper-scissors" / "test" / "images"
+        directory = MODULE / "data" / RPS_DIRECTORY / "test" / "images"
         sample = next(p for p in directory.rglob("*") if p.suffix.lower() in {".jpg", ".jpeg", ".png"})
     prediction = trained.predict(source=str(sample), conf=0.25, device=DEVICE,
                                   imgsz=IMGSZ, verbose=False)[0]
@@ -172,8 +173,8 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
 
     Sources: [YOLO26](https://docs.ultralytics.com/models/yolo26/),
     [training API](https://docs.ultralytics.com/modes/train/),
-    [Rock Paper Scissors detection dataset](https://universe.roboflow.com/roboflow-58fyf/rock-paper-scissors-sxsw)
-    through its [CC BY 4.0 mirror](https://huggingface.co/datasets/Xuban/rock-paper-scissors-roboflow).
+    [Rock Paper Scissors detection dataset](https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs)
+    Dataset identity and processing must be recorded in provenance.json; no mirror fallback.
     ''')])
 
 notebook('03-sentiment-analysis/pytorch/notebooks/04-pretrained-english-sentiment.ipynb',[

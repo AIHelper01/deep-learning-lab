@@ -18,7 +18,10 @@ def main():
     parser.add_argument('--group', required=True,
                         choices=['vision','pytorch','paddle','detection'])
     parser.add_argument('--resume', action='store_true')
+    parser.add_argument('--language', choices=['en', 'zh-CN'], default='en')
     args = parser.parse_args()
+    if args.language == 'zh-CN' and args.group != 'detection':
+        parser.error('Only detection supports --language zh-CN in this runner.')
     groups = {
         'vision': sorted([*(ROOT/'01-image-classification/notebooks').rglob('*.ipynb'),
                           *(ROOT/'01-image-classification/archive').rglob('*.ipynb')]),
@@ -26,8 +29,13 @@ def main():
         'paddle': sorted((ROOT/'03-sentiment-analysis/paddle/notebooks').glob('*.ipynb')),
         'detection': sorted((ROOT/'02-object-detection/notebooks').glob('*.ipynb')),
     }
+    groups = {key: [p for p in paths if '.ipynb_checkpoints' not in p.parts]
+              for key, paths in groups.items()}
     reports = ROOT/'reports'
-    report_file = reports/f'{args.group}-executed.json'
+    if args.language == 'zh-CN':
+        groups['detection'] = [ROOT.parent/'02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb']
+    suffix = '' if args.language == 'en' else '-zh-CN'
+    report_file = reports/f'{args.group}{suffix}-executed.json'
     results = json.loads(report_file.read_text(encoding='utf-8'))['results'] if args.resume and report_file.exists() else []
     os.environ['COURSE_SMOKE'] = '0'
     epochs_override = os.environ.get('COURSE_EPOCHS')
@@ -39,8 +47,9 @@ def main():
     # Matplotlib inline produces display_data PNGs in the saved notebook.
     os.environ.pop('MPLBACKEND', None)
     for path in groups[args.group]:
-        relative = path.relative_to(ROOT).as_posix()
-        if args.resume and any(row['notebook']==relative and row['status']=='passed' for row in results):
+        relative = Path(os.path.relpath(path, ROOT)).as_posix()
+        if args.resume and any(row['notebook']==relative and row['status']=='passed'
+                               and row.get('run_mode')==run_mode for row in results):
             continue
         print(f'Executing and saving: {relative}', flush=True)
         nb = nbformat.read(path, as_version=4)
@@ -85,14 +94,14 @@ def main():
             error = f'{type(exc).__name__}: {str(exc)[-3000:]}'
         finally:
             nbformat.write(nb, path)
-        row = {'notebook':relative,'status':status,'seconds':round(time.time()-start,2),
+        row = {'notebook':relative,'status':status,'run_mode':run_mode,'seconds':round(time.time()-start,2),
                'code_cells':sum(c.cell_type=='code' for c in nb.cells),
                'output_items':sum(len(c.get('outputs',[])) for c in nb.cells),
                'png_outputs':sum('image/png' in out.get('data',{}) for c in nb.cells for out in c.get('outputs',[]))}
         if error:
             row['error'] = error
         results = [item for item in results if item['notebook']!=relative] + [row]
-        report_file.write_text(json.dumps({'group':args.group,'python':sys.version.split()[0],
+        report_file.write_text(json.dumps({'group':args.group,'language':args.language,'python':sys.version.split()[0],
                                            'executable':sys.executable,'results':results},indent=2)+'\n',encoding='utf-8')
         print(json.dumps(row),flush=True)
     if any(row['status']!='passed' for row in results):

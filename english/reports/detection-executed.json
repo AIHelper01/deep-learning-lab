@@ -1,14 +1,16 @@
 {
   "group": "detection",
-  "python": "3.12.15",
+  "language": "en",
+  "python": "3.12.12",
   "executable": "E:\\deep-learning-lab\\english\\02-object-detection\\.venv\\Scripts\\python.exe",
   "results": [
     {
       "notebook": "02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
       "status": "passed",
-      "seconds": 2127.07,
+      "run_mode": "Default classroom training parameters",
+      "seconds": 4126.02,
       "code_cells": 7,
-      "output_items": 13,
+      "output_items": 12,
       "png_outputs": 4
     }
   ]

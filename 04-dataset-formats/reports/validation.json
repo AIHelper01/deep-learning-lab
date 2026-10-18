@@ -1,0 +1,27 @@
+{
+  "fixture": {
+    "directions": [
+      "yolo->voc",
+      "yolo->coco",
+      "voc->yolo",
+      "voc->coco",
+      "coco->yolo",
+      "coco->voc"
+    ],
+    "image_count": 2,
+    "includes_empty_image": true,
+    "includes_full_image_box": true,
+    "includes_nested_path": true,
+    "coordinate_tolerance_pixels": 0.001,
+    "overwrite_and_invalid_box_guards": "passed"
+  },
+  "status": "passed",
+  "real_test_split": {
+    "images": 186,
+    "boxes": 204,
+    "checks": [
+      "yolo->voc->yolo",
+      "yolo->coco->yolo"
+    ]
+  }
+}

@@ -1,5 +1,7 @@
 # 图像分类
 
+中文课程 · [English (default)](../english/01-image-classification/README.md) · [中文总览](../README.zh-CN.md)
+
 采用 PyTorch，依次学习数据预处理、训练评估、模型保存与预测。
 
 1. [LeNet-MNIST 主课程](notebooks/01-lenet-mnist.ipynb)：先阅读分步正文，再阅读完整训练系统附录。
@@ -19,4 +21,4 @@
 
 以具体 Notebook 所在目录作为工作目录，包含 extensions 与 archive 中的 Notebook。路径已按各自位置调整。
 
-[环境准备](../docs/environment-setup.md)。旧依赖和锁文件保留在 archive/environment/；新依赖尚未安装验证。教程中的 /workspace 数据复制命令仍是旧环境示例，Windows 下应按实际数据来源准备，不能直接照抄。训练逻辑与历史输出保留。
+[环境准备](../docs/environment-setup.zh-CN.md)。旧依赖和锁文件保留在 archive/environment/；新依赖尚未安装验证。教程中的 /workspace 数据复制命令仍是旧环境示例，Windows 下应按实际数据来源准备，不能直接照抄。训练逻辑与历史输出保留。

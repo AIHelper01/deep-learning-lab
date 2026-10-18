@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-18",
+  "python": "3.12.12",
+  "torch": "2.14.1+cpu",
+  "torchvision": "0.29.1",
+  "ultralytics": "8.4.177",
+  "cuda_available": false,
+  "device": "cpu",
+  "uv": "0.9.10",
+  "source_reference": "https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs/dataset/1",
+  "dataset_directory": "english/02-object-detection/data/rock-paper-scissors-ishcs-v1",
+  "archive_sha256": "2cf65dffbaa92483bbf99e7903f7c23c934ccf57d1cb097a66b7d38eadac0e59"
+}

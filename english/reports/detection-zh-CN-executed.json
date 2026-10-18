@@ -1,0 +1,19 @@
+{
+  "group": "detection",
+  "language": "zh-CN",
+  "python": "3.12.12",
+  "executable": "E:\\deep-learning-lab\\english\\02-object-detection\\.venv\\Scripts\\python.exe",
+  "results": [
+    {
+      "notebook": "../02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
+      "status": "passed",
+      "seconds": 634.85,
+      "code_cells": 7,
+      "output_items": 11,
+      "png_outputs": 4,
+      "run_mode": "1-epoch pipeline check via COURSE_EPOCHS",
+      "source": "https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs/dataset/1",
+      "dataset_directory": "rock-paper-scissors-ishcs-v1"
+    }
+  ]
+}

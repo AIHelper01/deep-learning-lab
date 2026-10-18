@@ -1,5 +1,7 @@
 # 中文情感分析
 
+中文课程 · [English (default)](../english/03-sentiment-analysis/README.md) · [中文总览](../README.zh-CN.md)
+
 学习顺序：NLP 基础 → 词向量 → LSTM 情感分类。选择一套框架完成全部实验，再对照另一套实现。
 
 - [PyTorch 路线](pytorch/README.md)：延续图像分类的框架知识。

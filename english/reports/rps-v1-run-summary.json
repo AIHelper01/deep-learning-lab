@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-18",
+  "source": "https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs/dataset/1",
+  "archive_sha256": "2cf65dffbaa92483bbf99e7903f7c23c934ccf57d1cb097a66b7d38eadac0e59",
+  "class_order": [
+    "paper",
+    "rock",
+    "scissors"
+  ],
+  "splits": {
+    "train": 3939,
+    "validation": 338,
+    "test": 186
+  },
+  "scope": "One actual full-dataset training epoch plus held-out test evaluation and prediction in each language; not COCO8 smoke and not the default ten epochs.",
+  "runs": {
+    "en": {
+      "status": "passed",
+      "epochs": 1,
+      "image_size": 320,
+      "batch": 8,
+      "device": "cpu",
+      "seconds_end_to_end": 683.77,
+      "epoch_seconds": 585.296,
+      "test_map50": 0.726625100288458,
+      "test_map50_95": 0.45354225390338176,
+      "checkpoint": "english/02-object-detection/outputs/runs/rps-ishcs-v1-yolo26n/weights/best.pt",
+      "notebook": "english/02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
+      "saved_figures": 4
+    },
+    "zh-CN": {
+      "status": "passed",
+      "epochs": 1,
+      "image_size": 320,
+      "batch": 8,
+      "device": "cpu",
+      "seconds_end_to_end": 634.85,
+      "epoch_seconds": 590.004,
+      "test_map50": 0.726625100288458,
+      "test_map50_95": 0.45354225390338176,
+      "checkpoint": "02-object-detection/outputs/runs/rps-ishcs-v1-yolo26n/weights/best.pt",
+      "notebook": "02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
+      "saved_figures": 4
+    }
+  },
+  "format_conversion_report": "../../04-dataset-formats/reports/validation.json"
+}

@@ -1,0 +1,38 @@
+{
+  "source": "https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs",
+  "version": 1,
+  "archive_sha256": "2cf65dffbaa92483bbf99e7903f7c23c934ccf57d1cb097a66b7d38eadac0e59",
+  "source_identity_verified": true,
+  "source_class_names": [
+    "0",
+    "1",
+    "2"
+  ],
+  "class_order": [
+    "paper",
+    "rock",
+    "scissors"
+  ],
+  "splits": {
+    "train": {
+      "images": 3939,
+      "boxes": 4610
+    },
+    "val": {
+      "images": 338,
+      "boxes": 400
+    },
+    "test": {
+      "images": 186,
+      "boxes": 204
+    }
+  },
+  "checks": [
+    "Embedded Roboflow workspace/project/version match requested source",
+    "Visual review of labeled crops: 0=paper, 1=rock, 2=scissors",
+    "All normalized box coordinates valid; original annotations and splits retained",
+    "No identical image bytes across train/validation/test"
+  ],
+  "limitations": "Near-duplicate frames or participant overlap in upstream splits are not ruled out.",
+  "review_image": "rps-v1-class-id-review.png"
+}

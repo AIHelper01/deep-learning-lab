@@ -1,7 +1,8 @@
 # Adaptation map
 
 Each source path below is relative to the original project root. The English counterpart
-has the same module-relative path unless stated otherwise. Existing source files were not edited.
+has the same module-relative path unless stated otherwise. This map records the original adaptation. The current Chinese detection lesson has since
+been updated to YOLO26n as well; its older PaddleYOLO notebook remains available as historical material.
 
 | Source case | English counterpart | Changes |
 |---|---|---|
@@ -37,3 +38,7 @@ and requires the PyTorch environment for it; no Chinese ERNIE model is loaded.
   figures, and predictions are visible on opening the files. No accuracy result is
   fabricated or copied from the original course.
 
+
+## Shared current detection lesson
+
+Both languages now use YOLO26n and the official melikeavan RPS v1 YOLO26 export. The Chinese lesson is `02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb` at the repository root; it shares the English detection environment and verified dataset but writes separate outputs. Format conversion and Xiaotudui Labs inspection are a [separate topic](../../04-dataset-formats/README.md).

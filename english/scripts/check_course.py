@@ -15,11 +15,11 @@ def main():
     paths = []
     for directory, folders, files in os.walk(ROOT):
         folders[:] = [name for name in folders if not name.startswith('.venv')
-                      and name not in {'data', 'outputs', '__pycache__', 'logs'}]
+                      and name not in {'data', 'outputs', '__pycache__', 'logs', '.ipynb_checkpoints'}]
         paths.extend(Path(directory) / name for name in files)
     for path in paths:
         relative = path.relative_to(ROOT)
-        if any(part.startswith('.venv') or part in {'data','outputs','__pycache__','logs'}
+        if any(part.startswith('.venv') or part in {'data','outputs','__pycache__','logs','.ipynb_checkpoints'}
                for part in relative.parts):
             continue
         if not path.is_file() or path.suffix not in {'.py','.md','.ipynb','.json','.toml','.txt'}:

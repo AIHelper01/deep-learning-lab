@@ -1,159 +1,96 @@
-"""Fetch the credential-free Rock Paper Scissors YOLO mirror and build the course export.
-
-The mirror ships a LibreYOLO layout (``images/train`` plus ``labels/train``, and no test
-split). This script caches it under ``data/rps-mirror`` and materializes the layout that
-``common/detection_data.prepare_rps`` validates: ``train/``, ``valid/``, and ``test/``, each
-with ``images/`` and ``labels/``, plus a rewritten ``data.yaml``. Re-running is a no-op.
-"""
+"""Prepare the official melikeavan RPS v1 YOLO export; never substitute a mirror."""
 from pathlib import Path
+import argparse
 import hashlib
 import json
 import shutil
 import sys
-
-import requests
+import tempfile
+from zipfile import ZipFile
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "common"))
-
-REPO = "Xuban/rock-paper-scissors-roboflow"
-API = f"https://huggingface.co/api/datasets/{REPO}/tree/main"
-RESOLVE = f"https://huggingface.co/datasets/{REPO}/resolve/main"
-CACHE = ROOT / "02-object-detection/data/rps-mirror"
-EXPORT = ROOT / "02-object-detection/data/rock-paper-scissors"
-SOURCES = ["https://universe.roboflow.com/rock-paper-scissors-2/rock-paper-scissors-bwev7",
-           f"https://huggingface.co/datasets/{REPO}"]
+sys.path.insert(0, str(ROOT / 'common'))
+from detection_data import (RPS_WORKSPACE, RPS_PROJECT, RPS_DIRECTORY,
+                            RPS_SOURCE, RPS_VERSION, prepare_rps)
+DESTINATION = ROOT / '02-object-detection/data' / RPS_DIRECTORY
 
 
-def mirror_files():
-    """List every file in the mirror, following the Hub pagination header."""
-    rows = []
-    response = requests.get(API, params={"recursive": "true", "paginate": "true"}, timeout=120)
-    while True:
-        rows.extend(response.json())
-        link = response.headers.get("Link", "")
-        if 'rel="next"' not in link:
-            return [row for row in rows if row["type"] == "file"]
-        response = requests.get(link.split(">")[0].strip("< "), timeout=120)
-
-
-def download(remote, target, size=None):
-    """Fetch one mirror file unless a cached copy of the listed size already exists."""
-    target.parent.mkdir(parents=True, exist_ok=True)
-    if target.exists() and size is not None and int(size) == target.stat().st_size:
-        return False
-    response = requests.get(f"{RESOLVE}/{remote}", timeout=300)
-    response.raise_for_status()
-    target.write_bytes(response.content)
-    return True
-
-
-def adopt_legacy_cache():
-    """Reuse a mirror-layout folder left behind by an earlier manual download."""
-    if (EXPORT / "images" / "train").is_dir() and not CACHE.exists():
-        CACHE.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(EXPORT), str(CACHE))
-        print("Reused the earlier mirror download as the cache.")
-
-
-def cache_mirror():
-    """Download the mirror in its original layout, skipping complete files."""
-    fetched = 0
-    files = mirror_files()
-    for row in files:
-        if download(row["path"], CACHE / row["path"], row.get("size")):
-            fetched += 1
-    print(f"Cached mirror files: {len(files)} ({fetched} fetched now).")
-
-
-def mirror_names():
-    """Read the mirror class-name order, which the validator must keep unchanged."""
-    cached = CACHE / "data.yaml"
-    if not cached.exists():
-        raise RuntimeError("The mirror cache has no data.yaml to read class names from.")
-    names = yaml.safe_load(cached.read_text(encoding="utf-8"))["names"]
-    if isinstance(names, dict):
-        names = [names[key] for key in sorted(names)]
-    return [str(name).strip().lower() for name in names]
-
-
-def clamp_label(source, target):
-    """Clip out-of-image bounding-box edges into the image, keeping the visible extent.
-
-    The mirror carries at least one annotation whose box reaches 1.48 in normalized
-    coordinates. The course validator rejects such rows, and the part of a box outside the
-    image is not something a detector can learn, so the visible part is kept.
-    """
-    lines, clamped = [], 0
-    for line in source.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        category, x, y, width, height = line.split()
-        x, y, width, height = map(float, (x, y, width, height))
-        left, top = max(x - width / 2, 0.0), max(y - height / 2, 0.0)
-        right, bottom = min(x + width / 2, 1.0), min(y + height / 2, 1.0)
-        if (left, top, right, bottom) != (x - width / 2, y - height / 2, x + width / 2,
-                                          y + height / 2):
-            clamped += 1
-        width, height = max(right - left, 1e-4), max(bottom - top, 1e-4)
-        lines.append(f"{category} {(left + right) / 2:.6f} {(top + bottom) / 2:.6f} "
-                     f"{width:.6f} {height:.6f}")
-    target.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
-    return clamped
-
-
-def build_export():
-    """Materialize the train/valid/test course layout from the cached mirror."""
-    train = sorted((CACHE / "images" / "train").glob("*"))
-    if not train:
-        raise RuntimeError("The mirror cache has no training images.")
-    # The mirror has no test split, so hold half of its validation images back by the
-    # deterministic order of the SHA-256 of each filename.
-    ranked = sorted((CACHE / "images" / "val").glob("*"),
-                    key=lambda path: hashlib.sha256(path.name.encode("utf-8")).hexdigest())
-    if len(ranked) < 2:
-        raise RuntimeError("The mirror validation split is too small to hold a test split out.")
-    splits = {"train": train, "valid": ranked[:len(ranked) // 2], "test": ranked[len(ranked) // 2:]}
-    copied = clamped = 0
-    for split, images in splits.items():
-        for image in images:
-            label = CACHE / "labels" / ("train" if split == "train" else "val") / f"{image.stem}.txt"
-            if not label.exists():
-                raise RuntimeError(f"Missing annotation in the mirror cache: {label.name}")
-            (EXPORT / split / "images").mkdir(parents=True, exist_ok=True)
-            (EXPORT / split / "labels").mkdir(parents=True, exist_ok=True)
-            image_target = EXPORT / split / "images" / image.name
-            if not image_target.exists():
-                shutil.copy2(image, image_target)
-                copied += 1
-            # Labels are rewritten on every run so re-clustering never leaves stale rows.
-            clamped += clamp_label(label, EXPORT / split / "labels" / label.name)
-    names = mirror_names()
-    (EXPORT / "data.yaml").write_text(
-        f"path: {EXPORT.as_posix()}\n"
-        "train: train/images\nvalid: valid/images\ntest: test/images\n"
-        "names:\n" + "".join(f"  {index}: {name}\n" for index, name in enumerate(names)),
-        encoding="utf-8")
-    (EXPORT / "provenance.json").write_text(json.dumps({
-        "sources": SOURCES, "license": "CC BY 4.0", "class_order": names,
-        "splits": {split: len(images) for split, images in splits.items()},
-        "holdout_rule": "Mirror validation images sorted by SHA-256 of filename; the first "
-                        "half became valid and the second half became test.",
-        "boxes_clamped_into_image": clamped}, indent=2) + "\n",
-        encoding="utf-8")
-    print("Course export:", {split: len(images) for split, images in splits.items()},
-          f"({copied} images copied, {clamped} label rows clamped).")
+def prepare_export(source, destination=DESTINATION, class_names=None, archive_sha256=None):
+    """Validate source identity and labels, then import to a fresh isolated directory."""
+    source, destination = Path(source).resolve(), Path(destination).resolve()
+    if destination.exists():
+        raise FileExistsError(f'Refusing to overwrite or merge an existing export: {destination}')
+    if source == destination or source in destination.parents or destination in source.parents:
+        raise ValueError('Source and destination must be separate, non-nested directories.')
+    config = yaml.safe_load((source / 'data.yaml').read_text(encoding='utf-8'))
+    origin = config.get('roboflow', {})
+    if (origin.get('workspace') != RPS_WORKSPACE or origin.get('project') != RPS_PROJECT
+            or str(origin.get('version')) != str(RPS_VERSION)):
+        raise ValueError(f'Export metadata must identify {RPS_SOURCE}/dataset/{RPS_VERSION}.')
+    raw = config['names']
+    if isinstance(raw, dict):
+        raw = {int(k): v for k, v in raw.items()}
+        if sorted(raw) != [0, 1, 2]:
+            raise ValueError('Expected consecutive source class IDs 0, 1, 2.')
+        raw = [raw[i] for i in range(3)]
+    if len(raw) != 3:
+        raise ValueError('Expected three source categories.')
+    names = [str(n).strip().lower() for n in (class_names if class_names is not None else raw)]
+    if len(names) != 3 or set(names) != {'rock', 'paper', 'scissors'}:
+        raise ValueError('Inspect labeled samples, then pass --class-names with the verified '
+                         'English names for IDs 0 1 2, in that order. No mapping is assumed.')
+    config['names'] = names
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='rps-import-', dir=destination.parent) as temporary:
+        staged = Path(temporary) / 'export'
+        shutil.copytree(source, staged)
+        (staged / 'data.yaml').write_text(yaml.safe_dump(config, sort_keys=False), encoding='utf-8')
+        prepared, counts = prepare_rps(staged, Path(temporary) / 'validated.yaml')
+        for key in ('train', 'val', 'test'):
+            config[key] = prepared[key]
+        config['path'] = str(destination)
+        (staged / 'data.yaml').write_text(yaml.safe_dump(config, sort_keys=False), encoding='utf-8')
+        (staged / 'provenance.json').write_text(json.dumps({
+            'source': RPS_SOURCE, 'version': RPS_VERSION, 'source_identity_verified': True,
+            'archive_sha256': archive_sha256,
+            'version_url': f'{RPS_SOURCE}/dataset/{RPS_VERSION}',
+            'source_class_names': [str(n) for n in raw], 'class_order': names, 'splits': counts,
+            'transformations': 'Verified semantic names assigned at original IDs; '
+                               'annotations and source splits preserved without clipping.',
+            'license': origin.get('license'),
+        }, indent=2) + '\n', encoding='utf-8')
+        staged.rename(destination)
+    return prepared['names'], counts
 
 
 def main():
-    adopt_legacy_cache()
-    cache_mirror()
-    build_export()
-    from detection_data import prepare_rps
-    prepared, counts = prepare_rps(EXPORT, ROOT / "02-object-detection/outputs/rps-data.yaml")
-    print("Validator accepted:", dict(enumerate(prepared["names"])), counts)
+    parser = argparse.ArgumentParser(description=__doc__, epilog=(
+        f'Download a YOLO export from {RPS_SOURCE}/dataset/{RPS_VERSION} first. '
+        'Roboflow may require sign-in; numeric gesture labels must be visually verified.'))
+    inputs = parser.add_mutually_exclusive_group(required=True)
+    inputs.add_argument('--archive', type=Path, help='Official Roboflow YOLO26 ZIP export.')
+    inputs.add_argument('--export-dir', type=Path, help='Unpacked official YOLO export.')
+    parser.add_argument('--class-names', nargs=3, metavar=('ID0', 'ID1', 'ID2'),
+                        help='Verified names rock/paper/scissors in original numeric ID order.')
+    args = parser.parse_args()
+    if args.archive:
+        with tempfile.TemporaryDirectory() as temporary:
+            folder = Path(temporary).resolve()
+            with ZipFile(args.archive) as zipped:
+                for item in zipped.infolist():
+                    if not (folder / item.filename).resolve().is_relative_to(folder):
+                        raise ValueError('Unsafe archive path.')
+                zipped.extractall(folder)
+            names, counts = prepare_export(folder, class_names=args.class_names,
+                archive_sha256=hashlib.sha256(args.archive.read_bytes()).hexdigest())
+    else:
+        names, counts = prepare_export(args.export_dir, class_names=args.class_names)
+    print('Dataset reference:', RPS_SOURCE)
+    print('Class mapping:', dict(enumerate(names)))
+    print('Validated splits:', counts)
+    print('Course data:', DESTINATION)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

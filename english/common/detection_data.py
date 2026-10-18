@@ -5,6 +5,12 @@ import math
 import re
 import yaml
 
+RPS_WORKSPACE = 'melikeavan'
+RPS_PROJECT = 'rock-paper-scissors-ishcs'
+RPS_VERSION = 1
+RPS_SOURCE = f'https://universe.roboflow.com/{RPS_WORKSPACE}/{RPS_PROJECT}'
+RPS_DIRECTORY = f'{RPS_PROJECT}-v{RPS_VERSION}'
+
 
 def prepare_coco8(data_dir, output_yaml):
     """Prepare the official tiny detection fixture inside the course data directory."""
@@ -33,16 +39,25 @@ def prepare_coco8(data_dir, output_yaml):
     return output_yaml
 
 
-def prepare_rps(export_dir, output_yaml):
+def prepare_rps(export_dir, output_yaml, *, require_course_source=True):
     root = Path(export_dir).resolve()
     source = root / 'data.yaml'
     if not source.exists():
         raise FileNotFoundError(
             'Export the Rock Paper Scissors object-detection dataset in YOLO format '
-            'and place data.yaml, train/, valid/, and test/ under data/rock-paper-scissors. '
+            f'from {RPS_SOURCE}/dataset/{RPS_VERSION} and prepare it with scripts/fetch_rps.py. '
             'See the dataset instructions in this module README. '
             'A classification-only image collection is not sufficient.')
     config = yaml.safe_load(source.read_text(encoding='utf-8'))
+    if require_course_source:
+        origin = config.get('roboflow', {})
+        official = (origin.get('workspace') == RPS_WORKSPACE
+                    and origin.get('project') == RPS_PROJECT
+                    and str(origin.get('version')) == str(RPS_VERSION))
+        if not official:
+            raise ValueError(f'The English and Chinese YOLO26 courses require '
+                             f'{RPS_SOURCE}/dataset/{RPS_VERSION}. '
+                             'Missing or different Roboflow metadata; historical and unverified archives are not accepted.')
     raw = config['names']
     if isinstance(raw, dict):
         raw = {int(key): value for key, value in raw.items()}

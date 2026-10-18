@@ -1,6 +1,33 @@
+# Execution evidence
+
+## Current official RPS v1 runs (2026-10-18)
+
+Both English and Chinese YOLO26n notebooks completed actual one-epoch CPU training
+on all 3,939 source training images, followed by the independent 186-image test split.
+Both reached **test mAP50 0.7266 and mAP50-95 0.4535** with seed 42.
+English execution took **683.77 seconds** end to end; Chinese took **634.85 seconds**.
+The measured training epoch times were 585.296 and 590.004 seconds respectively.
+This is `COURSE_EPOCHS=1`, not COCO8 smoke mode and not the default ten-epoch lesson.
+GPU was unavailable and has not been verified.
+
+- [Run summary and checkpoint paths](rps-v1-run-summary.json).
+- [English execution](detection-executed.json) and [Chinese execution](detection-zh-CN-executed.json).
+- [Source verification](rps-v1-data-checks.json), [class review](rps-v1-class-id-review.png),
+  [runtime environment](rps-v1-environment.json), and [installed packages](uv-detection-v1-environment.txt).
+- Each notebook retains four figures: epoch metrics, test confusion matrix, test predictions,
+  and a single-image prediction. A one-epoch plot contains one point per series, not an
+  established learning trend; individual images can still have missed detections.
+- [Format conversion validation](../../04-dataset-formats/reports/validation.json): 186 images,
+  204 boxes, exact image-byte preservation and box round trips within 0.001 pixel tolerance.
+
+The previous mirror execution report is `detection-legacy-executed.json` and its original
+notebook is in `02-object-detection/archive/`. Historical 0.904/0.524 metrics below must
+not be attributed to official v1. Current Chinese detection is YOLO26n; the old external
+PaddleYOLO materials remain for historical comparison.
+
 # Local notebook execution
 
-## Current uv run (2026-10-15)
+## Historical uv run (2026-10-15)
 
 The English notebooks are executed through real Jupyter kernels on this Windows PC.
 Outputs are saved directly into each `.ipynb`, including logs, metrics, predictions,

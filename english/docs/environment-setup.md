@@ -2,22 +2,29 @@
 
 ## Recommended: uv with Python 3.12
 
-The locally validated projects pin Python 3.12.15. PyTorch is 2.14.1, torchvision is
+Historical image/NLP runs pin Python 3.12.15; the current shared English/Chinese
+detection project pins locally available Python 3.12.12. PyTorch is 2.14.1, torchvision is
 0.29.1, and PaddlePaddle is 3.3.1, the stable versions checked for this update.
 Each module has its own `.venv` and generated `uv.lock`.
 
-From the project root in PowerShell, start the Paddle notebooks with:
+From the project root in PowerShell, start the default English image-classification course with:
 
 ```powershell
-.\english\start-notebooks.ps1 -Module paddle
+.\start-notebooks.ps1
 ```
 
-Use `-Module pytorch`, `-Module vision`, or `-Module detection` for the other modules.
+Use `-Module pytorch`, `-Module paddle`, or `-Module detection` for the other modules.
+The existing `english/start-notebooks.ps1` also defaults to `vision`.
+For the separate Chinese course, see the [language-aware launcher guide](../../docs/environment-setup.md).
 The launcher uses `uv` when available on PATH and otherwise uses `python -m uv`.
-Before the detection class, prepare the hand-gesture data with
-`02-object-detection\.venv\Scripts\python.exe scripts\fetch_rps.py` from this directory;
-see the [dataset guide](datasets.md). Detection then runs the real experiment like the other
-modules, so set `COURSE_SMOKE=1` only for a deliberate COCO8 pipeline check.
+It explicitly selects the PyPI index recorded by the lockfile, avoiding a machine-specific
+default mirror changing the locked resolution. Direct uv commands may also need
+`--default-index https://pypi.org/simple` if your global default differs.
+Before detection, import the official v1 YOLO26 archive as shown in the
+[dataset guide](datasets.md#rock-paper-scissors-detection). The importer requires
+`--archive` (or an unpacked `--export-dir`) and the verified class mapping.
+The Chinese detection launcher uses this same locked environment with a separate
+notebook/output directory. Set `COURSE_SMOKE=1` only for a deliberate COCO8 check.
 
 From an individual module directory, the equivalent commands are:
 

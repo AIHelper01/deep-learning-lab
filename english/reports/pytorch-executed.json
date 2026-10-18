@@ -1,12 +1,14 @@
 {
   "group": "pytorch",
-  "python": "3.12.15",
+  "language": "en",
+  "python": "3.12.12",
   "executable": "E:\\deep-learning-lab\\english\\03-sentiment-analysis\\pytorch\\.venv\\Scripts\\python.exe",
   "results": [
     {
       "notebook": "03-sentiment-analysis/pytorch/notebooks/01-nlp-overview.ipynb",
       "status": "passed",
-      "seconds": 14.62,
+      "run_mode": "Default classroom training parameters",
+      "seconds": 15.46,
       "code_cells": 3,
       "output_items": 3,
       "png_outputs": 0
@@ -14,15 +16,17 @@
     {
       "notebook": "03-sentiment-analysis/pytorch/notebooks/02-word-embeddings.ipynb",
       "status": "passed",
-      "seconds": 74.4,
+      "run_mode": "Default classroom training parameters",
+      "seconds": 206.74,
       "code_cells": 7,
-      "output_items": 7,
+      "output_items": 9,
       "png_outputs": 1
     },
     {
       "notebook": "03-sentiment-analysis/pytorch/notebooks/03-lstm-sentiment.ipynb",
       "status": "passed",
-      "seconds": 443.99,
+      "run_mode": "Default classroom training parameters",
+      "seconds": 744.07,
       "code_cells": 8,
       "output_items": 12,
       "png_outputs": 1
@@ -30,9 +34,10 @@
     {
       "notebook": "03-sentiment-analysis/pytorch/notebooks/04-pretrained-english-sentiment.ipynb",
       "status": "passed",
-      "seconds": 76.5,
+      "run_mode": "Default classroom training parameters",
+      "seconds": 53.48,
       "code_cells": 3,
-      "output_items": 5,
+      "output_items": 7,
       "png_outputs": 0
     }
   ]

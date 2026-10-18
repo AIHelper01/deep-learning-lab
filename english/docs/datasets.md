@@ -1,5 +1,9 @@
 # Dataset preparation and provenance
 
+[Dataset introductions and source catalog](../../docs/datasets.md) · [Chinese guide](../../docs/datasets.zh-CN.md)
+
+Paths in this page are relative to `english/`, unless a command explicitly starts from the repository root.
+
 ## Image classification
 
 MNIST contains handwritten digit images. Labels are displayed as zero through nine.
@@ -13,6 +17,9 @@ counts and class IDs are checked. The mirror preserves the official 50,000/10,00
 The custom-folder lesson exports
 MNIST images to English-named folders and writes CSV indexes; it does not require LEDNUM.
 The course keeps data in `01-image-classification/data/` and outputs separately.
+MNIST is 28 x 28 grayscale with 60,000/10,000 source training/test images; CIFAR-10
+is 32 x 32 RGB with 50,000/10,000. These are source sizes, not classroom subset sizes.
+The English CIFAR directory is lowercase `cifar10/`; MNIST uses `MNIST/`.
 
 Sources: [MNIST loader](https://docs.pytorch.org/vision/stable/generated/torchvision.datasets.MNIST.html),
 [CIFAR-10 dataset](https://www.cs.toronto.edu/~kriz/cifar.html).
@@ -22,7 +29,9 @@ Sources: [MNIST loader](https://docs.pytorch.org/vision/stable/generated/torchvi
 Source: [Stanford Large Movie Review Dataset](https://ai.stanford.edu/~amaas/data/sentiment/),
 Maas et al. (2011), *Learning Word Vectors for Sentiment Analysis*.
 
-Both frameworks read the same prepared IMDb JSONL files. The preparation helper:
+The source contains 25,000 labeled training and 25,000 labeled test reviews.
+Both frameworks read the same prepared IMDb JSONL files under
+`03-sentiment-analysis/data/imdb/`, with `0=negative` and `1=positive` labels. The preparation helper:
 
 1. Downloads the official archive, retaining its source URL and SHA-256.
 2. Reads only labeled review files and removes HTML tags.
@@ -43,70 +52,52 @@ negation words. Do not reuse the original Chinese vocabulary or Chinese weights.
 
 ## Rock Paper Scissors detection
 
-Use the [Roboflow Rock Paper Scissors object-detection dataset](https://universe.roboflow.com/roboflow-58fyf/rock-paper-scissors-sxsw).
-Export a chosen version in a YOLO bounding-box format compatible with Ultralytics.
-An account may be required by the provider. Retain the export's license and attribution
-files, and record its version before distributing a classroom bundle.
+Both English and Chinese YOLO26n lessons use [melikeavan / Rock-Paper-Scissors v1](https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs/dataset/1).
+The supplied official `Rock-Paper-Scissors.v1i.yolo26.zip` matches that project and version.
+Source metadata and license come from its `data.yaml` and READMEs. Its original splits are
+3,939 training / 338 validation / 186 test images, with 4,610 / 400 / 204 boxes.
+Labeled crop inspection confirms numeric class order: 0=paper, 1=rock, 2=scissors.
 
-Unpack the export under `02-object-detection/data/rock-paper-scissors/`:
-
-```text
-rock-paper-scissors/
-├── data.yaml
-├── train/images/ and train/labels/
-├── valid/images/ and valid/labels/
-└── test/images/ and test/labels/
-```
-
-### Download addresses
-
-- Upstream provider, account and API key may be required:
-  <https://universe.roboflow.com/roboflow-58fyf/rock-paper-scissors-sxsw>
-- Credential-free YOLO mirror on Hugging Face Hub:
-  <https://huggingface.co/datasets/Xuban/rock-paper-scissors-roboflow> (CC BY 4.0, mirrored
-  from <https://universe.roboflow.com/rock-paper-scissors-2/rock-paper-scissors-bwev7>).
-  Measured on 2026-10-15: `images/train` 1,485 files and `images/val` 100 files, 43.8 MB in
-  total, with `labels/train` and `labels/val` matching the images one to one. In the 903
-  mirrored label files checked here, only class IDs 0, 1, and 2 occur, in normalized
-  `class_id x_center y_center width height` form.
-
-`scripts/fetch_rps.py` turns the mirror into the layout above and is the supported way to
-prepare this dataset:
+From the repository root, after preparing the detection environment:
 
 ```powershell
-02-object-detection\.venv\Scripts\python.exe scripts\fetch_rps.py
+.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
-The script caches the mirror in `data/rps-mirror`, so a re-run only fetches what is missing,
-then builds `data/rock-paper-scissors` and validates it with `prepare_rps`. Three differences
-between the mirror and the course contract are handled there and recorded in
-`data/rock-paper-scissors/provenance.json`:
+The importer extracts safely into a temporary directory, checks official v1 metadata,
+assigns verified names without changing IDs, validates all annotations and exact split
+duplicates, and writes a fresh isolated `02-object-detection/data/rock-paper-scissors-ishcs-v1/`
+under `english/`. It refuses overwriting existing data. Keep the export's original
+READMEs and CC BY 4.0 attribution. The supplied archive SHA-256 is
+`2cf65dffbaa92483bbf99e7903f7c23c934ccf57d1cb097a66b7d38eadac0e59`.
 
-- The mirror layout is `images/train` plus `labels/train`, so the script rewrites
-  `data.yaml` and copies each split into `<split>/images` and `<split>/labels`.
-- The mirror has no test split. Its 100 validation images are ordered by the SHA-256 of the
-  filename, and the first half becomes `valid/` while the second half becomes `test/`, so the
-  reported test numbers are a real held-out set rather than the training distribution.
-- One mirrored annotation reaches normalized coordinate 1.48, outside the image. The course
-  validator rejects it, so the script clips box edges to the image bounds and keeps the
-  visible extent. One of the 2,133 annotation rows is affected.
+```text
+rock-paper-scissors-ishcs-v1/
+  data.yaml
+  provenance.json
+  README.dataset.txt
+  README.roboflow.txt
+  train/images/ and train/labels/
+  valid/images/ and valid/labels/
+  test/images/ and test/labels/
+```
 
-Only per-file downloads work on the mirror
-(`https://huggingface.co/datasets/Xuban/rock-paper-scissors-roboflow/resolve/main/<path>`):
-the usual `/archive/main.zip` endpoint returns HTTP 404, so there is no single-zip download.
-Retain the CC BY 4.0 attribution in any classroom bundle. The resulting splits are 1,485
-training images with 1,973 boxes, 50 validation images with 80 boxes, and 50 test images with
-80 boxes. The delivered notebook run uses the classroom ten-epoch setting on this export and
-reached test mAP50 0.904 and mAP50-95 0.524 in about 35 CPU minutes; `COURSE_EPOCHS=1` repeats
-the same path as a short check with a much lower score.
+Both languages share this read-only dataset and detection environment, with separate
+output directories. The course validator requires the matching official source;
+it does not silently accept the previous mirror or flattened VOC package. Near-duplicate
+or video leakage in the upstream split is still a limitation; exact duplicate checks do
+not detect it. No boxes or splits were modified in the official v1 export.
 
-The course checks the three English class names, preserves their ID order, checks label
-coordinates, and detects exact image duplicates across splits. A labeled classification
-dataset without bounding boxes cannot replace this export. Exported images may contain
-incidental scene text; inspect representative samples before teaching.
+The historical mirror-trained notebook is in `02-object-detection/archive/` and its
+execution report is `reports/detection-legacy-executed.json`. `scripts/fetch_rps_legacy.py`
+is an explicitly historical helper. Their mAP values are not results on the current data.
 
-`COURSE_SMOKE=1` uses COCO8 only for a YOLO26 software check. It is never reported as a
-completed hand-gesture experiment. COCO8 uses English object labels.
+Conversion is a separate [YOLO / VOC / COCO topic](../../04-dataset-formats/README.md),
+with runnable conversions and Xiaotudui Labs viewer steps. Training consumes YOLO directly.
+
+`COURSE_SMOKE=1` deliberately switches to [COCO8](https://docs.ultralytics.com/datasets/detect/coco8/)
+in `02-object-detection/data/coco8/`: eight images, four training and four validation.
+This is a software check, not hand-gesture evaluation.
 
 ## Optional pretrained English model
 
