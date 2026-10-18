@@ -15,4 +15,4 @@ For Chinese explanations and Chinese sentiment data, use the [Chinese course](..
 
 ## Parallel data topic
 
-Study [YOLO / VOC / COCO conversion and Xiaotudui Labs inspection](../04-dataset-formats/README.md) independently of the model-training route.
+Study [YOLO / VOC / COCO conversion and Xiaotudui Labs inspection](../english/02-object-detection/dataset-formats/README.md) independently of the model-training route.

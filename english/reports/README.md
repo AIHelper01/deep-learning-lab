@@ -1,120 +1,111 @@
 # Execution evidence
 
-## Current official RPS v1 runs (2026-10-18)
+Every number here comes from a real Jupyter kernel run with outputs saved into the notebook, and every number is
+labelled with its run mode. Two environments produced the evidence:
 
-Both English and Chinese YOLO26n notebooks completed actual one-epoch CPU training
-on all 3,939 source training images, followed by the independent 186-image test split.
-Both reached **test mAP50 0.7266 and mAP50-95 0.4535** with seed 42.
-English execution took **683.77 seconds** end to end; Chinese took **634.85 seconds**.
-The measured training epoch times were 585.296 and 590.004 seconds respectively.
-This is `COURSE_EPOCHS=1`, not COCO8 smoke mode and not the default ten-epoch lesson.
-GPU was unavailable and has not been verified.
+- **Current:** the single classroom environment outside the repository, `~/env_dl_uv` (Python 3.12.12 on an Apple
+  Silicon Mac: MPS for PyTorch and Ultralytics, CPU for Paddle), which produced all Chinese lessons plus the English
+  and Chinese detection runs on 2026-10-18.
+- **Earlier:** four per-module uv environments on a Windows machine, which produced the English image-classification
+  and NLP evidence (their reports record `E:\...` executables).
 
-- [Run summary and checkpoint paths](rps-v1-run-summary.json).
-- [English execution](detection-executed.json) and [Chinese execution](detection-zh-CN-executed.json).
-- [Source verification](rps-v1-data-checks.json), [class review](rps-v1-class-id-review.png),
-  [runtime environment](rps-v1-environment.json), and [installed packages](uv-detection-v1-environment.txt).
-- Each notebook retains four figures: epoch metrics, test confusion matrix, test predictions,
-  and a single-image prediction. A one-epoch plot contains one point per series, not an
-  established learning trend; individual images can still have missed detections.
-- [Format conversion validation](../../04-dataset-formats/reports/validation.json): 186 images,
-  204 boxes, exact image-byte preservation and box round trips within 0.001 pixel tolerance.
+MPS is verified on that machine; CUDA is unverified everywhere. `data/` and `outputs/` are excluded from Git, so the
+datasets must be staged in the DataSet folder and then copied in before a run (see the module `data/README.md` files,
+which give both the `cp` command and the download command, and the [dataset guide](../docs/datasets.md)).
 
-The previous mirror execution report is `detection-legacy-executed.json` and its original
-notebook is in `02-object-detection/archive/`. Historical 0.904/0.524 metrics below must
-not be attributed to official v1. Current Chinese detection is YOLO26n; the old external
-PaddleYOLO materials remain for historical comparison.
+## Vehicle counting, traffic flow (2026-10-18, MPS)
 
-# Local notebook execution
+Both language courses ran the full lesson on the official
+[vehicle-counting-tksu5 v4](https://universe.roboflow.com/vehicle-counting-rtvul/vehicle-counting-tksu5/dataset/4)
+export with the classroom defaults (YOLO26n, 5 epochs at `imgsz=320`, `seed=42`), then evaluated the 196-image test
+split and counted vehicles in images and in a tracked video.
 
-## Historical uv run (2026-10-15)
+| Course | Notebook | Seconds | Code cells | Outputs | Figures |
+|---|---|---:|---:|---:|---:|
+| English | `notebooks/02-yolo26-vehicle-counting.ipynb` | 940.21 | 13 | 19 | 7 |
+| Chinese | `../../02-object-detection/notebooks/02-yolo26-vehicle-counting.ipynb` | 940.47 | 13 | 19 | 7 |
 
-The English notebooks are executed through real Jupyter kernels on this Windows PC.
-Outputs are saved directly into each `.ipynb`, including logs, metrics, predictions,
-and embedded PNG charts. Open the notebooks to inspect the actual results.
+English run, measured on MPS: validation mAP50 per epoch 0.4933, 0.5645, 0.6207, 0.6368, 0.6407 (cumulative
+182/361/539/717/896 s); test precision 0.7308, recall 0.6444, mAP50 0.6983, mAP50-95 0.4071. Zero-shot counting
+error 4.33 vehicles per image over six test images, and 3.75 over the four images also used for the fine-tuned
+comparison; fine-tuned counting error 4.00 over those same four images. Line-crossing tracking on the generated
+clip: 4 forward, 2 backward, 6 unique vehicles out of 10 tracks, 40.0 vehicles per minute against 6 ground-truth
+crossings - a deviation of exactly 0, although one spawned `car` was reported as a `bus`. The Chinese run reaches
+the same conclusions on the same data; its own numbers are in
+[the Chinese narrative report](../../02-object-detection/lessons/05-vehicle-counting-run-report.md).
 
-- Python 3.12.15, managed by uv 0.13.1.
-- PyTorch 2.14.1 and torchvision 0.29.1.
-- PaddlePaddle 3.3.1.
-- Ultralytics 8.4.177 with YOLO26.
-- Four separate module environments, each with its own `uv.lock`.
+- Narrative report with every quoted output and figure: [English course](../02-object-detection/lessons/05-vehicle-counting-run-report.md),
+  [Chinese course](../../02-object-detection/lessons/05-vehicle-counting-run-report.md).
+- [English execution](detection-executed.json), [Chinese execution](detection-zh-CN-executed.json).
+- Run folders (`runs/vehicle-counting-v4-yolo26n-*`) hold weights, curves, confusion matrices and `metrics.json`.
+- Five epochs at 320 pixels did not converge: validation mAP50 was still rising. These are the numbers of *this*
+  classroom run, not the ceiling of the dataset. Raising `imgsz` and `epochs` is the first lever.
 
-Image classification and NLP use the default classroom parameters, not smoke mode.
-This means 3 epochs for classification and 5 for LSTM, using the documented course
-subsets rather than the entire source datasets. ResNet uses pretrained ImageNet weights.
-The optional DistilBERT notebook uses the downloaded English sentiment model.
-Detection runs the same way on the real Rock Paper Scissors export: ten epochs at 320 pixels,
-2127 CPU seconds, test mAP50 0.904, and mAP50-95 0.524. The rerun reproduced the same metrics,
-which is the expected result under `seed=42` and `deterministic=True`. Set `COURSE_EPOCHS=1` to
-repeat the same path as a short check.
-These are CPU teaching runs, not GPU benchmarks or accuracy guarantees.
+## Rock-paper-scissors detection
 
-## Evidence
+Both courses ran the delivered lesson with its classroom defaults - YOLO26n, **ten epochs** at `imgsz=320`,
+`batch=8`, `seed=42` - on Apple silicon MPS inside `~/env_dl_uv`, over all 3,939 training images.
 
-- `*-executed.json`: per-notebook status, elapsed time, output counts, and environment.
-- `saved-output-checks.json`: every nonempty code cell executed, no saved errors,
-  and embedded image counts.
-- `uv-*-environment.txt`: actual installed packages for all four environments.
-- `static-checks.json`: notebook syntax/schema, English-language scan, and local links.
-- `original-course-integrity.json`: hash comparison of all 93 original course files.
+| Course | Seconds | test mAP50 | test mAP50-95 |
+|---|---:|---:|---:|
+| English | 1161.8 | **0.9410** | **0.7467** |
+| Chinese | 1163.89 | **0.9410** | **0.7467** |
 
-Launch Jupyter using `english/start-notebooks.ps1` from the project root; see
-[environment setup](../docs/environment-setup.md). The execution script is
-`english/scripts/execute_and_save.py`; run it with the corresponding module's uv
-Python and `--group vision`, `pytorch`, `paddle`, or `detection`. Use `--resume` to
-skip previously successful notebooks in that group's report. The authoring scripts
-refuse to overwrite notebooks containing saved execution.
+Same data, same seed, same defaults, so the two languages agree; the single-image test prediction is `paper` at
+0.874 confidence in both. Rows live in [detection-executed.json](detection-executed.json) and
+[detection-zh-CN-executed.json](detection-zh-CN-executed.json).
+- [Run summary and checkpoints](rps-v1-run-summary.json), [source verification](rps-v1-data-checks.json),
+  [class review](rps-v1-class-id-review.png), [runtime environment](rps-v1-environment.json),
+  [installed packages](uv-detection-v1-environment.txt).
+- Each notebook keeps four figures: epoch metrics, test confusion matrix, test predictions, single-image prediction.
+- MPS reaches the Ultralytics determinism switch, whose `index_put_with_accumulate_mps` kernel has no deterministic
+  implementation. The two languages matched to four decimals here; a rerun matches in aggregate, not bit-for-bit.
+- [Format conversion validation](dataset-formats-validation.json): 186 images, 204 boxes, exact
+  image-byte preservation, box round trips within 0.001 pixel tolerance.
+- The earlier mirror execution is `detection-legacy-executed.json` and its notebook is in
+  `02-object-detection/archive/`. Its 0.904/0.524 metrics belong to a different dataset package and must never be
+  attributed to official v1.
 
-## Leftover downloads
+## Image classification and NLP (classroom defaults, not smoke mode)
 
-`01-image-classification/data/cifar10` still holds unreferenced CIFAR-10 download fragments
-from an earlier fetch implementation: `cifar-10-python.tar.gz`, `cifar-10-python.tar.part`, and
-`download-parts/` (41 files, 59.9 MB in total). The delivered loader only reads the checksummed
-`train-00000-of-00001.parquet` and `test-00000-of-00001.parquet` files with their provenance
-records, so deleting the fragments is safe.
+Three epochs for classification, five for LSTM, documented course subsets, ResNet18 with pretrained ImageNet weights,
+and the optional pretrained sentiment checkpoint per language.
 
-```powershell
-Remove-Item -LiteralPath english\01-image-classification\data\cifar10\cifar-10-python.tar.gz -Force
-Remove-Item -LiteralPath english\01-image-classification\data\cifar10\cifar-10-python.tar.part -Force
-Remove-Item -LiteralPath english\01-image-classification\data\cifar10\download-parts -Recurse -Force
-```
+| Notebook | English seconds | Chinese seconds |
+|---|---:|---:|
+| vision 01 LeNet + MNIST | 18.69 | 4.88 |
+| vision 02 LeNet + CIFAR-10 | 46.57 | 7.20 |
+| vision 03 ResNet18 + CIFAR-10 | 748.30 | 564.99 |
+| vision 04 custom folders | 74.85 | 5.81 |
+| vision archive `01-lenet-mnist-copy1` | 79.51 | 36.23 |
+| pytorch 01 NLP overview | 15.46 | 1.39 |
+| pytorch 02 word embeddings | 206.74 | 6.39 |
+| pytorch 03 LSTM sentiment | 744.07 | 63.04 |
+| pytorch 04 pretrained sentiment | 53.48 (SST-2) | 8.53 (JD Chinese) |
+| paddle 01 NLP overview | 16.95 | 1.44 |
+| paddle 02 word embeddings | 84.84 | 6.90 |
+| paddle 03 LSTM sentiment | 121.36 | 24.77 |
 
-The Rock Paper Scissors export under `02-object-detection/data` is complete and in use, and
-`02-object-detection/data/rps-mirror` is the mirror cache that `scripts\fetch_rps.py` keeps so
-re-runs only fetch missing files. Both stay out of Git through the existing `**/data/**` rule.
+The Chinese NLP lessons are not a translation of IMDb: they train on ChnSentiCorp with jieba segmentation, so the
+runs are shorter and the accuracies are not comparable across languages. English LSTM reached test accuracy 0.736;
+the Chinese LSTM reached 0.838 on its own split.
 
-`02-object-detection\outputs\runs` keeps one delivered run, `rps-yolo26n-5` with its
-`evaluation-8` folder, and the notebook renders the training curves, the normalized confusion
-matrix, and a validation prediction crop from those folders. Ultralytics progress-bar redraws
-are suppressed, so the saved notebook holds 13 output records rather than two thousand. Every
-other folder there is superseded: the timing probes, the stopped and one-epoch attempts, and the
-historical COCO8 smoke runs with their evaluation folders. None of it is tracked by Git. Delete
-the superseded folders with:
+- [vision](vision-executed.json) · [vision zh-CN](vision-zh-CN-executed.json) ·
+  [pytorch](pytorch-executed.json) · [pytorch zh-CN](pytorch-zh-CN-executed.json) ·
+  [paddle](paddle-executed.json) · [paddle zh-CN](paddle-zh-CN-executed.json).
 
-```powershell
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\coco8-smoke -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\coco8-smoke-2 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\coco8-smoke-3 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\coco8-smoke-4 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-2 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-3 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-4 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-5 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-6 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\evaluation-7 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\progress-probe -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\rps-yolo26n -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\rps-yolo26n-2 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\rps-yolo26n-3 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\rps-yolo26n-4 -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\timing-probe -Recurse -Force
-Remove-Item -LiteralPath english\02-object-detection\outputs\runs\timing-probe-320 -Recurse -Force
-```
+## Evidence and limits
 
-## Earlier smoke checks
-
-The `*-smoke.json`, `logs/`, and `windows-*-environment.txt` files are historical
-small-sample checks using Python 3.12.11, PyTorch 2.8.0+cpu, and Paddle 3.2.2.
-They are retained for troubleshooting and are superseded by the current uv execution
-reports. The historical random-weight ResNet smoke score is not a transfer-learning result.
+- `*-executed.json`: per-notebook status, elapsed time, output counts, run mode and interpreter. Reports accumulate;
+  `--notebook` runs no longer drop the other rows.
+- `saved-output-checks.json`: 28 delivered notebooks on both sides, every non-empty code cell executed, no saved
+  errors, embedded image counts.
+- `docs-asset-checks.json`: repository-wide local link reachability, zero remote images, `assets/<name>-<index>`
+  naming, bilingual `docs/` pairing. `legacy_external_links` counts links inside archived PaddleYOLO courseware,
+  which is read-only history.
+- `uv-*-environment.txt`: installed packages per environment. `static-checks.json`: notebook schema, English-language
+  scan, local links. `original-course-integrity.json`: hash comparison of all 93 original course files.
+- `COURSE_SMOKE=1` (COCO8, random ResNet weights) and `COURSE_EPOCHS=<n>` change what a score means; never mix them
+  with the default-parameter results above.
+- Detection runs use Apple silicon MPS and the other lessons run in the same `~/env_dl_uv` interpreter on one
+  machine. These are teaching runs, not benchmarks or accuracy guarantees.

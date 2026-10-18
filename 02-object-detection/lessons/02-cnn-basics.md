@@ -18,7 +18,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/2fd7d49a775e4e9c93293d49ecd60cdc734bf44c0eb24b4cb57a34f059b25824" width = "1000"></center>
+<center><img src="../assets/lessons-27.jpg" width = "1000"></center>
 <center><br>图1：卷积神经网络经典结构</br></center>
 
 <br></br>
@@ -56,7 +56,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/be34aad0b53543d9bc0759a76893c435a778306d78e848e9b21952bd18aa48b3" width = "700"></center>
+<center><img src="../assets/lessons-28.png" width = "700"></center>
 <center><br>图2：卷积计算过程</br></center>
 
 <br></br>
@@ -125,7 +125,7 @@ $$W_{out} = W - k_w + 1$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/01d311ec2c65435f85059953a84ec7ea8ef2fd236452450e912346a7da201c5f" width = "700"></center>
+<center><img src="../assets/lessons-29.png" width = "700"></center>
 <center><br>图3：图形填充 </br></center>
 
 <br></br>
@@ -148,7 +148,7 @@ $$W_{out} = W + 2p_w - k_w + 1$$
 **图4** 中卷积核每次滑动一个像素点，这是步幅为1的特殊情况。**图9** 是步幅为2的卷积过程，卷积核在图片上移动时，每次移动大小为2个像素点。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/afdae9af02fc45eabdd9663ee6474e4da86675fa1f444c78aea0e21539b32cf0" width = "800"></center>
+<center><img src="../assets/lessons-30.png" width = "800"></center>
 <center><br>图4：步幅为2的卷积过程 </br></center>
 
 <br></br>
@@ -171,7 +171,7 @@ $$W_{out} = \frac{100 + 2 - 3}{2} + 1 = 50$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/1021536721524f4d8f4c1aefa89693c4b0fd388f21a347b583d413b3ac41241b" width = "800"></center>
+<center><img src="../assets/lessons-31.png" width = "800"></center>
 <center><br>图5：感受野为3×3的卷积 </br></center>
 
 <br></br>
@@ -180,7 +180,7 @@ $$W_{out} = \frac{100 + 2 - 3}{2} + 1 = 50$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/ac14916db81e40a48a25ab894d7a95e33fa0eece71d44a55af7bffab462fb7a7" width = "800"></center>
+<center><img src="../assets/lessons-32.png" width = "800"></center>
 <center><br>图6：感受野为5×5的卷积 </br></center>
 
 <br></br>
@@ -202,7 +202,7 @@ $$W_{out} = \frac{100 + 2 - 3}{2} + 1 = 50$$
 1. 将这$C_{in}$个通道的计算结果相加，得到的是一个形状为$H_{out}\times{W_{out}}$的二维数组。
    <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/92186667b8424a7ca781b22de6766fa62e31512cf2e24e33a4b796541177c9dd" width = "800"></center>
+<center><img src="../assets/lessons-33.png" width = "800"></center>
 <center><br>图7：多输入通道计算过程 </br></center>
 
 <br></br>
@@ -222,7 +222,7 @@ $$W_{out} = \frac{100 + 2 - 3}{2} + 1 = 50$$
 
 ------
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/cf1fbddc141349e4b7aaeade9a201b78a16d249e069c4f8aaeb77e0ea1a95c31" width = "800"></center>
+<center><img src="../assets/lessons-34.png" width = "800"></center>
 <center><br>图8：多输出通道计算过程 </br></center>
 
 <br></br>
@@ -234,7 +234,7 @@ $$W_{out} = \frac{100 + 2 - 3}{2} + 1 = 50$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/60760d68001c40d6a6c500b17f57d8deae7b5921631b4b6b896b057b904d24b1" width = "800"></center>
+<center><img src="../assets/lessons-35.jpg" width = "800"></center>
 <center><br>图9：批量操作 </br></center>
 
 <br></br>
@@ -286,7 +286,7 @@ $x_{\mathrm{left}}\neq x_{\mathrm{right}} \Rightarrow |y|>0$
 
 因此，在输出的特征图中，**黑白分界线位置会产生明显响应，而其他平坦区域的响应接近 0**。
 
-![png](../assets/image/output_11_1.png)
+![png](../assets/lessons-42.png)
 
 ------
 
@@ -310,7 +310,7 @@ $y= 8x_{\mathrm{center}} - \sum_{i=1}^{8}x_{\mathrm{neighbor},i}$
 
 所以，这类卷积核能够**突出图像中亮度变化明显的位置，从而提取物体的边缘和轮廓信息**。
 
-![png](../assets/image/output_14_0.png)
+![png](../assets/lessons-44.png)
 
 ------
 
@@ -330,7 +330,7 @@ $y=\frac{1}{25}\sum_{i=1}^{25}x_i$
 
 因此，均值卷积可以起到**平滑图像、降低局部噪声**的作用，但与此同时，也会使图像中的**边缘和细节变得模糊**。
 
-![png](../assets/image/output_16_0.png)
+![png](../assets/lessons-46.png)
 
 **这三个案例实际上展示了卷积最核心的思想：**
 
@@ -349,7 +349,7 @@ $[1,0,-1]$ 关注左右像素的变化，可以检测边界；拉普拉斯卷积
 池化层的作用是进行特征选择，降低特征数量，从而减少参数数量。由于池化之后特征图会变得更小，如果后面连接的是全连接层，可以有效地减小神经元的个数，节省存储空间并提高计算效率。如 **图10** 所示，将一个$2\times 2$的区域池化成一个像素点。通常有两种方法，平均池化和最大池化。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/a6aa47e61daa44629bc787e489e303a2029f7654ba3349098cf7bf2c8c05eaa5" width = "600"></center>
+<center><img src="../assets/lessons-36.jpg" width = "600"></center>
 <center><br>图10：池化 </br></center>
 
 <br></br>
@@ -381,7 +381,7 @@ $$W_{out} = \frac{W}{2}$$
 前面介绍的网络结构中，普遍使用Sigmoid函数做激活函数。在神经网络发展的早期，Sigmoid函数和Tanh函数用的比较多，而目前用的较多的激活函数是ReLU。这是因为Sigmoid函数和tanh函数在反向传播过程中，具有软饱和性，一但落入饱和区梯度就会接近0，容易造成梯度消失，让我们仔细观察Sigmoid函数图形。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/56c693f93293460498f0b37a7472ee037c7224c4bcb4435c8bf0450ce7abc6cc" width = "600"></center>
+<center><img src="../assets/lessons-37.jpg" width = "600"></center>
 <center><br>图11：Sigmoid函数图形 </br></center>
 
 <br></br>
@@ -389,7 +389,7 @@ $$W_{out} = \frac{W}{2}$$
 Tanh激活函数图形如 **图12** 所示：
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/05510f67623b4dfb83460e30ed4084fac10d2759f3084fd0a57b1394ad4f09e8" width = "600"></center>
+<center><img src="../assets/lessons-38.jpg" width = "600"></center>
 <center><br>图12：Tanh函数图形 </br></center>
 
 <br></br>
@@ -398,7 +398,7 @@ ReLU激活函数图形如 **图13** 所示：
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/bce1d67a67414749b0653e0c9fbf7314f22b9e01878548dbad1bb72ed3335a57" width = "600"></center>
+<center><img src="../assets/lessons-39.jpg" width = "600"></center>
 <center><br>图13：ReLU函数图形 </br></center>
 
 <br></br>
@@ -425,7 +425,7 @@ BatchNorm的变体包括：层归一化(Layer Normalization, LN)、组归一化(
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/5aec4af01eb8451eb1695657a0bbc7e20181d7cd7e7b4136b04f9b2dedaca5c8" width = "800"></center>
+<center><img src="../assets/lessons-40.png" width = "800"></center>
 <center><br>图14：归一化方法</br></center>
 
 <br></br>
@@ -444,7 +444,7 @@ BatchNorm的变体包括：层归一化(Layer Normalization, LN)、组归一化(
 **图15** 是Dropout示意图，左边是完整的神经网络，右边是应用了Dropout之后的网络结构。应用Dropout之后，会将标了$\times$的神经元从网络中删除，让它们不向后面的层传递信号。在学习过程中，丢弃哪些神经元是随机决定，因此模型不会过度依赖某些神经元，能一定程度上抑制过拟合。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/65f8e486bae94b349d296f83663849759b4cbf777d4e4f96a81bae47a93c3e77" width = "700"></center>
+<center><img src="../assets/lessons-41.jpg" width = "700"></center>
 <center><br>图15 Dropout示意图 </br></center>
 
 <br></br>

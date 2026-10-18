@@ -8,6 +8,10 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 CJK = re.compile(r'[\u3400-\u9fff\uf900-\ufaff]')
+# The course runner must be able to write Chinese runtime cells into the mirrored Chinese
+# course, so Chinese literals are allowed in that one tool (recorded here on purpose).
+BILINGUAL_TOOLS = {'scripts/execute_and_save.py'}
+
 
 
 def main():
@@ -27,7 +31,7 @@ def main():
         if not relative.as_posix().isascii():
             problems.append(f'Non-ASCII filename: {relative}')
         text = path.read_text(encoding='utf-8')
-        if CJK.search(text):
+        if CJK.search(text) and relative.as_posix() not in BILINGUAL_TOOLS:
             problems.append(f'CJK text in course source: {relative}')
         checked += 1
         markdown = []

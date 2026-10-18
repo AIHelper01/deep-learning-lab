@@ -19,6 +19,7 @@ Thumbs.db
 # ---------------------------------------------------------------------------
 **/data/**
 !**/data/README.md
+!**/data/README.zh-CN.md
 datasets/
 **/*.parquet
 **/*.cache

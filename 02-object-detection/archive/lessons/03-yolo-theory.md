@@ -13,7 +13,7 @@
 者认为生物视觉产生于距今约5亿年前寒武纪。寒武纪生物大爆发的原因一直是个未解之谜，不过可以肯定的是在寒武纪动物具有了视觉能力，捕食者可以更容易地发现猎物，被捕食者也可以更早的发现天敌的位置。视觉能力加剧了猎手和猎物之间的博弈，也催生出更加激烈的生存演化规则。视觉系统的形成有力地推动了食物链的演化，加速了生物进化过程，是生物发展史上重要的里程碑。经过几亿年的演化，目前人类的视觉系统已经具备非常高的复杂度和强大的功能，人脑中神经元数目达到了1000亿个，这些神经元通过网络互相连接，这样庞大的视觉神经网络使得我们可以很轻松的观察周围的世界，如 **图** 所示。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/70d8475ed908487680057bf1f2760f10e367e7176acf43ebb380207b748b2377" width = "600"></center>
+<center><img src="../assets/lessons-2.png" width = "600"></center>
 <center><br>图：人类视觉感知</br></center>
 
 <br></br>
@@ -26,7 +26,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/93476b373dd342d1aae22397aa24c58fc60ab68307fd448189f16c8284723e9d" width = "500"></center>
+<center><img src="../assets/lessons-3.png" width = "500"></center>
 <center><br>图2：计算机视觉技术在各领域的应用</br></center>
 
 <br></br>
@@ -38,7 +38,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/90513f72043a4ec3bb74560c1014822292211a27c39641f9b9b732b83cdb09bd" width = "500"></center>
+<center><img src="../assets/lessons-4.png" width = "500"></center>
 <center><br>图3：计算机视觉技术在各领域的应用</br></center>
 
 <br></br>
@@ -62,7 +62,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/d1468aff55cf4e68a504cd876b1e017c4d1cd2f9dc90494eaaff4c80ec03c32e" width = "500"></center>
+<center><img src="../assets/lessons-1.jpg" width = "500"></center>
 <center><br>图4：行人检测和NMS合并重复区域示意图</br></center>
 
 <br></br>
@@ -77,7 +77,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/29755414bb1347bb834bd7835faa1320d91f98cefcd1468e85f8409238994879" width = "500"></center>
+<center><img src="../assets/lessons-5.png" width = "500"></center>
 <center><br>图5：早期的卷积神经网络处理图像任务示意</br></center>
 
 <br></br>
@@ -97,7 +97,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/368c6656e0364563b5d26e0f81b94755dba944a271c14b18bc112c3d6ea6d106" width = "500"></center>
+<center><img src="../assets/lessons-6.jpg" width = "500"></center>
 <center><br>图6：图像分类示意图</br></center>
 
 <br></br>
@@ -109,7 +109,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/8ba9786060524ccc9a71d1ba1f905f85701282afd36d4df9a46395ec197138e2" width = "500"></center>
+<center><img src="../assets/lessons-7.png" width = "500"></center>
 <center><br>图8：图像分类算法</br></center>
 
 ****
@@ -120,13 +120,13 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/3d28910e9b3c486fbdaf68ddcee5913621c412777735461eb8f2a43701b1d1f4" width = "500"></center>
+<center><img src="../assets/lessons-8.jpg" width = "500"></center>
 <center><br>图9：目标检测示意图</br></center>
 
 <br></br>
 
 
-![png](../../assets/image/output_11_1.png)
+![png](../assets/lessons-42.png)
     
 
 
@@ -134,7 +134,7 @@
 目标检测主要分为Anchor based(两阶段和单阶段)、Anchor free模型、Transformer系列如 **图10** 所示：
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/2f00530f68d049b78f85701ab31850885a03d6b54a594a8b93489ea932a8f7d7" width = "500"></center>
+<center><img src="../assets/lessons-9.png" width = "500"></center>
 <center><br>图10：目标检测算法</br></center>
 
 <br></br>
@@ -150,7 +150,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/a54407135cbb4267b060d8d106bc6cf0e261a91ec2c04c44bc1993fbf1edb8cc" width = "500"></center>
+<center><img src="../assets/lessons-10.jpg" width = "500"></center>
 <center><br>图11：图像分割示意图</br></center>
 
 <br></br>
@@ -158,7 +158,7 @@
 人像分割示例：
 
 
-![png](../../assets/image/output_14_1.png)
+![png](../assets/lessons-65.png)
     
 
 
@@ -166,7 +166,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/3eeb81b4280a470c967e57fed189ed238d2cf0fe27fa48d9a8f5480862c89bbe" width = "200"></center>
+<center><img src="../assets/lessons-11.png" width = "200"></center>
 <center>图12：图像分割算法</center>
 
 <br></br>
@@ -180,7 +180,7 @@ OCR（Optical Character Recognition，光学字符识别）是计算机视觉重
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/682ac28a5bb14ae0b330d96ae17f89eb10f29d217a5449f380c203ff2ead7d3e" width = "500"></center>
+<center><img src="../assets/lessons-12.jpg" width = "500"></center>
 <center><br>图13：文字识别示意图</br></center>
 
 <br></br>
@@ -188,19 +188,19 @@ OCR（Optical Character Recognition，光学字符识别）是计算机视觉重
 OCR进行文字识别示例：
 
 
-![png](../../assets/image/output_17_1.png)
+![png](../assets/lessons-66.png)
 
 
 OCR实现过程如果分为检测和识别2个模型，我们称之为两阶段算法，除此之外还有端到端算法，使用一个模型同时完成文字检测和文字识别。文档分析能够帮助开发者更好地完成文档理解相关任务，通常OCR算法和文档分析算法结合使用。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/e652e800b4434dd68c18a06a312681b601bc7954832e448d8fff7dd8c02fa1e8" width = "500"></center>
+<center><img src="../assets/lessons-13.png" width = "500"></center>
 <center><br>图14：OCR算法</br></center>
 
 其中，版面分析识别文档中的图像、文本、标题和表格等区域，然后对文本、标题等区域进行OCR的检测识别，如 **图15(a)** 所示。表格识别对文档中表格区域进行结构化分析，最终结果输出Excel文件，如 **图15(b)** 所示。关键信息提取算法，将每个检测到的文本区域分类为预定义的类别，如订单ID、发票号码，金额等，如 **图15(c)** 所示。文档视觉问答DocVQA包括语义实体识别SER 和关系抽取RE任务。基于SER任务，可以完成对图像中的文本识别与分类；基于RE任务，可以完成对图象中的文本内容的关系提取，如判断问题对(pair)，如 **图15(d)** 所示。PP-Structure包含了版面分析、表格识别、视觉问答等功能，支持模型训练、测试等，如 **图15(e)** 所示。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/e13c60192f7c4d31a27791ebdaa2b547137bd6c344014d949d933884126aba6b" width = "500"></center>
+<center><img src="../assets/lessons-14.jpg" width = "500"></center>
 <center><br>图15：文档分析算法</br></center>
 
 ****
@@ -214,7 +214,7 @@ OCR实现过程如果分为检测和识别2个模型，我们称之为两阶段�
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/4de45b562f794553bbc8c3e156d347e412fdb60941d14afa9f99d775887865ca" width = "500"></center>
+<center><img src="../assets/lessons-15.jpg" width = "500"></center>
 <center><br>图16：视频分析子任务示意图</br></center>
 
 <br></br>
@@ -223,7 +223,7 @@ OCR实现过程如果分为检测和识别2个模型，我们称之为两阶段�
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/b35b11be907c473e9c686e54afc927d2ffcd4e6998704c17940395c9e17e6f55" width = "500"></center>
+<center><img src="../assets/lessons-16.gif" width = "500"></center>
 <center><br>图17：待分类视频</br></center>
 
 <br></br>
@@ -239,7 +239,7 @@ OCR实现过程如果分为检测和识别2个模型，我们称之为两阶段�
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/82242dd655b04bea95e89305545143a8630efec8b361413f882874d37da836fe" width = "900"></center>
+<center><img src="../assets/lessons-17.png" width = "900"></center>
 <center><br>图18：视频分析算法</br></center>
 
 <br></br>
@@ -252,7 +252,7 @@ GAN的全称是Generative Adversarial Networks，即生成对抗网络，由Ian 
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/9fc39a8a1f194845ac8258af0132f6b6817129e83c4f455386c11f68e711e207" width = "500"></center>
+<center><img src="../assets/lessons-18.jpg" width = "500"></center>
 <center><br>图19：图像生成示意图</br></center>
 
 <br></br>
@@ -262,7 +262,7 @@ GAN的全称是Generative Adversarial Networks，即生成对抗网络，由Ian 
 人像动漫化示例：
 
 
-![png](../../assets/image/output_23_1.png)
+![png](../assets/lessons-69.png)
     
 
 
@@ -270,7 +270,7 @@ GAN的全称是Generative Adversarial Networks，即生成对抗网络，由Ian 
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/230089b457b04f6e8b3899e3c62f49872f3061c642014ba7bbaf1ee4eed9a9cb" width = "800"></center>
+<center><img src="../assets/lessons-19.png" width = "800"></center>
 <center><br>图20：图像生成算法</br></center>
 
 <br></br>
@@ -332,7 +332,7 @@ DiT
 3. **SVM 分类**：判断候选区域中是否包含行人；
 4. **NMS**：去除重复检测框，保留最终检测结果。
 
-![传统行人检测流程](https://ai-studio-static-online.cdn.bcebos.com/d1468aff55cf4e68a504cd876b1e017c4d1cd2f9dc90494eaaff4c80ec03c32e)
+![传统行人检测流程](../assets/lessons-1.jpg)
 
 其中：
 
@@ -436,7 +436,7 @@ CNN 的不同层可以逐步学习不同层次的视觉信息：
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/2fd7d49a775e4e9c93293d49ecd60cdc734bf44c0eb24b4cb57a34f059b25824" width = "1000"></center>
+<center><img src="../assets/lessons-20.jpg" width = "1000"></center>
 <center><br>图1：卷积神经网络经典结构</br></center>
 
 <br></br>
@@ -474,7 +474,7 @@ CNN 的不同层可以逐步学习不同层次的视觉信息：
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/be34aad0b53543d9bc0759a76893c435a778306d78e848e9b21952bd18aa48b3" width = "700"></center>
+<center><img src="../assets/lessons-21.png" width = "700"></center>
 <center><br>图2：卷积计算过程</br></center>
 
 <br></br>
@@ -543,7 +543,7 @@ $$W_{out} = W - k_w + 1$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/01d311ec2c65435f85059953a84ec7ea8ef2fd236452450e912346a7da201c5f" width = "700"></center>
+<center><img src="../assets/lessons-22.png" width = "700"></center>
 <center><br>图3：图形填充 </br></center>
 
 <br></br>
@@ -566,7 +566,7 @@ $$W_{out} = W + 2p_w - k_w + 1$$
 **图4** 中卷积核每次滑动一个像素点，这是步幅为1的特殊情况。**图9** 是步幅为2的卷积过程，卷积核在图片上移动时，每次移动大小为2个像素点。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/afdae9af02fc45eabdd9663ee6474e4da86675fa1f444c78aea0e21539b32cf0" width = "800"></center>
+<center><img src="../assets/lessons-23.png" width = "800"></center>
 <center><br>图4：步幅为2的卷积过程 </br></center>
 
 <br></br>
@@ -589,7 +589,7 @@ $$W_{out} = \frac{100 + 2 - 3}{2} + 1 = 50$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/1021536721524f4d8f4c1aefa89693c4b0fd388f21a347b583d413b3ac41241b" width = "800"></center>
+<center><img src="../assets/lessons-24.png" width = "800"></center>
 <center><br>图5：感受野为3×3的卷积 </br></center>
 
 <br></br>
@@ -598,7 +598,7 @@ $$W_{out} = \frac{100 + 2 - 3}{2} + 1 = 50$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/ac14916db81e40a48a25ab894d7a95e33fa0eece71d44a55af7bffab462fb7a7" width = "800"></center>
+<center><img src="../assets/lessons-25.png" width = "800"></center>
 <center><br>图6：感受野为5×5的卷积 </br></center>
 
 <br></br>
@@ -620,7 +620,7 @@ $$W_{out} = \frac{100 + 2 - 3}{2} + 1 = 50$$
 1. 将这$C_{in}$个通道的计算结果相加，得到的是一个形状为$H_{out}\times{W_{out}}$的二维数组。
    <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/92186667b8424a7ca781b22de6766fa62e31512cf2e24e33a4b796541177c9dd" width = "800"></center>
+<center><img src="../assets/lessons-26.png" width = "800"></center>
 <center><br>图7：多输入通道计算过程 </br></center>
 
 <br></br>
@@ -640,7 +640,7 @@ $$W_{out} = \frac{100 + 2 - 3}{2} + 1 = 50$$
 
 ------
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/cf1fbddc141349e4b7aaeade9a201b78a16d249e069c4f8aaeb77e0ea1a95c31" width = "800"></center>
+<center><img src="../assets/lessons-27.png" width = "800"></center>
 <center><br>图8：多输出通道计算过程 </br></center>
 
 <br></br>
@@ -652,7 +652,7 @@ $$W_{out} = \frac{100 + 2 - 3}{2} + 1 = 50$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/60760d68001c40d6a6c500b17f57d8deae7b5921631b4b6b896b057b904d24b1" width = "800"></center>
+<center><img src="../assets/lessons-28.jpg" width = "800"></center>
 <center><br>图9：批量操作 </br></center>
 
 <br></br>
@@ -704,7 +704,7 @@ $x_{\mathrm{left}}\neq x_{\mathrm{right}} \Rightarrow |y|>0$
 
 因此，在输出的特征图中，**黑白分界线位置会产生明显响应，而其他平坦区域的响应接近 0**。
 
-![png](../../assets/image/output_11_1.png)
+![png](../assets/lessons-42.png)
 
 ------
 
@@ -728,7 +728,7 @@ $y= 8x_{\mathrm{center}} - \sum_{i=1}^{8}x_{\mathrm{neighbor},i}$
 
 所以，这类卷积核能够**突出图像中亮度变化明显的位置，从而提取物体的边缘和轮廓信息**。
 
-![png](../../assets/image/output_14_0.png)
+![png](../assets/lessons-44.png)
 
 ------
 
@@ -748,7 +748,7 @@ $y=\frac{1}{25}\sum_{i=1}^{25}x_i$
 
 因此，均值卷积可以起到**平滑图像、降低局部噪声**的作用，但与此同时，也会使图像中的**边缘和细节变得模糊**。
 
-![png](../../assets/image/output_16_0.png)
+![png](../assets/lessons-46.png)
 
 **这三个案例实际上展示了卷积最核心的思想：**
 
@@ -767,7 +767,7 @@ $[1,0,-1]$ 关注左右像素的变化，可以检测边界；拉普拉斯卷积
 池化层的作用是进行特征选择，降低特征数量，从而减少参数数量。由于池化之后特征图会变得更小，如果后面连接的是全连接层，可以有效地减小神经元的个数，节省存储空间并提高计算效率。如 **图10** 所示，将一个$2\times 2$的区域池化成一个像素点。通常有两种方法，平均池化和最大池化。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/a6aa47e61daa44629bc787e489e303a2029f7654ba3349098cf7bf2c8c05eaa5" width = "600"></center>
+<center><img src="../assets/lessons-29.jpg" width = "600"></center>
 <center><br>图10：池化 </br></center>
 
 <br></br>
@@ -799,7 +799,7 @@ $$W_{out} = \frac{W}{2}$$
 前面介绍的网络结构中，普遍使用Sigmoid函数做激活函数。在神经网络发展的早期，Sigmoid函数和Tanh函数用的比较多，而目前用的较多的激活函数是ReLU。这是因为Sigmoid函数和tanh函数在反向传播过程中，具有软饱和性，一但落入饱和区梯度就会接近0，容易造成梯度消失，让我们仔细观察Sigmoid函数图形。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/56c693f93293460498f0b37a7472ee037c7224c4bcb4435c8bf0450ce7abc6cc" width = "600"></center>
+<center><img src="../assets/lessons-30.jpg" width = "600"></center>
 <center><br>图11：Sigmoid函数图形 </br></center>
 
 <br></br>
@@ -807,7 +807,7 @@ $$W_{out} = \frac{W}{2}$$
 Tanh激活函数图形如 **图12** 所示：
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/05510f67623b4dfb83460e30ed4084fac10d2759f3084fd0a57b1394ad4f09e8" width = "600"></center>
+<center><img src="../assets/lessons-31.jpg" width = "600"></center>
 <center><br>图12：Tanh函数图形 </br></center>
 
 <br></br>
@@ -816,7 +816,7 @@ ReLU激活函数图形如 **图13** 所示：
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/bce1d67a67414749b0653e0c9fbf7314f22b9e01878548dbad1bb72ed3335a57" width = "600"></center>
+<center><img src="../assets/lessons-32.jpg" width = "600"></center>
 <center><br>图13：ReLU函数图形 </br></center>
 
 <br></br>
@@ -843,7 +843,7 @@ BatchNorm的变体包括：层归一化(Layer Normalization, LN)、组归一化(
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/5aec4af01eb8451eb1695657a0bbc7e20181d7cd7e7b4136b04f9b2dedaca5c8" width = "800"></center>
+<center><img src="../assets/lessons-33.png" width = "800"></center>
 <center><br>图14：归一化方法</br></center>
 
 <br></br>
@@ -862,7 +862,7 @@ BatchNorm的变体包括：层归一化(Layer Normalization, LN)、组归一化(
 **图15** 是Dropout示意图，左边是完整的神经网络，右边是应用了Dropout之后的网络结构。应用Dropout之后，会将标了$\times$的神经元从网络中删除，让它们不向后面的层传递信号。在学习过程中，丢弃哪些神经元是随机决定，因此模型不会过度依赖某些神经元，能一定程度上抑制过拟合。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/65f8e486bae94b349d296f83663849759b4cbf777d4e4f96a81bae47a93c3e77" width = "700"></center>
+<center><img src="../assets/lessons-34.jpg" width = "700"></center>
 <center><br>图15 Dropout示意图 </br></center>
 
 <br></br>
@@ -881,7 +881,7 @@ Dropout的变体有很多，如：DropConnect、Standout、Gaussian Dropout、Sp
 对计算机而言，能够“看到”的是图像被编码之后的数字，但它很难理解高层语义概念，比如图像或者视频帧中出现的目标是人还是物体，更无法定位目标出现在图像中哪个区域。目标检测的主要目的是让计算机可以自动识别图片或者视频帧中所有目标的类别，并在该目标周围绘制边界框，标示出每个目标的位置，如 **图1** 所示。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/e25116d994724f83abe3bef7f033c1c89bf34e083075494bb7833947c557f4fc" width = "700"  div align=center" width = "800"></center>
+<center><img src="../assets/lessons-35.png" width = "700"  div align=center" width = "800"></center>
 <center><br>图1：图像分类和目标检测示意图。(a)是图像分类任务，只需识别出这是一张斑马的图片。(b)是目标检测任务，不仅要识别出这是一张斑马的图片，还要标出图中斑马的位置。</br></center>
 
 <br></br>
@@ -891,7 +891,7 @@ Dropout的变体有很多，如：DropConnect、Standout、Gaussian Dropout、Sp
 回顾图像分类处理基本流程，先使用卷积神经网络提取图像特征，然后再用这些特征预测分类概率，最后选出概率最大的类别，即为当前图片的类别，流程如 **图2** 所示。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/183dc8e1df224df2b223f4e80b68d42c3d746f339a084c5a9f3942fba3475988" width = "800"></center>
+<center><img src="../assets/lessons-36.png" width = "800"></center>
 <center><br>图2：图像分类流程示意图</br></center>
 
 <br></br>
@@ -903,7 +903,7 @@ Dropout的变体有很多，如：DropConnect、Standout、Gaussian Dropout、Sp
 如何解决图像分类任务，使用卷积神经网络对一幅图像进行分类不再是一件困难的事情。那么，现在问题的关键就是如何产生候选区域？比如我们可以使用穷举法来产生候选区域，如图3所示。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/57755ac8e95a460f9262afc7c37a0db51f66027ff86c40e2967a2e22524c20a1" width = "800"></center>
+<center><img src="../assets/lessons-37.png" width = "800"></center>
 <center><br>图3：候选区域</br></center>
 
 <br></br>
@@ -937,7 +937,7 @@ $$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/485c16915ae2433d93a646b0b7576991389780b3c5204e53aed48356af74e8c3" width = "800"></center>
+<center><img src="../assets/lessons-38.jpg" width = "800"></center>
 <center><br>图4：目标检测算法</br></center>
 
 <br></br>
@@ -955,7 +955,7 @@ Anchor-Based使用Anchor提取候选目标框，然后在特征图上的每一�
 三类算法的对比如下图所示：
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/ada190d940164471a0d6202aa1011f51eed709293e774e7a8fb474fb91aaffaa" width = "800"></center>
+<center><img src="../assets/lessons-39.png" width = "800"></center>
 <center><br>图5：目标检测算法对比</br></center>
 
 ## 目标检测基础概念
@@ -967,7 +967,7 @@ Anchor-Based使用Anchor提取候选目标框，然后在特征图上的每一�
 检测任务需要同时预测物体的类别和位置，因此需要引入一些跟位置相关的概念。通常使用边界框（bounding box，bbox）来表示物体的位置，边界框是正好能包含物体的矩形框，如 **图6** 所示，图中3个人分别对应3个边界框。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/f581e1bfd07a414596368c9c03a1b30ea115a2e30a014be68b2c26961f5c38fa" width = "400"  div align=center"></center>
+<center><img src="../assets/lessons-40.png" width = "400"  div align=center"></center>
 <center><br>图6：边界框</br></center>
 
 <br></br>
@@ -993,7 +993,7 @@ Anchor-Based使用Anchor提取候选目标框，然后在特征图上的每一�
 锚框与物体边界框不同，是由人们假想出来的一种框。先设定好锚框的大小和形状，再以图像上某一个点为中心画出矩形框。在下图中，以像素点[300, 500]为中心可以使用下面的程序生成3个框，如运行如下代码结果图中蓝色框所示，其中锚框A1跟人像区域非常接近。
 
 
-![png](../../assets/image/output_4_1.png)
+![png](../assets/lessons-72.png)
     
 
 
@@ -1011,7 +1011,7 @@ $$IoU = \frac{A\cap B}{A \cup B}$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/c2095c01997044f8a054d676ab585f3beed4400961ea40379771a1fd6d8bf2ea" width = "500"></center>
+<center><img src="../assets/lessons-41.png" width = "500"></center>
 <center><br>图7：交并比</br></center>
 
 <br></br>
@@ -1025,7 +1025,7 @@ $$B:  [x_{b1}, y_{b1}, x_{b2}, y_{b2}]$$
 假如位置关系如 **图8** 所示：
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/8abb3525989044fa8f512f82dfcd0f2f244594ff79cc4f14a900a09d464b22b8" width = "300"></center>
+<center><img src="../assets/lessons-42.png" width = "300"></center>
 <center><br>图8：计算交并比</br></center>
 
 <br></br>
@@ -1135,7 +1135,7 @@ print('IoU is {}'.format(iou))
 为了直观的展示交并比的大小跟重合程度之间的关系，**图9** 示意了不同交并比下两个框之间的相对位置关系，从 IoU = 0.95 到 IoU = 0.
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/52faaa317c6c4de59088de70e7ba0d478969aacffa6e40b4998a3ca9203a9ee2" width = "500"></center>
+<center><img src="../assets/lessons-43.png" width = "500"></center>
 <center><br>图9：不同交并比下两个框之间相对位置示意图</br></center>
 
 <br></br>
@@ -1148,7 +1148,7 @@ print('IoU is {}'.format(iou))
 
 
 ​    
-![png](../../assets/image/output_12_0.png)
+![png](../assets/lessons-43.png)
 ​    
 
 
@@ -1172,7 +1172,7 @@ NMS基本思想是，如果有多个预测框都对应同一个物体，则只�
 最终得到keep_list=[3, 5, 10]，也就是预测框3、5、10被最终挑选出来了，如下图所示。
 
 
-![png](../../assets/image/output_15_1.png)
+![png](../../assets/lessons-45.png)
     
 
 ---
@@ -1189,7 +1189,7 @@ YOLOv3算法基本思想可以分成两部分：
 YOLOv3算法预测过程的流程图如 **图1** 所示，预测图片经过一系列预处理(resize、normalization等)输入到YOLOv3模型，根据预先设定的Anchor和提取到的图片特征得到目标预测框，最后通过非极大值抑制(NMS)消除重叠较大的冗余预测框，得到最终预测结果。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/e92ba2985c474efa8e83b17289b0534c8ffc616cb8c3441c8d268936d90bc571"></center>
+<center><img src="../assets/lessons-44.png"></center>
 <center><br>图1：YOLOv3算法预测流程图 </br></center>
 
 <br></br>
@@ -1198,7 +1198,7 @@ YOLOv3网络结构大致分为3个部分：Backbone、Neck、Head，如 **图2**
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/682c9a2807ed4b34b5ef575e56d4c629623c5e2d86a442b6b49d32decd1f821c" width='800'></center>
+<center><img src="../assets/lessons-45.jpg" width='800'></center>
 <center><br>图2：YOLOv3网络结构 </br></center>
 
 <br></br>
@@ -1226,7 +1226,7 @@ $$n = \frac{480}{32} = 15$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/2dd1cbeb53644552a8cb38f3f834dbdda5046a489465454d93cdc88d1ce65ca5" width = "400"></center>
+<center><img src="../assets/lessons-46.png" width = "400"></center>
 <center><br>图3：将图片划分成多个32x32的小方块 </br></center>
 
 <br></br>
@@ -1244,7 +1244,7 @@ YOLOv3算法会在每个区域的中心，生成一系列锚框。为了展示�
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/6dd42b9138364a379b6231ac2247d3cb449d612e17be4896986bca2703acbb29" width = "400"></center>
+<center><img src="../assets/lessons-47.png" width = "400"></center>
 <center><br>图4：在第10行第4列的小方块区域生成3个锚框 </br></center>
 
 <br></br>
@@ -1253,7 +1253,7 @@ YOLOv3算法会在每个区域的中心，生成一系列锚框。为了展示�
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/0880c3b5ec2d40edb476f4fcbadd87aa9f37059cd24d4a1a9d37c627ce5f618a" width = "400"></center>
+<center><img src="../assets/lessons-48.png" width = "400"></center>
 <center><br>图5：在每个小方块区域生成3个锚框 </br></center>
 
 <br></br>
@@ -1311,7 +1311,7 @@ $$t_x = 0.2,  t_y = 0.3, t_w = 0.1, t_h = -0.12$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/f4b33522eb5a45f0804b94a5c66b76a0a2d13345d6de499399580a031b6ccc74" width = "400"></center>
+<center><img src="../assets/lessons-49.png" width = "400"></center>
 <center><br>图6：生成预测框 </br></center>
 
 <br></br>
@@ -1347,7 +1347,7 @@ $$p_h e^{t^*_h} = gt_h$$
 如 **图13** 所示，这里一共有3个目标，以最左边的人像为例，其真实框是$(133.96, 328.42, 186.06, 374.63)$。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/f21679e68d2b496698ed788a16d4ea2e5bc6f82b253a44ef9508b6a4fc9b6be4" width = "600"></center>
+<center><img src="../assets/lessons-50.png" width = "600"></center>
 <center><br>图13：选出与真实框中心位于同一区域的锚框 </br></center>
 
 <br></br>
@@ -1368,7 +1368,7 @@ $$ j = 328.42 / 32 = 10.263125$$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/3008337ea66c44068042c670db54368edc56b1e43ced4b6b811bdc95b64ca3d5" width = "400"></center>
+<center><img src="../assets/lessons-51.png" width = "400"></center>
 <center><br>图14：选出与真实框与锚框的IoU </br></center>
 
 <br></br>
@@ -1414,7 +1414,7 @@ $$t^*_h = log(\frac{gt_h}{p_h})$$
 对上述步骤进行总结，标注的流程如 **图15** 所示。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/3b914be0c6274916bc7abe4922d4d0fb75be340172764f7096af5be0c2737c57" width = "700"></center>
+<center><img src="../assets/lessons-52.png" width = "700"></center>
 <center><br>图15：标注流程示意图 </br></center>
 
 <br></br>
@@ -1429,7 +1429,7 @@ $$t^*_h = log(\frac{gt_h}{p_h})$$
 
 YOLOv3算法使用的骨干网络是Darknet53。Darknet53网络的具体结构如 **图3** 所示，在ImageNet图像分类任务上取得了很好的成绩。在检测任务中，将图中C0后面的平均池化、全连接层和Softmax去掉，保留从输入到C0部分的网络结构，作为检测模型的基础网络结构，也称为骨干网络。YOLOv3模型会在骨干网络的基础上，再添加检测相关的网络模块。
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/d5cb1e88d3f44259be1427a90ee454a57738ee8083ad40269f5485988526f30d" width = "400"></center>
+<center><img src="../assets/lessons-53.png" width = "400"></center>
 <center><br>图3：Darknet53网络结构 </br></center>
 
 下面的程序是Darknet53骨干网络的实现代码，这里将上图中C0、C1、C2所表示的输出数据取出，并查看它们的形状分别是，$C0 [1, 1024, 20, 20]$，$C1 [1, 512, 40, 40]$，$C2 [1, 256, 80, 80]$。
@@ -1487,7 +1487,7 @@ x → 下采样
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/b6d3b425644342e48bd0a50ebde90d882fd10717e0e44a53a44e98225bbb6df8" width = "800"></center>
+<center><img src="../assets/lessons-54.png" width = "800"></center>
 <center><br>图4：生成多层级的输出特征图P0、P1、P2 </br></center>
 
 <br></br>
@@ -1519,7 +1519,7 @@ $$[K(5 + C)] \times m \times n $$
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/59bd2592dd9f4f4dada8333307198888e667b15969ce434eb52c0232d9608a62" width = "600"></center>
+<center><img src="../assets/lessons-55.png" width = "600"></center>
 <center><br>图5：特征图C0与小方块区域形状对比 </br></center>
 
 <br></br>
@@ -1538,7 +1538,7 @@ $P0[t, 0:4, i, j]$与输入的第t张图片上小方块区域$(i, j)$第1个预�
 如 **图6** 所示，通过这种方式可以巧妙的将网络输出特征图，与每个小方块区域生成的预测框对应起来了。
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/9ea44b2c11f74f1484ab2bdc93be4008008cdee0b8d34dcb97bc9f89af935d1c" width = "800"></center>
+<center><img src="../assets/lessons-56.png" width = "800"></center>
 <center><br>图6：特征图P0与候选区域的关联 </br></center>
 
 <br></br>
@@ -2207,7 +2207,7 @@ Table 1 用一张谱系表概括了作者眼中的技术演进：
 
 ### 从速度—精度取舍看 YOLO26 的位置
 
-![YOLO26 与其他实时检测器的精度—延迟比较](../../assets/image/arXiv-2509.25164-v2.0-figure-1.png)
+![YOLO26 与其他实时检测器的精度—延迟比较](../assets/lessons-61.png)
 
 *Figure 1（原图）：YOLO26 的精度—延迟权衡；左图为标准检测，右图为端到端检测。[PDF 第 2 页](https://arxiv.org/pdf/2509.25164#page=2)*
 
@@ -2217,7 +2217,7 @@ n、s、m、l、x 是同一家族由轻到重的容量档，不是五种任务�
 
 ### 一套设计语言，覆盖五类视觉任务
 
-![YOLO26 的五类视觉任务](../../assets/image/arXiv-2509.25164-v2.0-figure-2.png)
+![YOLO26 的五类视觉任务](../assets/lessons-62.png)
 
 *Figure 2（原图）：YOLO26 统一架构覆盖五类视觉任务。[PDF 第 4 页](https://arxiv.org/pdf/2509.25164#page=4)*
 
@@ -2233,7 +2233,7 @@ n、s、m、l、x 是同一家族由轻到重的容量档，不是五种任务�
 
 ### 图像如何流经网络：从层级特征到多尺度预测
 
-![YOLO26 网络架构示意](../../assets/image/arXiv-2509.25164-v2.0-figure-3.png)
+![YOLO26 网络架构示意](../assets/lessons-63.png)
 
 *Figure 3（原图）：YOLO26 的 backbone、neck 与多尺度 detection head。[PDF 第 5 页](https://arxiv.org/pdf/2509.25164#page=5)*
 
@@ -2248,7 +2248,7 @@ n、s、m、l、x 是同一家族由轻到重的容量档，不是五种任务�
 
 ### 为什么它更容易训练和部署
 
-![YOLO26 的四项关键增强](../../assets/image/arXiv-2509.25164-v2.0-figure-4.png)
+![YOLO26 的四项关键增强](../assets/lessons-64.png)
 
 *Figure 4（原图）：DFL 移除、端到端推理、ProgLoss/STAL 与 MuSGD。[PDF 第 6 页](https://arxiv.org/pdf/2509.25164#page=6)*
 

@@ -92,12 +92,56 @@ The historical mirror-trained notebook is in `02-object-detection/archive/` and 
 execution report is `reports/detection-legacy-executed.json`. `scripts/fetch_rps_legacy.py`
 is an explicitly historical helper. Their mAP values are not results on the current data.
 
-Conversion is a separate [YOLO / VOC / COCO topic](../../04-dataset-formats/README.md),
+Conversion is a separate [YOLO / VOC / COCO topic](../02-object-detection/dataset-formats/README.md),
 with runnable conversions and Xiaotudui Labs viewer steps. Training consumes YOLO directly.
 
 `COURSE_SMOKE=1` deliberately switches to [COCO8](https://docs.ultralytics.com/datasets/detect/coco8/)
 in `02-object-detection/data/coco8/`: eight images, four training and four validation.
 This is a software check, not hand-gesture evaluation.
+
+## Vehicle Counting (Traffic Flow)
+
+The vehicle-counting lesson in both languages uses
+[vehicle-counting-rtvul / vehicle-counting-tksu5 v4](https://universe.roboflow.com/vehicle-counting-rtvul/vehicle-counting-tksu5/dataset/4),
+an official YOLO26 export (CC BY 4.0) with 6,565 square 640x640 images in 5 classes.
+Source splits are kept: 4,708 train / 1,661 valid / 196 test images and 52,668 / 18,810 / 2,120
+boxes. Class IDs keep their original order with lower-cased names (the source listed `Truck`
+capitalized): 0=truck, 1=bicycle, 2=bus, 3=car, 4=motorcycle. English and Chinese read the
+same import and write their own `outputs/`; both share the locked detection dependency set, which
+pins `lapx` so ByteTrack has the `lap` module.
+
+Roboflow exports belong to an account: use the browser download, or call the export REST
+endpoint with a personal API key. Both commands are in
+`02-object-detection/data/README.md`; keep the key outside the repository. Datasets live
+outside the repository in a DataSet staging folder (classroom mirror
+`/workspace/DataSet/yolo/`); the importer copies the ZIP, verifies it, and records
+provenance. From the repository root:
+
+```powershell
+.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\import_vehicle_counting.py --from-staging
+```
+
+On macOS/Linux the classroom machine uses the single `~/env_dl_uv` interpreter and stages the archive
+first (`--staging <dir>` moves the DataSet folder):
+
+```bash
+cp "/path/to/vehicle counting.v4i.yolo26.zip" /workspace/DataSet/yolo/
+~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --from-staging
+```
+
+or point at any archive with `--archive /path/to/vehicle counting.v4i.yolo26.zip`, or at an
+already unpacked export with `--export-dir`. The importer verifies embedded workspace/project
+version metadata (`vehicle-counting-rtvul` / `vehicle-counting-tksu5` / 4), the exact class
+set, split independence, cross-split duplicates, and box geometry, then writes
+`02-object-detection/data/vehicle-counting-tksu5-v4/` with `provenance.json`; the classroom
+archive SHA-256 is `3945432ed7ce76c9af3b83db7f0ee68ad898b0996bd7577f88a3b6ee6f0cea20`.
+Existing destinations are refused. Three label lines in the source package were segmentation
+polygons; the importer rewrites each to its enclosing detection box and records the count.
+
+The lesson's default traffic clip is synthesized offline by
+`scripts/build_traffic_demo_video.py` from real annotated vehicle crops, so every spawned
+vehicle crosses the counting line exactly once and the counter has a ground truth;
+`TRAFFIC_VIDEO=<path.mp4>` switches the same pipeline to a real road video.
 
 ## Optional pretrained English model
 

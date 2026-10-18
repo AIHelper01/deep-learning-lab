@@ -12,36 +12,37 @@
     "validation": 338,
     "test": 186
   },
-  "scope": "One actual full-dataset training epoch plus held-out test evaluation and prediction in each language; not COCO8 smoke and not the default ten epochs.",
+  "scope": "Full lesson run with the classroom default ten epochs in each language, plus held-out test evaluation and prediction; not COCO8 smoke mode.",
   "runs": {
     "en": {
       "status": "passed",
-      "epochs": 1,
+      "epochs": 10,
       "image_size": 320,
       "batch": 8,
-      "device": "cpu",
-      "seconds_end_to_end": 683.77,
-      "epoch_seconds": 585.296,
-      "test_map50": 0.726625100288458,
-      "test_map50_95": 0.45354225390338176,
-      "checkpoint": "english/02-object-detection/outputs/runs/rps-ishcs-v1-yolo26n/weights/best.pt",
+      "device": "mps",
+      "seconds_end_to_end": 1161.8,
+      "epoch_seconds_last": 1143.0,
+      "test_map50": 0.9409942451806544,
+      "test_map50_95": 0.7467232233704099,
+      "checkpoint": "english/02-object-detection/outputs/runs/rps-ishcs-v1-yolo26n-2/weights/best.pt",
       "notebook": "english/02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
       "saved_figures": 4
     },
     "zh-CN": {
       "status": "passed",
-      "epochs": 1,
+      "epochs": 10,
       "image_size": 320,
       "batch": 8,
-      "device": "cpu",
-      "seconds_end_to_end": 634.85,
-      "epoch_seconds": 590.004,
-      "test_map50": 0.726625100288458,
-      "test_map50_95": 0.45354225390338176,
-      "checkpoint": "02-object-detection/outputs/runs/rps-ishcs-v1-yolo26n/weights/best.pt",
+      "device": "mps",
+      "seconds_end_to_end": 1163.89,
+      "test_map50": 0.9409942451806544,
+      "test_map50_95": 0.7467232233704099,
+      "checkpoint": "02-object-detection/outputs/runs/rps-ishcs-v1-yolo26n-3/weights/best.pt",
       "notebook": "02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
       "saved_figures": 4
     }
   },
-  "format_conversion_report": "../../04-dataset-formats/reports/validation.json"
+  "format_conversion_report": "english/reports/dataset-formats-validation.json",
+  "device_note": "Runs used Apple silicon MPS; CUDA has not been validated. Ultralytics reports non-deterministic index_put accumulation on MPS, so totals agree without guaranteeing bit-identical metrics.",
+  "agreement_note": "Both languages report the same test metrics to the printed precision (mAP50 0.9410, mAP50-95 0.7467) and the same single-image prediction, paper at 0.874."
 }

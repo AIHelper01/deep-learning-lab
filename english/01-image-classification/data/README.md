@@ -9,3 +9,19 @@
 MNIST downloads through torchvision. CIFAR-10 reuses a valid torchvision copy or downloads the pinned, checksum-verified [Parquet mirror](https://huggingface.co/datasets/uoft-cs/cifar10). The custom-folder smoke variant adds `-smoke` to its directory name. Classroom subsets can be smaller than source datasets; retain training/test separation and source attribution.
 
 See the [dataset catalog](../../../docs/datasets.md) for descriptions, source sizes, attribution, and language-specific paths, and the [preparation guide](../../docs/datasets.md#image-classification) for loader behavior. Data files are excluded from Git.
+
+## From DataSet staging (cp method)
+
+Original downloads are cached outside the repository under `/workspace/DataSet` (same layout as the classroom server). Copy the exact subdirectory into this module:
+
+```bash
+# MNIST (torchvision root layout; lands as data/MNIST/raw/)
+cp -r /workspace/DataSet/cvdata/MNIST/MNIST data/
+# CIFAR-10 (unpacked batches; untar the staged archive first if only the tar is present)
+cp -r /workspace/DataSet/cvdata/CIFAR10/cifar-10-batches-py data/cifar10/
+```
+
+## Download method
+
+- MNIST: `datasets.MNIST(root=data, download=True)` in the notebook, or the staged copy above (`/workspace/DataSet/cvdata/MNIST/DOWNLOAD.md` records checksums).
+- CIFAR-10: the pinned university archive <https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz> (170,498,071 bytes, SHA-256 `6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce`); `load_cifar10` accepts this torchvision layout and otherwise falls back to the pinned Parquet mirror.

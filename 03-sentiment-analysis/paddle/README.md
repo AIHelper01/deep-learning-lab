@@ -1,9 +1,20 @@
-# paddle 情感分析路线
+# PaddlePaddle 情感分析路线
 
 1. [自然语言处理综述](notebooks/01-nlp-overview.ipynb)
 2. [词向量](notebooks/02-word-embeddings.ipynb)
 3. [LSTM 情感分类](notebooks/03-lstm-sentiment.ipynb)
 
-使用本目录的独立环境；以 notebooks/ 为工作目录顺序运行。数据目录为 ../../data/，输出目录为 ../../outputs/paddle/（均相对于 Notebook）。首次运行可能下载评论数据和预训练模型。
+在 notebook 里以 `notebooks/` 为工作目录顺序运行即可：数据在 `../../data/`，产物写入
+`../../outputs/paddle/`。数据是 ChnSentiCorp 中文评论，分词用 jieba（详见[模块说明](../README.md)）。
+首次运行会下载数据集；可选预训练课会下载中文检查点。
 
-[环境准备](../../docs/environment-setup.md)。新依赖依据代码导入整理，尚未安装验证、未生成新锁文件、未执行训练。
+命令行整本执行并保留真实输出：
+
+```bash
+~/env_dl_uv/.venv/bin/python ../../../english/scripts/execute_and_save.py --group paddle --language zh-CN
+~/env_dl_uv/.venv/bin/python ../../../scripts/embed_expected_outputs.py --module 03-sentiment-analysis
+```
+
+本路线由英文母本 `../../english/03-sentiment-analysis/paddle/notebooks/` 镜像生成，训练逻辑与英文一致。
+[环境准备](../../docs/environment-setup.zh-CN.md) · [数据获取](../../docs/datasets.zh-CN.md)
+历史版本在 [archive/legacy-notebooks/](archive/legacy-notebooks/README.md)，只读参考。

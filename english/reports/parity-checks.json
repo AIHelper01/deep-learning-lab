@@ -1,0 +1,552 @@
+{
+  "notebooks_checked": 40,
+  "pairs": [
+    {
+      "module": "01-image-classification",
+      "file": "README.md",
+      "status": "paired"
+    },
+    {
+      "module": "01-image-classification",
+      "file": "archive/01-lenet-mnist-copy1.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "01-image-classification",
+      "file": "archive/environment/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "01-image-classification",
+      "file": "archive/legacy-notebooks/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "01-image-classification",
+      "file": "notebooks/01-lenet-mnist.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "01-image-classification",
+      "file": "notebooks/02-lenet-cifar10.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "01-image-classification",
+      "file": "notebooks/03-resnet-cifar10.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "01-image-classification",
+      "file": "notebooks/extensions/04-lenet-custom-data.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "README.md",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "archive/01-yolo26-rps-legacy-executed.ipynb",
+      "status": "en-only",
+      "reason": "English-side historical archive; the Chinese history is the original YOLO11 lesson kept in 02-object-detection/notebooks/, a different artifact"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "archive/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "archive/lessons/03-yolo-theory.md",
+      "status": "zh-only",
+      "reason": "Chinese historical courseware; english/02-object-detection/archive/README.md records why it stays untranslated"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "archive/lessons/04-yolo-practice.md",
+      "status": "zh-only",
+      "reason": "Chinese historical courseware; english/02-object-detection/archive/README.md records why it stays untranslated"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "dataset-formats/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "lessons/01-cv-overview.md",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "lessons/02-cnn-basics.md",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "lessons/03-yolo-theory.md",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "lessons/04-yolo-practice.md",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "lessons/05-vehicle-counting-run-report.md",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "notebooks/01-yolo11-rock-paper-scissors.ipynb",
+      "status": "zh-only",
+      "reason": "Original Chinese PaddleYOLO/YOLO11 lesson, kept in notebooks/ at the owner's request for comparison; it needs that external project, is never executed, has no English twin, and is excluded from pairing"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "notebooks/01-yolo26-rock-paper-scissors.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "notebooks/02-yolo26-vehicle-counting.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "README.md",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "archive/environment/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "paddle/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "paddle/archive/legacy-notebooks/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "paddle/notebooks/01-nlp-overview.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "paddle/notebooks/02-word-embeddings.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "paddle/notebooks/03-lstm-sentiment.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "pytorch/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "pytorch/archive/legacy-notebooks/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "pytorch/notebooks/01-nlp-overview.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "pytorch/notebooks/02-word-embeddings.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "pytorch/notebooks/03-lstm-sentiment.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "pytorch/notebooks/04-pretrained-english-sentiment.ipynb",
+      "status": "paired"
+    }
+  ],
+  "parity_problems": [],
+  "chinese_notebooks_with_english_outputs": [],
+  "chinese_notebooks_with_english_outputs_total": 0,
+  "notebooks": [
+    {
+      "file": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
+      "language": "zh",
+      "code_cells": 14,
+      "markdown_cells": 16,
+      "executed_cells": 14,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/archive/legacy-notebooks/01-lenet-mnist.ipynb",
+      "language": "zh",
+      "code_cells": 15,
+      "markdown_cells": 17,
+      "executed_cells": 15,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/archive/legacy-notebooks/02-lenet-cifar10.ipynb",
+      "language": "zh",
+      "code_cells": 12,
+      "markdown_cells": 16,
+      "executed_cells": 10,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/archive/legacy-notebooks/03-resnet-cifar10.ipynb",
+      "language": "zh",
+      "code_cells": 16,
+      "markdown_cells": 13,
+      "executed_cells": 1,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/archive/legacy-notebooks/extensions/04-lenet-custom-data.ipynb",
+      "language": "zh",
+      "code_cells": 28,
+      "markdown_cells": 39,
+      "executed_cells": 14,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/notebooks/01-lenet-mnist.ipynb",
+      "language": "zh",
+      "code_cells": 8,
+      "markdown_cells": 7,
+      "executed_cells": 8,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/notebooks/02-lenet-cifar10.ipynb",
+      "language": "zh",
+      "code_cells": 8,
+      "markdown_cells": 7,
+      "executed_cells": 8,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/notebooks/03-resnet-cifar10.ipynb",
+      "language": "zh",
+      "code_cells": 8,
+      "markdown_cells": 8,
+      "executed_cells": 8,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/notebooks/extensions/04-lenet-custom-data.ipynb",
+      "language": "zh",
+      "code_cells": 8,
+      "markdown_cells": 7,
+      "executed_cells": 8,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
+      "language": "en",
+      "code_cells": 7,
+      "markdown_cells": 6,
+      "executed_cells": 7,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/notebooks/01-lenet-mnist.ipynb",
+      "language": "en",
+      "code_cells": 8,
+      "markdown_cells": 7,
+      "executed_cells": 8,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/notebooks/02-lenet-cifar10.ipynb",
+      "language": "en",
+      "code_cells": 8,
+      "markdown_cells": 7,
+      "executed_cells": 8,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/notebooks/03-resnet-cifar10.ipynb",
+      "language": "en",
+      "code_cells": 8,
+      "markdown_cells": 8,
+      "executed_cells": 8,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "01-image-classification/notebooks/extensions/04-lenet-custom-data.ipynb",
+      "language": "en",
+      "code_cells": 8,
+      "markdown_cells": 7,
+      "executed_cells": 8,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb",
+      "language": "zh",
+      "code_cells": 3,
+      "markdown_cells": 43,
+      "executed_cells": 2,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
+      "language": "zh",
+      "code_cells": 6,
+      "markdown_cells": 6,
+      "executed_cells": 6,
+      "error_outputs": 0,
+      "allowed_english_outputs": 5,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "02-object-detection/notebooks/02-yolo26-vehicle-counting.ipynb",
+      "language": "zh",
+      "code_cells": 12,
+      "markdown_cells": 9,
+      "executed_cells": 12,
+      "error_outputs": 0,
+      "allowed_english_outputs": 9,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "02-object-detection/archive/01-yolo26-rps-legacy-executed.ipynb",
+      "language": "en",
+      "code_cells": 6,
+      "markdown_cells": 6,
+      "executed_cells": 6,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
+      "language": "en",
+      "code_cells": 6,
+      "markdown_cells": 6,
+      "executed_cells": 6,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "02-object-detection/notebooks/02-yolo26-vehicle-counting.ipynb",
+      "language": "en",
+      "code_cells": 12,
+      "markdown_cells": 9,
+      "executed_cells": 12,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/paddle/archive/legacy-notebooks/01-nlp-overview.ipynb",
+      "language": "zh",
+      "code_cells": 1,
+      "markdown_cells": 4,
+      "executed_cells": 0,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/paddle/archive/legacy-notebooks/02-word-embeddings.ipynb",
+      "language": "zh",
+      "code_cells": 13,
+      "markdown_cells": 22,
+      "executed_cells": 11,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/paddle/archive/legacy-notebooks/03-lstm-sentiment.ipynb",
+      "language": "zh",
+      "code_cells": 26,
+      "markdown_cells": 27,
+      "executed_cells": 22,
+      "error_outputs": 1,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/paddle/notebooks/01-nlp-overview.ipynb",
+      "language": "zh",
+      "code_cells": 2,
+      "markdown_cells": 3,
+      "executed_cells": 2,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/paddle/notebooks/02-word-embeddings.ipynb",
+      "language": "zh",
+      "code_cells": 6,
+      "markdown_cells": 6,
+      "executed_cells": 6,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/paddle/notebooks/03-lstm-sentiment.ipynb",
+      "language": "zh",
+      "code_cells": 7,
+      "markdown_cells": 7,
+      "executed_cells": 7,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/archive/legacy-notebooks/01-nlp-overview.ipynb",
+      "language": "zh",
+      "code_cells": 1,
+      "markdown_cells": 4,
+      "executed_cells": 0,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/archive/legacy-notebooks/02-word-embeddings.ipynb",
+      "language": "zh",
+      "code_cells": 11,
+      "markdown_cells": 12,
+      "executed_cells": 0,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/archive/legacy-notebooks/03-lstm-sentiment.ipynb",
+      "language": "zh",
+      "code_cells": 14,
+      "markdown_cells": 18,
+      "executed_cells": 0,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/notebooks/01-nlp-overview.ipynb",
+      "language": "zh",
+      "code_cells": 2,
+      "markdown_cells": 3,
+      "executed_cells": 2,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/notebooks/02-word-embeddings.ipynb",
+      "language": "zh",
+      "code_cells": 6,
+      "markdown_cells": 6,
+      "executed_cells": 6,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/notebooks/03-lstm-sentiment.ipynb",
+      "language": "zh",
+      "code_cells": 7,
+      "markdown_cells": 7,
+      "executed_cells": 7,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/notebooks/04-pretrained-chinese-sentiment.ipynb",
+      "language": "zh",
+      "code_cells": 2,
+      "markdown_cells": 2,
+      "executed_cells": 2,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/paddle/notebooks/01-nlp-overview.ipynb",
+      "language": "en",
+      "code_cells": 2,
+      "markdown_cells": 3,
+      "executed_cells": 2,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/paddle/notebooks/02-word-embeddings.ipynb",
+      "language": "en",
+      "code_cells": 6,
+      "markdown_cells": 6,
+      "executed_cells": 6,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/paddle/notebooks/03-lstm-sentiment.ipynb",
+      "language": "en",
+      "code_cells": 7,
+      "markdown_cells": 7,
+      "executed_cells": 7,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/notebooks/01-nlp-overview.ipynb",
+      "language": "en",
+      "code_cells": 2,
+      "markdown_cells": 3,
+      "executed_cells": 2,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/notebooks/02-word-embeddings.ipynb",
+      "language": "en",
+      "code_cells": 6,
+      "markdown_cells": 6,
+      "executed_cells": 6,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/notebooks/03-lstm-sentiment.ipynb",
+      "language": "en",
+      "code_cells": 7,
+      "markdown_cells": 7,
+      "executed_cells": 7,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
+    {
+      "file": "03-sentiment-analysis/pytorch/notebooks/04-pretrained-english-sentiment.ipynb",
+      "language": "en",
+      "code_cells": 2,
+      "markdown_cells": 2,
+      "executed_cells": 2,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    }
+  ],
+  "problems": []
+}

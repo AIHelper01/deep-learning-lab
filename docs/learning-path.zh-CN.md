@@ -22,4 +22,4 @@ LEDNUM 实验属于扩展，需要外部数据。MNIST Copy1 属于历史对照�
 
 ## 平行数据专题
 
-[YOLO / VOC / COCO 转换与小土堆 Labs 查看](../04-dataset-formats/README.zh-CN.md)独立于模型训练主线，可单独学习。
+[YOLO / VOC / COCO 转换与小土堆 Labs 查看](../02-object-detection/dataset-formats/README.md)独立于模型训练主线，可单独学习。

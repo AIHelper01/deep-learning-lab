@@ -11,6 +11,13 @@ RPS_VERSION = 1
 RPS_SOURCE = f'https://universe.roboflow.com/{RPS_WORKSPACE}/{RPS_PROJECT}'
 RPS_DIRECTORY = f'{RPS_PROJECT}-v{RPS_VERSION}'
 
+VEHICLE_WORKSPACE = 'vehicle-counting-rtvul'
+VEHICLE_PROJECT = 'vehicle-counting-tksu5'
+VEHICLE_VERSION = 4
+VEHICLE_SOURCE = f'https://universe.roboflow.com/{VEHICLE_WORKSPACE}/{VEHICLE_PROJECT}'
+VEHICLE_DIRECTORY = f'{VEHICLE_PROJECT}-v{VEHICLE_VERSION}'
+VEHICLE_CLASSES = ('truck', 'bicycle', 'bus', 'car', 'motorcycle')
+
 
 def prepare_coco8(data_dir, output_yaml):
     """Prepare the official tiny detection fixture inside the course data directory."""
@@ -39,7 +46,19 @@ def prepare_coco8(data_dir, output_yaml):
     return output_yaml
 
 
-def prepare_rps(export_dir, output_yaml, *, require_course_source=True):
+def polygon_line_to_box(fields):
+    """Convert one YOLO segmentation line to the detection box that encloses it."""
+    coordinates = [float(v) for v in fields[1:]]
+    xs, ys = coordinates[0::2], coordinates[1::2]
+    left, right, top, bottom = min(xs), max(xs), min(ys), max(ys)
+    return (int(float(fields[0])), (left + right) / 2, (top + bottom) / 2, right - left, bottom - top)
+
+
+def prepare_yolo_export(export_dir, output_yaml, *, expected_names, expected_nc,
+                     workspace=None, project=None, version=None, require_course_source=True,
+                     normalize_segmentation_lines=False):
+    """Validate a Roboflow YOLO export and write a course-ready data YAML."""
+    polygon_lines = 0
     root = Path(export_dir).resolve()
     source = root / 'data.yaml'
     if not source.exists():
@@ -51,13 +70,12 @@ def prepare_rps(export_dir, output_yaml, *, require_course_source=True):
     config = yaml.safe_load(source.read_text(encoding='utf-8'))
     if require_course_source:
         origin = config.get('roboflow', {})
-        official = (origin.get('workspace') == RPS_WORKSPACE
-                    and origin.get('project') == RPS_PROJECT
-                    and str(origin.get('version')) == str(RPS_VERSION))
+        official = (origin.get('workspace') == workspace
+                    and origin.get('project') == project
+                    and str(origin.get('version')) == str(version))
         if not official:
-            raise ValueError(f'The English and Chinese YOLO26 courses require '
-                             f'{RPS_SOURCE}/dataset/{RPS_VERSION}. '
-                             'Missing or different Roboflow metadata; historical and unverified archives are not accepted.')
+            raise ValueError(f'The course requires {workspace}/{project} dataset/{version}. '
+                             'Missing or different Roboflow metadata; unverified archives are not accepted.')
     raw = config['names']
     if isinstance(raw, dict):
         raw = {int(key): value for key, value in raw.items()}
@@ -65,10 +83,10 @@ def prepare_rps(export_dir, output_yaml, *, require_course_source=True):
             raise ValueError('Class IDs must be consecutive, starting at zero.')
         raw = [raw[i] for i in range(len(raw))]
     names = [str(name).strip().lower() for name in raw]
-    if len(names) != 3 or set(names) != {'rock', 'paper', 'scissors'}:
-        raise ValueError('Expected exactly the English classes rock, paper, scissors.')
+    if len(names) != expected_nc or set(names) != set(expected_names):
+        raise ValueError(f'Expected exactly the classes {sorted(expected_names)}.')
     # Preserve the original ID order. Never alphabetically reorder annotation IDs.
-    prepared = {'path': root.as_posix(), 'names': names, 'nc': 3}
+    prepared = {'path': root.as_posix(), 'names': names, 'nc': expected_nc}
     seen = {}
     counts = {}
     for split, choices in {'train': ['train'], 'val': ['valid', 'val'], 'test': ['test']}.items():
@@ -91,7 +109,24 @@ def prepare_rps(export_dir, output_yaml, *, require_course_source=True):
             label = folder / 'labels' / relative
             if not label.exists():
                 raise ValueError(f'Missing annotation file: {label.name}')
-            for line in label.read_text(encoding='utf-8').splitlines():
+            lines = label.read_text(encoding='utf-8').splitlines()
+            if normalize_segmentation_lines and any(
+                    len(line.split()) >= 7 and len(line.split()) % 2 == 1
+                    for line in lines if line.strip()):
+                normalised = []
+                for line in lines:
+                    if not line.strip():
+                        continue
+                    fields = line.split()
+                    if len(fields) >= 7 and len(fields) % 2 == 1:
+                        class_id, x, y, width, height = polygon_line_to_box(fields)
+                        normalised.append(f'{class_id} {x} {y} {width} {height}')
+                        polygon_lines += 1
+                    else:
+                        normalised.append(line)
+                label.write_text('\n'.join(normalised) + '\n', encoding='utf-8')
+                lines = normalised
+            for line in lines:
                 if not line.strip():
                     continue
                 fields = line.split()
@@ -99,7 +134,7 @@ def prepare_rps(export_dir, output_yaml, *, require_course_source=True):
                     raise ValueError('Detection labels require class_id x_center y_center width height.')
                 category = int(fields[0])
                 x, y, width, height = map(float, fields[1:])
-                if category not in range(3) or not all(math.isfinite(v) for v in (x,y,width,height)):
+                if category not in range(expected_nc) or not all(math.isfinite(v) for v in (x,y,width,height)):
                     raise ValueError('Invalid category or non-finite bounding-box coordinate.')
                 if not (0 <= x <= 1 and 0 <= y <= 1 and 0 < width <= 1 and 0 < height <= 1):
                     raise ValueError('Bounding-box coordinates must be normalized to [0, 1].')
@@ -110,7 +145,28 @@ def prepare_rps(export_dir, output_yaml, *, require_course_source=True):
             raise ValueError(f'The {split} split has no annotated objects.')
         prepared[split] = (folder / 'images').relative_to(root).as_posix()
         counts[split] = {'images': len(images), 'boxes': boxes}
+    counts['segmentation_lines_normalised'] = polygon_lines
     output_yaml = Path(output_yaml)
     output_yaml.parent.mkdir(parents=True, exist_ok=True)
     output_yaml.write_text(yaml.safe_dump(prepared, sort_keys=False), encoding='utf-8')
     return prepared, counts
+
+
+def prepare_rps(export_dir, output_yaml, *, require_course_source=True):
+    """Validate the shared Rock Paper Scissors v1 export used by both courses."""
+    return prepare_yolo_export(
+        export_dir, output_yaml, expected_names={'rock', 'paper', 'scissors'}, expected_nc=3,
+        workspace=RPS_WORKSPACE, project=RPS_PROJECT, version=RPS_VERSION,
+        require_course_source=require_course_source)
+
+
+def prepare_vehicle_counting(export_dir, output_yaml, *, require_course_source=True):
+    """Validate the vehicle counting v4 export used by the traffic-counting lesson.
+
+    Three source label files carry YOLO segmentation lines instead of detection boxes; they are
+    rewritten to their enclosing box at import time and the count is reported for provenance.
+    """
+    return prepare_yolo_export(
+        export_dir, output_yaml, expected_names=set(VEHICLE_CLASSES), expected_nc=len(VEHICLE_CLASSES),
+        workspace=VEHICLE_WORKSPACE, project=VEHICLE_PROJECT, version=VEHICLE_VERSION,
+        require_course_source=require_course_source, normalize_segmentation_lines=True)

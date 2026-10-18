@@ -26,6 +26,8 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     in provenance.json. Use RPS_DIRECTORY to isolate it from historical mirror data.
     '''),code(BOOT),code('''
     import json
+    import warnings
+
     MODULE = COURSE / "02-object-detection"
     OUTPUT = MODULE / "outputs"
     # Keep Ultralytics settings local to this edition, before importing the package.
@@ -46,7 +48,17 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
     # becomes a stored output record, so raise its log level and read the curve from results.png.
     set_logging(verbose=False)
     torch.set_num_threads(4)
-    DEVICE = 0 if torch.cuda.is_available() else "cpu"
+    DEVICE = ("cuda" if torch.cuda.is_available()
+              else "mps" if torch.backends.mps.is_available()
+              else "cpu")
+
+    # Ultralytics turns on warn-only determinism (seed plus torch.use_deterministic_algorithms).
+    # On Apple Silicon the autograd kernel index_put_with_accumulate_mps has no deterministic
+    # implementation, so that warning repeats once per epoch and buries the training log. It is
+    # silenced here; the caveat stays real: on MPS a rerun matches in aggregate, not bit-for-bit.
+    warnings.filterwarnings(
+        "ignore",
+        message="index_put_with_accumulate_mps does not have a deterministic implementation")
     print("Ultralytics version:", ultralytics.__version__)
     print("Device:", DEVICE)
     '''),md('''## 1. Validate the dataset and label mapping
@@ -78,8 +90,9 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
 
     `workers=0` avoids notebook multiprocessing problems on Windows. The initial download
     needs internet. The smoke run uses a smaller image size and one epoch for speed. The
-    classroom image size is 320 rather than 640 because one 640-pixel epoch measured over
-    twenty minutes on this CPU, while a 320-pixel epoch measured about 205 seconds. The cell
+    classroom image size is 320 rather than 640: the historical mirror run at 640 pixels measured over
+    twenty minutes per epoch on CPU, while on Apple silicon MPS a 320-pixel epoch measured about 114
+    seconds. The cell
     ends by displaying `results.png` from the run folder, so loss and mAP are visible inline.
     '''),code('''
     weights = OUTPUT / "weights" / "yolo26n.pt"
@@ -173,8 +186,8 @@ notebook('02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb',[
 
     Sources: [YOLO26](https://docs.ultralytics.com/models/yolo26/),
     [training API](https://docs.ultralytics.com/modes/train/),
-    [Rock Paper Scissors detection dataset](https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs)
-    Dataset identity and processing must be recorded in provenance.json; no mirror fallback.
+    [requested Rock Paper Scissors project](https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs).
+    The official v1 export identity and processing are recorded in provenance.json.
     ''')])
 
 notebook('03-sentiment-analysis/pytorch/notebooks/04-pretrained-english-sentiment.ipynb',[
@@ -187,8 +200,10 @@ notebook('03-sentiment-analysis/pytorch/notebooks/04-pretrained-english-sentimen
     from transformers import pipeline
     import torch
     model_id = "distilbert/distilbert-base-uncased-finetuned-sst-2-english"
-    classifier = pipeline("sentiment-analysis", model=model_id,
-                          device=0 if torch.cuda.is_available() else -1)
+    DEVICE = ("cuda" if torch.cuda.is_available()
+              else "mps" if torch.backends.mps.is_available()
+              else "cpu")
+    classifier = pipeline("sentiment-analysis", model=model_id, device=DEVICE)
     reviews = ["The movie was engaging and beautifully acted.",
                "The story was dull and the ending made no sense."]
     for text, result in zip(reviews, classifier(reviews, truncation=True, max_length=512)):

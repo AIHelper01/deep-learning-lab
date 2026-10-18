@@ -2,7 +2,8 @@
 
 Each source path below is relative to the original project root. The English counterpart
 has the same module-relative path unless stated otherwise. This map records the original adaptation. The current Chinese detection lesson has since
-been updated to YOLO26n as well; its older PaddleYOLO notebook remains available as historical material.
+been updated to YOLO26n as well; its older PaddleYOLO notebook stays in the same `notebooks/` folder as read-only
+history, next to the current lesson.
 
 | Source case | English counterpart | Changes |
 |---|---|---|
@@ -11,7 +12,7 @@ been updated to YOLO26n as well; its older PaddleYOLO notebook remains available
 | `01-image-classification/notebooks/03-resnet-cifar10.ipynb` | Same path | ResNet18 transfer learning, documented normalization and frozen backbone |
 | `01-image-classification/notebooks/extensions/04-lenet-custom-data.ipynb` | Same path | MNIST exported to English ImageFolder classes replaces unavailable LEDNUM; domain change explicitly documented |
 | `01-image-classification/archive/01-lenet-mnist-copy1.ipynb` | Same path | Compact English comparison edition, separate experiment output |
-| `02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb` | `02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb` | Ultralytics YOLO26n; validated English detection labels; original PaddleYOLO lesson preserved |
+| `02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb` | `02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb` | Ultralytics YOLO26n; validated English detection labels; the original PaddleYOLO lesson is preserved in place in the same folder, read-only and never executed |
 | `03-sentiment-analysis/pytorch/notebooks/01-nlp-overview.ipynb` | Same path | English tasks, examples, tokenization and evaluation concepts |
 | `03-sentiment-analysis/pytorch/notebooks/02-word-embeddings.ipynb` | Same path | English IMDb training text → Word2Vec → PyTorch Embedding → PCA |
 | `03-sentiment-analysis/pytorch/notebooks/03-lstm-sentiment.ipynb` | Same path | IMDb replaces Chinese reviews; English regex tokenizer; packed sequences; negative/positive labels |
@@ -41,4 +42,4 @@ and requires the PyTorch environment for it; no Chinese ERNIE model is loaded.
 
 ## Shared current detection lesson
 
-Both languages now use YOLO26n and the official melikeavan RPS v1 YOLO26 export. The Chinese lesson is `02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb` at the repository root; it shares the English detection environment and verified dataset but writes separate outputs. Format conversion and Xiaotudui Labs inspection are a [separate topic](../../04-dataset-formats/README.md).
+Both languages now use YOLO26n and the official melikeavan RPS v1 YOLO26 export. The Chinese lesson is `02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb` at the repository root; it shares the English detection environment and verified dataset but writes separate outputs. Format conversion and Xiaotudui Labs inspection are a [separate topic](../02-object-detection/dataset-formats/README.md).

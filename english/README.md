@@ -33,12 +33,13 @@ See the [adaptation map](docs/adaptation-map.md) for every original case and its
 
 The notebooks retain locally executed outputs, including charts and predictions.
 Use the uv launcher in [environment setup](docs/environment-setup.md). Current detection
-runs on Python 3.12.12, PyTorch 2.14.1+cpu, and Ultralytics 8.4.177; other lessons retain
+runs on Python 3.12.12, PyTorch 2.14.1, and Ultralytics 8.4.177; other lessons retain
 their recorded environments. Classification and NLP saved outputs use their documented
 classroom parameters. Detection now uses the official melikeavan RPS v1 YOLO26 export:
-3,939 training, 338 validation, and 186 test images. The current one-epoch full-data CPU
-check reached test mAP50 0.7266 and mAP50-95 0.4535 in 683.77 seconds end to end.
-It is not the default ten-epoch lesson result. Previous mirror-trained outputs are archived.
+3,939 training, 338 validation, and 186 test images. The delivered English lesson ran the
+default ten epochs on Apple Silicon MPS in 1161.8 seconds and reached test mAP50 0.9410
+and mAP50-95 0.7467. Previous mirror-trained outputs are archived.
 See [execution reports](reports/README.md) for the scope and current Chinese run.
-GPU execution has not been validated. Dataset conversion and Xiaotudui Labs inspection
-are a [separate topic](../04-dataset-formats/README.md).
+CUDA execution has not been validated; on Apple silicon the lessons select MPS. Dataset
+conversion and Xiaotudui Labs inspection
+are a [separate topic](02-object-detection/dataset-formats/README.md).

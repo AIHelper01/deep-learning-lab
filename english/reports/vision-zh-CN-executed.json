@@ -1,0 +1,53 @@
+{
+  "group": "vision",
+  "language": "zh-CN",
+  "python": "3.12.12",
+  "executable": "/Users/will/env_dl_uv/.venv/bin/python",
+  "results": [
+    {
+      "notebook": "../01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
+      "status": "passed",
+      "run_mode": "Default classroom training parameters",
+      "seconds": 36.8,
+      "code_cells": 15,
+      "output_items": 19,
+      "png_outputs": 5
+    },
+    {
+      "notebook": "../01-image-classification/notebooks/01-lenet-mnist.ipynb",
+      "status": "passed",
+      "run_mode": "Default classroom training parameters",
+      "seconds": 5.69,
+      "code_cells": 9,
+      "output_items": 13,
+      "png_outputs": 3
+    },
+    {
+      "notebook": "../01-image-classification/notebooks/02-lenet-cifar10.ipynb",
+      "status": "passed",
+      "run_mode": "Default classroom training parameters",
+      "seconds": 7.0,
+      "code_cells": 9,
+      "output_items": 14,
+      "png_outputs": 3
+    },
+    {
+      "notebook": "../01-image-classification/notebooks/03-resnet-cifar10.ipynb",
+      "status": "passed",
+      "run_mode": "Default classroom training parameters",
+      "seconds": 79.78,
+      "code_cells": 9,
+      "output_items": 14,
+      "png_outputs": 3
+    },
+    {
+      "notebook": "../01-image-classification/notebooks/extensions/04-lenet-custom-data.ipynb",
+      "status": "passed",
+      "run_mode": "Default classroom training parameters",
+      "seconds": 5.73,
+      "code_cells": 9,
+      "output_items": 14,
+      "png_outputs": 3
+    }
+  ]
+}

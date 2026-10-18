@@ -14,4 +14,4 @@ Notebook 的中文说明、代码及历史输出均保留。名称含 Copy1 的 
 
 Paddle 版情感分析需要 paddlenlp>=2.6,<3.0。依赖文件沿用原项目，未安装依赖或执行训练；其中平台相关依赖需要结合操作系统与 GPU 环境选择。
 
-详见 [迁移说明](迁移说明.md) 和 [文件清单](migration-manifest.json)。
+详见 [迁移说明](migration-notes.md) 和 [文件清单](migration-manifest.json)。

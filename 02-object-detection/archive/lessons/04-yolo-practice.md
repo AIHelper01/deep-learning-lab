@@ -6,7 +6,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/6a03b4c34aab474ea3d3f11a811c28f7f0927553d2b74003b5ebb9a20c297416" width = "700"></center>
+<center><img src="../assets/lessons-57.png" width = "700"></center>
 <center><br>图1：基本的视觉任务研发全流程</br></center>
 
 <br></br>
@@ -18,7 +18,7 @@
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/d26c234a73b249e59cabc0d4b7ff9b03491b7b4fc7fc49eeb2dcaaef70f5c79b" width = "700"></center>
+<center><img src="../assets/lessons-58.png" width = "700"></center>
 <center><br>图2：通用的视觉任务研发全流程</br></center>
 
 <br></br>
@@ -445,7 +445,7 @@ visualize(srcimg, img_enhance)
 
 
 
-![png](../../assets/image/output_19_1.png)
+![png](../assets/lessons-67.png)
 
 
 #### **随机填充**
@@ -497,7 +497,7 @@ visualize(srcimg, img_enhance)
 ```
 
 
-![png](../../assets/image/output_21_0.png)
+![png](../assets/lessons-68.png)
 
 
 #### **随机缩放**
@@ -533,7 +533,7 @@ print('src image shape:{}, resize imgage shape:{}'.format(srcimg.shape, img_enha
 
 
 
-![png](../../assets/image/output_23_1.png)
+![png](../assets/lessons-69.png)
 
 
 #### **随机翻转**
@@ -554,7 +554,7 @@ visualize(srcimg, img_enhance)
 ```
 
 
-![png](../../assets/image/output_25_0.png)
+![png](../assets/lessons-70.png)
 
 
 #### **随机打乱真实框排列顺序**
@@ -598,7 +598,7 @@ visualize(srcimg, img_enhance)
 
 
 
-![png](../../assets/image/output_29_1.png)
+![png](../assets/lessons-71.png)
 
 
 
@@ -852,7 +852,7 @@ def get_loss(num_classes, outputs, gtbox, gtlabel, gtscore=None,
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/736da9cd3a4f4a1c98187a6cdf1a0334af73470b6d7c4b2fbaa9660d4bd20621" width = "600"></center>
+<center><img src="../assets/lessons-59.jpg" width = "600"></center>
 <center><br>图3：端到端训练流程 </br></center>
 
 <br></br>
@@ -1238,7 +1238,7 @@ if __name__ == '__main__':
 
 <br></br>
 
-<center><img src="https://ai-studio-static-online.cdn.bcebos.com/15c140b1844d419cbe237b1a70f4099266aa168c05dc413f8e232f688050fa75" width = "400"></center>
+<center><img src="../assets/lessons-60.png" width = "400"></center>
 <center><br>图4：预测流程 </br></center>
 
 <br></br>
@@ -1343,7 +1343,7 @@ draw_results(result, image_name, draw_thresh=0.4)
 ```
 
 
-![png](../../assets/image/output_60_0.png)
+![png](../assets/lessons-73.png)
 
 
 通过上面的程序，清晰的给读者展示了如何使用训练好的权重，对图片进行预测并将结果可视化。最终输出的图片上，检测出了每个昆虫，标出了它们的边界框和具体类别。

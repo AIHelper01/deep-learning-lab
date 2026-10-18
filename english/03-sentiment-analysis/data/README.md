@@ -9,3 +9,14 @@ Run an embeddings or LSTM notebook to download and prepare data. `common/course_
 Local files are `data/imdb/train.jsonl`, `validation.jsonl`, `test.jsonl`, the downloaded archive, and `provenance.json` under this module. Keep the archive README and cite Maas et al. (2011). Chinese ChnSentiCorp data and vocabularies are separate.
 
 See the [dataset catalog](../../../docs/datasets.md#imdb) and [preparation details](../../docs/datasets.md#english-sentiment-analysis). Pretrained DistilBERT is a separate model resource; it does not replace the IMDb training data. Data files are excluded from Git.
+
+## From DataSet staging (cp method)
+
+```bash
+# stage the original archive, then let the notebook expand it into jsonl + provenance.json
+cp /workspace/DataSet/nlp/imdb/aclImdb_v1.tar.gz data/imdb/
+```
+
+## Download method
+
+`curl -LO https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz` (SHA-256 recorded in `/workspace/DataSet/nlp/DOWNLOAD.md`) into `data/imdb/`. Running any embeddings/LSTM notebook expands the archive in place into `train.jsonl`, `validation.jsonl`, `test.jsonl` and writes `provenance.json`; re-running reuses the staged archive without another download.

@@ -1,11 +1,109 @@
 {
-  "notebooks": 14,
+  "notebooks": 28,
   "results": [
+    {
+      "notebook": "../01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
+      "code_cells": 15,
+      "executed_cells": 15,
+      "output_items": 19,
+      "embedded_images": 5
+    },
+    {
+      "notebook": "../01-image-classification/notebooks/01-lenet-mnist.ipynb",
+      "code_cells": 9,
+      "executed_cells": 9,
+      "output_items": 13,
+      "embedded_images": 3
+    },
+    {
+      "notebook": "../01-image-classification/notebooks/02-lenet-cifar10.ipynb",
+      "code_cells": 9,
+      "executed_cells": 9,
+      "output_items": 14,
+      "embedded_images": 3
+    },
+    {
+      "notebook": "../01-image-classification/notebooks/03-resnet-cifar10.ipynb",
+      "code_cells": 9,
+      "executed_cells": 9,
+      "output_items": 14,
+      "embedded_images": 3
+    },
+    {
+      "notebook": "../01-image-classification/notebooks/extensions/04-lenet-custom-data.ipynb",
+      "code_cells": 9,
+      "executed_cells": 9,
+      "output_items": 14,
+      "embedded_images": 3
+    },
+    {
+      "notebook": "../02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
+      "code_cells": 7,
+      "executed_cells": 7,
+      "output_items": 12,
+      "embedded_images": 4
+    },
+    {
+      "notebook": "../02-object-detection/notebooks/02-yolo26-vehicle-counting.ipynb",
+      "code_cells": 13,
+      "executed_cells": 13,
+      "output_items": 19,
+      "embedded_images": 7
+    },
+    {
+      "notebook": "../03-sentiment-analysis/paddle/notebooks/01-nlp-overview.ipynb",
+      "code_cells": 3,
+      "executed_cells": 3,
+      "output_items": 5,
+      "embedded_images": 0
+    },
+    {
+      "notebook": "../03-sentiment-analysis/paddle/notebooks/02-word-embeddings.ipynb",
+      "code_cells": 7,
+      "executed_cells": 7,
+      "output_items": 12,
+      "embedded_images": 1
+    },
+    {
+      "notebook": "../03-sentiment-analysis/paddle/notebooks/03-lstm-sentiment.ipynb",
+      "code_cells": 8,
+      "executed_cells": 8,
+      "output_items": 14,
+      "embedded_images": 1
+    },
+    {
+      "notebook": "../03-sentiment-analysis/pytorch/notebooks/01-nlp-overview.ipynb",
+      "code_cells": 3,
+      "executed_cells": 3,
+      "output_items": 5,
+      "embedded_images": 0
+    },
+    {
+      "notebook": "../03-sentiment-analysis/pytorch/notebooks/02-word-embeddings.ipynb",
+      "code_cells": 7,
+      "executed_cells": 7,
+      "output_items": 11,
+      "embedded_images": 1
+    },
+    {
+      "notebook": "../03-sentiment-analysis/pytorch/notebooks/03-lstm-sentiment.ipynb",
+      "code_cells": 8,
+      "executed_cells": 8,
+      "output_items": 14,
+      "embedded_images": 1
+    },
+    {
+      "notebook": "../03-sentiment-analysis/pytorch/notebooks/04-pretrained-chinese-sentiment.ipynb",
+      "code_cells": 3,
+      "executed_cells": 3,
+      "output_items": 5,
+      "embedded_images": 0
+    },
     {
       "notebook": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
       "code_cells": 8,
       "executed_cells": 8,
-      "output_items": 371,
+      "output_items": 11,
       "embedded_images": 2
     },
     {
@@ -19,14 +117,14 @@
       "notebook": "01-image-classification/notebooks/02-lenet-cifar10.ipynb",
       "code_cells": 9,
       "executed_cells": 9,
-      "output_items": 15,
+      "output_items": 13,
       "embedded_images": 3
     },
     {
       "notebook": "01-image-classification/notebooks/03-resnet-cifar10.ipynb",
       "code_cells": 9,
       "executed_cells": 9,
-      "output_items": 373,
+      "output_items": 13,
       "embedded_images": 3
     },
     {
@@ -44,6 +142,13 @@
       "embedded_images": 4
     },
     {
+      "notebook": "02-object-detection/notebooks/02-yolo26-vehicle-counting.ipynb",
+      "code_cells": 13,
+      "executed_cells": 13,
+      "output_items": 19,
+      "embedded_images": 7
+    },
+    {
       "notebook": "03-sentiment-analysis/paddle/notebooks/01-nlp-overview.ipynb",
       "code_cells": 3,
       "executed_cells": 3,
@@ -54,7 +159,7 @@
       "notebook": "03-sentiment-analysis/paddle/notebooks/02-word-embeddings.ipynb",
       "code_cells": 7,
       "executed_cells": 7,
-      "output_items": 9,
+      "output_items": 13,
       "embedded_images": 1
     },
     {
@@ -75,7 +180,7 @@
       "notebook": "03-sentiment-analysis/pytorch/notebooks/02-word-embeddings.ipynb",
       "code_cells": 7,
       "executed_cells": 7,
-      "output_items": 9,
+      "output_items": 11,
       "embedded_images": 1
     },
     {
@@ -89,15 +194,8 @@
       "notebook": "03-sentiment-analysis/pytorch/notebooks/04-pretrained-english-sentiment.ipynb",
       "code_cells": 3,
       "executed_cells": 3,
-      "output_items": 7,
+      "output_items": 5,
       "embedded_images": 0
-    },
-    {
-      "notebook": "../02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb",
-      "code_cells": 7,
-      "executed_cells": 7,
-      "output_items": 11,
-      "embedded_images": 4
     }
   ],
   "problems": []

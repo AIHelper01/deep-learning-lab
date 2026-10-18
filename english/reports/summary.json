@@ -3,15 +3,15 @@
   "run_status": "completed",
   "notebooks_total": 14,
   "notebooks_passed": 14,
-  "scope": "13 English course notebooks have verified saved outputs; current English/Chinese detection notebooks were independently re-executed on official RPS v1 for one CPU epoch. Other saved course runs remain historical.",
+  "scope": "13 English course notebooks have verified saved outputs; the current English and Chinese detection notebooks were re-executed end to end on official RPS v1 with the classroom default ten epochs on Apple silicon MPS. Other saved course runs remain historical.",
   "current_detection_source": "https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs/dataset/1",
   "real_rps_dataset": "Official v1 YOLO26 export, train 3939 images/4610 boxes, validation 338/400, test 186/204; original splits and boxes preserved.",
-  "detection_scope": "One actual full-data epoch, 320 pixels, batch 8, seed 42, CPU; not smoke mode or default ten-epoch training.",
+  "detection_scope": "Classroom defaults: ten epochs, 320 pixels, batch 8, seed 42, device mps; all 3,939 training images. Not smoke mode.",
   "detection_runs": "rps-v1-run-summary.json",
-  "detection_test_map50": 0.726625100288458,
-  "detection_test_map50_95": 0.45354225390338176,
+  "detection_test_map50": 0.9409942451806544,
+  "detection_test_map50_95": 0.7467232233704099,
   "python_detection": "3.12.12",
-  "torch_detection": "2.14.1+cpu",
+  "torch_detection": "2.14.1",
   "ultralytics_detection": "8.4.177",
   "gpu_tested": false,
   "static_checks": {
@@ -20,7 +20,7 @@
     "problems": 0
   },
   "saved_output_problems": 0,
-  "format_conversion_validation": "../../04-dataset-formats/reports/validation.json",
+  "format_conversion_validation": "english/reports/dataset-formats-validation.json",
   "original_course_integrity": "original-course-integrity.json is historical and does not describe current documentation changes.",
   "cleanup": "No local dataset or run cleanup was performed. The superseded VOC conversion is excluded from default training.",
   "historical_2026_10_15": {
@@ -47,5 +47,11 @@
     "saved_output_problems": 0,
     "detection_scope": "full ten-epoch classroom run at 320 pixels on the real Rock Paper Scissors export; 2127 CPU seconds; run folder rps-yolo26n-5 with evaluation-8; the run reproduced identical metrics from seed=42 and deterministic=True",
     "detection_training_seconds": 2127.07
-  }
+  },
+  "device_detection": "mps",
+  "detection_seconds": {
+    "en": 1161.8,
+    "zh-CN": 1163.89
+  },
+  "device_note": "The notebooks choose cuda, then mps, then cpu. Apple silicon MPS is verified; CUDA has not been validated. On MPS the Ultralytics determinism switch hits index_put_with_accumulate_mps, which has no deterministic implementation, so reruns agree in aggregate rather than bit for bit."
 }

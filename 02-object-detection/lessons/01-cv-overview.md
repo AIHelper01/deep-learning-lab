@@ -53,7 +53,7 @@ Transformer 与 Diffusion 如何改变 CV
 
 ### 推荐配图
 
-![人类视觉感知](https://ai-studio-static-online.cdn.bcebos.com/70d8475ed908487680057bf1f2760f10e367e7176acf43ebb380207b748b2377)
+![人类视觉感知](../assets/lessons-1.png)
 
 ---
 
@@ -102,37 +102,37 @@ PPT 页面可以采用左右对照：
 
 图像分类为整张图像分配类别标签。
 
-![图像分类示意图](https://ai-studio-static-online.cdn.bcebos.com/368c6656e0364563b5d26e0f81b94755dba944a271c14b18bc112c3d6ea6d106)
+![图像分类示意图](../assets/lessons-2.jpg)
 
 ### 目标检测
 
 目标检测不仅要识别物体类别，还要确定物体在图像中的位置。
 
-![目标检测示意图](https://ai-studio-static-online.cdn.bcebos.com/3d28910e9b3c486fbdaf68ddcee5913621c412777735461eb8f2a43701b1d1f4)
+![目标检测示意图](../assets/lessons-3.jpg)
 
 ### 图像分割
 
 图像分割对每个像素进行分类，能够获得比边界框更精细的物体轮廓。
 
-![图像分割示意图](https://ai-studio-static-online.cdn.bcebos.com/a54407135cbb4267b060d8d106bc6cf0e261a91ec2c04c44bc1993fbf1edb8cc)
+![图像分割示意图](../assets/lessons-4.jpg)
 
 ### OCR
 
 OCR（Optical Character Recognition，光学字符识别）用于检测并识别图像中的文字。
 
-![OCR示意图](https://ai-studio-static-online.cdn.bcebos.com/682ac28a5bb14ae0b330d96ae17f89eb10f29d217a5449f380c203ff2ead7d3e)
+![OCR示意图](../assets/lessons-5.jpg)
 
 ### 视频分析
 
 视频可以看成按照时间排列的图像序列。视频分析不仅需要理解单帧画面，还要建模帧与帧之间的时间关系。
 
-![视频分析任务](https://ai-studio-static-online.cdn.bcebos.com/4de45b562f794553bbc8c3e156d347e412fdb60941d14afa9f99d775887865ca)
+![视频分析任务](../assets/lessons-6.jpg)
 
 ### 图像生成
 
 图像生成关注如何根据噪声、文本、参考图像或其他条件生成新的视觉内容。
 
-![图像生成示意图](https://ai-studio-static-online.cdn.bcebos.com/9fc39a8a1f194845ac8258af0132f6b6817129e83c4f455386c11f68e711e207)
+![图像生成示意图](../assets/lessons-7.jpg)
 
 ---
 
@@ -153,7 +153,7 @@ OCR（Optical Character Recognition，光学字符识别）用于检测并识别
 | 数据问题 | 标注成本高，类别分布可能不均衡 |
 | 工程约束 | 实际系统通常还有实时性、功耗和算力限制 |
 
-![视觉任务的典型挑战](https://ai-studio-static-online.cdn.bcebos.com/90513f72043a4ec3bb74560c1014822292211a27c39641f9b9b732b83cdb09bd)
+![视觉任务的典型挑战](../assets/lessons-8.png)
 
 > CV 模型需要学习的不是某一张图片，而是在各种变化条件下仍然稳定存在的视觉特征。
 
@@ -171,7 +171,7 @@ OCR（Optical Character Recognition，光学字符识别）用于检测并识别
 | 互联网 | 图像搜索、内容审核、商品识别 |
 | 内容创作 | 文生图、图像编辑、视频生成 |
 
-![计算机视觉应用](https://ai-studio-static-online.cdn.bcebos.com/93476b373dd342d1aae22397aa24c58fc60ab68307fd448189f16c8284723e9d)
+![计算机视觉应用](../assets/lessons-9.png)
 
 ---
 
@@ -207,7 +207,7 @@ Diffusion / DiT
 3. 使用 SVM 判断候选区域是否包含行人；
 4. 使用 NMS 去除重复检测框。
 
-![传统行人检测流程](https://ai-studio-static-online.cdn.bcebos.com/d1468aff55cf4e68a504cd876b1e017c4d1cd2f9dc90494eaaff4c80ec03c32e)
+![传统行人检测流程](../assets/lessons-10.jpg)
 
 传统方法的主要限制是：模型效果高度依赖人工设计的特征，跨场景迁移能力有限。
 
@@ -246,7 +246,7 @@ Diffusion / DiT
 | 层级提取 | 逐层组合边缘、纹理、部件和语义特征 |
 | 平移等变 | 物体位置变化时，相应特征也随位置移动 |
 
-![经典CNN结构](https://ai-studio-static-online.cdn.bcebos.com/2fd7d49a775e4e9c93293d49ecd60cdc734bf44c0eb24b4cb57a34f059b25824)
+![经典CNN结构](../assets/lessons-11.jpg)
 
 ---
 
@@ -317,7 +317,7 @@ $$
 
 在亮度相同的区域，左右像素差接近 0；当卷积核跨越明暗边界时，输出的绝对值会明显增大。
 
-![黑白边界检测结果](../assets/image/output_11_1.png)
+![黑白边界检测结果](../assets/lessons-42.png)
 
 ### 案例二：检测物体轮廓
 
@@ -342,7 +342,7 @@ $$
 
 平坦区域的输出接近 0，亮度变化明显的边缘区域会产生较强响应。
 
-![物体轮廓检测结果](../assets/image/output_14_0.png)
+![物体轮廓检测结果](../assets/lessons-44.png)
 
 ### 案例三：均值模糊
 
@@ -369,7 +369,7 @@ $$
 
 均值卷积能够降低局部噪声，但也会模糊边缘与细节。
 
-![均值模糊结果](../assets/image/output_16_0.png)
+![均值模糊结果](../assets/lessons-46.png)
 
 ---
 
@@ -451,7 +451,7 @@ $$
 - $C_{out}$：输出通道数，也可以理解为卷积核的个数；
 - 每个输出通道可以学习关注不同的特征模式。
 
-![多输出通道卷积](https://ai-studio-static-online.cdn.bcebos.com/cf1fbddc141349e4b7aaeade9a201b78a16d249e069c4f8aaeb77e0ea1a95c31)
+![多输出通道卷积](../assets/lessons-12.png)
 
 ---
 
@@ -467,7 +467,7 @@ $$
 | 平均池化 | 取窗口内平均值 | 保留区域整体统计信息 |
 | 全局平均池化 | 对整张特征图求平均 | 将每个通道压缩为一个数值 |
 
-![池化示意图](https://ai-studio-static-online.cdn.bcebos.com/a6aa47e61daa44629bc787e489e303a2029f7654ba3349098cf7bf2c8c05eaa5)
+![池化示意图](../assets/lessons-13.jpg)
 
 ### 激活函数：引入非线性
 
@@ -481,7 +481,7 @@ $$
 
 与 Sigmoid 和 Tanh 相比，ReLU 在正区间的梯度为 1，有助于缓解深层网络中的梯度消失问题。
 
-![ReLU函数](https://ai-studio-static-online.cdn.bcebos.com/bce1d67a67414749b0653e0c9fbf7314f22b9e01878548dbad1bb72ed3335a57)
+![ReLU函数](../assets/lessons-14.jpg)
 
 ### Batch Normalization：稳定中间特征分布
 
@@ -496,13 +496,13 @@ Batch Normalization 对一个 mini-batch 中的中间特征进行标准化，再
 | GroupNorm | 分组后的通道与空间维度 | 小 batch 场景更稳定 |
 | InstanceNorm | 单样本、单通道的空间维度 | 常用于图像风格任务 |
 
-![归一化方法对比](https://ai-studio-static-online.cdn.bcebos.com/5aec4af01eb8451eb1695657a0bbc7e20181d7cd7e7b4136b04f9b2dedaca5c8)
+![归一化方法对比](../assets/lessons-15.png)
 
 ### Dropout：降低神经元之间的过度依赖
 
 训练时，Dropout 随机将一部分神经元输出设置为 0，使模型不能长期依赖少量固定特征，从而起到正则化作用。
 
-![Dropout示意图](https://ai-studio-static-online.cdn.bcebos.com/65f8e486bae94b349d296f83663849759b4cbf777d4e4f96a81bae47a93c3e77)
+![Dropout示意图](../assets/lessons-16.jpg)
 
 ### 一页总结
 
@@ -534,7 +534,7 @@ Backbone：提取视觉特征
 
 分类任务虽然输出形式简单，却是目标检测、图像分割和图像检索等任务的重要基础。
 
-![ImageNet数据集示意](https://ai-studio-static-online.cdn.bcebos.com/13eab4d6c64648f5a61702f56bbec5e951b5f9fadd7f4a269c7795e3e69954c6)
+![ImageNet数据集示意](../assets/lessons-17.jpg)
 
 ---
 
@@ -560,7 +560,7 @@ $$
 y\approx x
 $$
 
-![ResNet残差块](https://ai-studio-static-online.cdn.bcebos.com/4c3bd130c3e04a739840159c2a4bf3f001662ec96760440cbcf9df19678faa68)
+![ResNet残差块](../assets/lessons-18.jpg)
 
 残差连接带来的关键价值：
 
@@ -582,7 +582,7 @@ ResNet-50 等模型常使用 $1\times1$、$3\times3$、$1\times1$ 的瓶颈结�
 输出通道
 ```
 
-![ResNet瓶颈结构](https://ai-studio-static-online.cdn.bcebos.com/1316fd225097464e9afa14ab084bad8211de59cb3dcb46c18d9e5e9688c08c1a)
+![ResNet瓶颈结构](../assets/lessons-19.jpg)
 
 ---
 
@@ -597,7 +597,7 @@ ResNet-50 等模型常使用 $1\times1$、$3\times3$、$1\times1$ 的瓶颈结�
 | 图像分类 | 整张图像的类别 |
 | 目标检测 | 多个物体的类别、置信度和位置 |
 
-![分类与检测对比](https://ai-studio-static-online.cdn.bcebos.com/e25116d994724f83abe3bef7f033c1c89bf34e083075494bb7833947c557f4fc)
+![分类与检测对比](../assets/lessons-20.png)
 
 一个常见检测结果可以表示为：
 
@@ -618,7 +618,7 @@ $$
 - $xyxy$：左上角和右下角坐标 $(x_1,y_1,x_2,y_2)$；
 - $xywh$：中心坐标与宽高 $(x,y,w,h)$。
 
-![边界框](https://ai-studio-static-online.cdn.bcebos.com/f581e1bfd07a414596368c9c03a1b30ea115a2e30a014be68b2c26961f5c38fa)
+![边界框](../assets/lessons-21.png)
 
 ### IoU
 
@@ -631,7 +631,7 @@ $$
 - IoU 越接近 1，两个框越重合；
 - IoU 越接近 0，两个框的重合程度越低。
 
-![IoU示意图](https://ai-studio-static-online.cdn.bcebos.com/c2095c01997044f8a054d676ab585f3beed4400961ea40379771a1fd6d8bf2ea)
+![IoU示意图](../assets/lessons-22.png)
 
 PPT 主讲时保留概念和图示即可，坐标级交集面积推导建议放入附录。
 
@@ -660,9 +660,9 @@ PPT 主讲时保留概念和图示即可，坐标级交集面积推导建议放�
 得到最终检测结果
 ```
 
-![NMS前的候选框](../assets/image/output_12_0.png)
+![NMS前的候选框](../assets/lessons-43.png)
 
-![NMS后的检测框](../assets/image/output_15_1.png)
+![NMS后的检测框](../assets/lessons-45.png)
 
 ---
 
@@ -677,7 +677,7 @@ PPT 主讲时保留概念和图示即可，坐标级交集面积推导建议放�
 
 > 两阶段、单阶段与 Anchor-Free 不是完全互斥的分类维度。单阶段和两阶段描述检测流程，Anchor-Based 与 Anchor-Free 描述候选框或位置表示方式。
 
-![目标检测算法路线](https://ai-studio-static-online.cdn.bcebos.com/485c16915ae2433d93a646b0b7576991389780b3c5204e53aed48356af74e8c3)
+![目标检测算法路线](../assets/lessons-23.jpg)
 
 ---
 
@@ -701,7 +701,7 @@ NMS 去除重复框
 最终检测结果
 ```
 
-![YOLOv3预测流程](https://ai-studio-static-online.cdn.bcebos.com/e92ba2985c474efa8e83b17289b0534c8ffc616cb8c3441c8d268936d90bc571)
+![YOLOv3预测流程](../assets/lessons-24.png)
 
 ### Backbone、Neck 与 Head
 
@@ -711,7 +711,7 @@ NMS 去除重复框
 | Neck | 融合不同尺度的特征，增强多尺度表达 |
 | Head | 预测目标类别、置信度和边界框位置 |
 
-![YOLOv3结构](https://ai-studio-static-online.cdn.bcebos.com/682c9a2807ed4b34b5ef575e56d4c629623c5e2d86a442b6b49d32decd1f821c)
+![YOLOv3结构](../assets/lessons-25.jpg)
 
 PPT 主讲建议聚焦整体流程与三个模块的分工。锚框生成、坐标变换、标签分配和损失函数代码可放入实践课或技术附录。
 
@@ -745,7 +745,7 @@ Transformer Encoder
 Classification Head
 ```
 
-![ViT结构](https://githubraw.cdn.bcebos.com/PaddlePaddle/docs/develop/docs/practices/cv/sample_img/image_classification_ViT_1.jpg)
+![ViT结构](../assets/lessons-26.png)
 
 CNN 与 ViT 的关注重点不同：
 

@@ -14,6 +14,6 @@
 
 采用 [Rock-Paper-Scissors v1](https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs/dataset/1) 的原始 3,939/338/186 划分，模型 `yolo26n.pt`，原编号 `0=paper、1=rock、2=scissors`。`n` 表示此处选择的 nano 模型规模。框架、数据版本和随机种子都应随结果记录。
 
-[继续实践](04-yolo-practice.md)；[格式转换与查看器专题](../../04-dataset-formats/README.zh-CN.md)单独讨论文件格式与坐标约定，不在本节重新实现数据处理。
+[继续实践](04-yolo-practice.md)；本模块第二个案例[车流量统计 Notebook](../notebooks/02-yolo26-vehicle-counting.ipynb) 在同一套检测输出上加入计数与过线判定。[格式转换与查看器专题](../dataset-formats/README.md)单独讨论文件格式与坐标约定，不在本节重新实现数据处理。
 
 旧讲义保存在 [archive/lessons/](../archive/lessons/03-yolo-theory.md)，其中历史架构内容不代表本次实跑模型。

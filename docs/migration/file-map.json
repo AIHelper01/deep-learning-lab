@@ -1,5 +1,6 @@
 {
   "backup": "E:\\deep-learning-lab-backup-20261015-092728.zip",
+  "filename-normalization": "2026-10-18: the two archived Chinese file names were renamed to ASCII so every path in the repository is ASCII; the \"old\" column keeps the historical names.",
   "files": [
     {
       "old": "migration-manifest.json",
@@ -11,11 +12,11 @@
     },
     {
       "old": "迁移说明.md",
-      "new": "docs/migration/original/迁移说明.md"
+      "new": "docs/migration/original/migration-notes.md"
     },
     {
       "old": "项目导览.md",
-      "new": "docs/migration/original/项目导览.md"
+      "new": "docs/migration/original/project-tour.md"
     },
     {
       "old": "2.1深度学习-ImageClassification/.python-version",
@@ -51,7 +52,7 @@
     },
     {
       "old": "2.2深度学习-ObjectDetection/基于YOLOv11完成剪刀石头布目标检测.ipynb",
-      "new": "02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb"
+      "new": "02-object-detection/archive/legacy-notebooks/01-yolo11-rock-paper-scissors.ipynb"
     },
     {
       "old": "2.2深度学习-ObjectDetection/理解卷积.md",
@@ -107,83 +108,83 @@
     },
     {
       "old": "2.2深度学习-ObjectDetection/assets/image1.png",
-      "new": "02-object-detection/assets/assets/image1.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/legacy-notebooks-1.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/assets/image2.png",
-      "new": "02-object-detection/assets/assets/image2.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/legacy-notebooks-2.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/arXiv-2509.25164-v2.0-figure-1.png",
-      "new": "02-object-detection/assets/image/arXiv-2509.25164-v2.0-figure-1.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-61.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/arXiv-2509.25164-v2.0-figure-2.png",
-      "new": "02-object-detection/assets/image/arXiv-2509.25164-v2.0-figure-2.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-62.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/arXiv-2509.25164-v2.0-figure-3.png",
-      "new": "02-object-detection/assets/image/arXiv-2509.25164-v2.0-figure-3.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-63.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/arXiv-2509.25164-v2.0-figure-4.png",
-      "new": "02-object-detection/assets/image/arXiv-2509.25164-v2.0-figure-4.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-64.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_11_1.png",
-      "new": "02-object-detection/assets/image/output_11_1.png"
+      "new": "02-object-detection/02-object-detection/assets/lessons-42.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_12_0.png",
-      "new": "02-object-detection/assets/image/output_12_0.png"
+      "new": "02-object-detection/02-object-detection/assets/lessons-43.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_14_0.png",
-      "new": "02-object-detection/assets/image/output_14_0.png"
+      "new": "02-object-detection/02-object-detection/assets/lessons-44.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_14_1.png",
-      "new": "02-object-detection/assets/image/output_14_1.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-65.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_15_1.png",
-      "new": "02-object-detection/assets/image/output_15_1.png"
+      "new": "02-object-detection/02-object-detection/assets/lessons-45.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_16_0.png",
-      "new": "02-object-detection/assets/image/output_16_0.png"
+      "new": "02-object-detection/02-object-detection/assets/lessons-46.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_17_1.png",
-      "new": "02-object-detection/assets/image/output_17_1.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-66.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_19_1.png",
-      "new": "02-object-detection/assets/image/output_19_1.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-67.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_21_0.png",
-      "new": "02-object-detection/assets/image/output_21_0.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-68.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_23_1.png",
-      "new": "02-object-detection/assets/image/output_23_1.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-69.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_25_0.png",
-      "new": "02-object-detection/assets/image/output_25_0.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-70.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_29_1.png",
-      "new": "02-object-detection/assets/image/output_29_1.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-71.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_4_1.png",
-      "new": "02-object-detection/assets/image/output_4_1.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-72.png"
     },
     {
       "old": "2.2深度学习-ObjectDetection/image/output_60_0.png",
-      "new": "02-object-detection/assets/image/output_60_0.png"
+      "new": "02-object-detection/02-object-detection/archive/assets/lessons-73.png"
     },
     {
       "old": "2.1深度学习-ImageClassification/LeNet-5/01_LeNet-MNIST手写数字识别分类器-规范版-Copy1.ipynb",

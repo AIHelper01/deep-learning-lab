@@ -13,9 +13,28 @@ def write(path, content):
     path.write_text(textwrap.dedent(content).strip() + '\n', encoding='utf-8')
 
 
+def markdown_source(source):
+    """Dedent lesson prose that was authored inside an indented call.
+
+    ``textwrap.dedent`` finds no common prefix when the opening line sits on the same line as the
+    opening quotes, which left the whole body indented by four spaces - Jupyter then renders
+    explanatory prose as a code block. The first line (a title or heading) stays flush and the rest
+    lose only their shared indentation, so nested lists and fenced code keep their own indentation.
+    """
+    lines = textwrap.dedent(source).strip().split("\n")
+    body = [line for line in lines[1:] if line.strip()]
+    if body:
+        width = min(len(line) - len(line.lstrip(" ")) for line in body)
+        if width:
+            prefix = " " * width
+            lines = [lines[0]] + [line[len(prefix):] if line.startswith(prefix) else line
+                                  for line in lines[1:]]
+    return "\n".join(lines).splitlines(keepends=True)
+
+
 def md(source):
     return {'cell_type': 'markdown', 'id': uuid.uuid4().hex[:8], 'metadata': {},
-            'source': textwrap.dedent(source).strip().splitlines(keepends=True)}
+            'source': markdown_source(source)}
 
 
 def code(source):
@@ -64,7 +83,11 @@ random.seed(SEED)
 np.random.seed(SEED)
 torch.manual_seed(SEED)
 torch.set_num_threads(2)
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+DEVICE = torch.device(
+    "cuda" if torch.cuda.is_available()
+    else "mps" if torch.backends.mps.is_available()
+    else "cpu"
+)
 DATA = COURSE / "01-image-classification" / "data"
 OUTPUT = COURSE / "01-image-classification" / "outputs" / EXPERIMENT
 DATA.mkdir(parents=True, exist_ok=True)
@@ -520,7 +543,11 @@ from torch.nn.utils.rnn import pack_padded_sequence
 
 torch.manual_seed(SEED)
 torch.set_num_threads(2)
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+DEVICE = torch.device(
+    "cuda" if torch.cuda.is_available()
+    else "mps" if torch.backends.mps.is_available()
+    else "cpu"
+)
 
 def make_loader(rows, shuffle=False):
     encoded = [encode(row["text"], vocab, MAX_LENGTH) for row in rows]

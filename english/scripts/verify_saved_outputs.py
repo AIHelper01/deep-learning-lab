@@ -4,13 +4,25 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-paths = sorted(p for folder in [ROOT/'01-image-classification/notebooks',
-                               ROOT/'01-image-classification/archive',
-                               ROOT/'02-object-detection/notebooks',
-                               ROOT/'03-sentiment-analysis/pytorch/notebooks',
-                               ROOT/'03-sentiment-analysis/paddle/notebooks']
-               for p in folder.rglob('*.ipynb') if '.ipynb_checkpoints' not in p.parts)
-paths.append(ROOT.parent/'02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb')
+# English course lives in this directory, the mirrored Chinese course one level up.
+COURSE_ROOTS = [ROOT, ROOT.parent]
+MODULE_DIRS = ['01-image-classification/notebooks',
+               '02-object-detection/notebooks',
+               '03-sentiment-analysis/pytorch/notebooks',
+               '03-sentiment-analysis/paddle/notebooks']
+paths = []
+for course_root in COURSE_ROOTS:
+    for folder in MODULE_DIRS:
+        paths.extend(p for p in (course_root / folder).rglob('*.ipynb')
+                     if '.ipynb_checkpoints' not in p.parts
+                     # The original Chinese PaddleYOLO/YOLO11 lesson is read-only history that
+                     # needs the external PaddleYOLO project, so it is never executed.
+                     and p.stem != '01-yolo11-rock-paper-scissors')
+    archived = course_root / '01-image-classification/archive'
+    if archived.is_dir():
+        paths.extend(p for p in archived.rglob('*.ipynb')
+                     if 'legacy-notebooks' not in p.parts and '.ipynb_checkpoints' not in p.parts)
+paths = sorted(set(paths))
 rows, problems = [], []
 for path in paths:
     nb = json.loads(path.read_text(encoding='utf-8'))

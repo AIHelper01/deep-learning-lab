@@ -2,22 +2,22 @@
   "group": "vision",
   "language": "en",
   "python": "3.12.12",
-  "executable": "E:\\deep-learning-lab\\english\\01-image-classification\\.venv\\Scripts\\python.exe",
+  "executable": "/Users/will/env_dl_uv/.venv/bin/python",
   "results": [
     {
       "notebook": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
       "status": "passed",
       "run_mode": "Default classroom training parameters",
-      "seconds": 79.51,
+      "seconds": 5.17,
       "code_cells": 8,
-      "output_items": 371,
+      "output_items": 11,
       "png_outputs": 2
     },
     {
       "notebook": "01-image-classification/notebooks/01-lenet-mnist.ipynb",
       "status": "passed",
       "run_mode": "Default classroom training parameters",
-      "seconds": 18.69,
+      "seconds": 4.95,
       "code_cells": 9,
       "output_items": 13,
       "png_outputs": 3
@@ -26,25 +26,25 @@
       "notebook": "01-image-classification/notebooks/02-lenet-cifar10.ipynb",
       "status": "passed",
       "run_mode": "Default classroom training parameters",
-      "seconds": 46.57,
+      "seconds": 6.16,
       "code_cells": 9,
-      "output_items": 15,
+      "output_items": 13,
       "png_outputs": 3
     },
     {
       "notebook": "01-image-classification/notebooks/03-resnet-cifar10.ipynb",
       "status": "passed",
       "run_mode": "Default classroom training parameters",
-      "seconds": 748.3,
+      "seconds": 78.57,
       "code_cells": 9,
-      "output_items": 373,
+      "output_items": 13,
       "png_outputs": 3
     },
     {
       "notebook": "01-image-classification/notebooks/extensions/04-lenet-custom-data.ipynb",
       "status": "passed",
       "run_mode": "Default classroom training parameters",
-      "seconds": 74.85,
+      "seconds": 5.47,
       "code_cells": 9,
       "output_items": 14,
       "png_outputs": 3

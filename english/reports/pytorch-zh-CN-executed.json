@@ -1,0 +1,44 @@
+{
+  "group": "pytorch",
+  "language": "zh-CN",
+  "python": "3.12.12",
+  "executable": "/Users/will/env_dl_uv/.venv/bin/python",
+  "results": [
+    {
+      "notebook": "../03-sentiment-analysis/pytorch/notebooks/01-nlp-overview.ipynb",
+      "status": "passed",
+      "run_mode": "Default classroom training parameters",
+      "seconds": 1.42,
+      "code_cells": 3,
+      "output_items": 5,
+      "png_outputs": 0
+    },
+    {
+      "notebook": "../03-sentiment-analysis/pytorch/notebooks/02-word-embeddings.ipynb",
+      "status": "passed",
+      "run_mode": "Default classroom training parameters",
+      "seconds": 6.48,
+      "code_cells": 7,
+      "output_items": 11,
+      "png_outputs": 1
+    },
+    {
+      "notebook": "../03-sentiment-analysis/pytorch/notebooks/03-lstm-sentiment.ipynb",
+      "status": "passed",
+      "run_mode": "Default classroom training parameters",
+      "seconds": 120.25,
+      "code_cells": 8,
+      "output_items": 14,
+      "png_outputs": 1
+    },
+    {
+      "notebook": "../03-sentiment-analysis/pytorch/notebooks/04-pretrained-chinese-sentiment.ipynb",
+      "status": "passed",
+      "run_mode": "Default classroom training parameters",
+      "seconds": 8.33,
+      "code_cells": 3,
+      "output_items": 5,
+      "png_outputs": 0
+    }
+  ]
+}

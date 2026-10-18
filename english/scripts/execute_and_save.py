@@ -19,33 +19,56 @@ def main():
                         choices=['vision','pytorch','paddle','detection'])
     parser.add_argument('--resume', action='store_true')
     parser.add_argument('--language', choices=['en', 'zh-CN'], default='en')
+    parser.add_argument('--notebook', action='append',
+                        help='Only execute notebooks whose filename matches this stem. Repeatable.')
     args = parser.parse_args()
-    if args.language == 'zh-CN' and args.group != 'detection':
-        parser.error('Only detection supports --language zh-CN in this runner.')
+    # 中文课程镜像位于仓库根目录的模块树，英文课程在 english/ 下。
+    base = ROOT if args.language == 'en' else ROOT.parent
     groups = {
-        'vision': sorted([*(ROOT/'01-image-classification/notebooks').rglob('*.ipynb'),
-                          *(ROOT/'01-image-classification/archive').rglob('*.ipynb')]),
-        'pytorch': sorted((ROOT/'03-sentiment-analysis/pytorch/notebooks').glob('*.ipynb')),
-        'paddle': sorted((ROOT/'03-sentiment-analysis/paddle/notebooks').glob('*.ipynb')),
-        'detection': sorted((ROOT/'02-object-detection/notebooks').glob('*.ipynb')),
+        'vision': sorted([*(base/'01-image-classification/notebooks').rglob('*.ipynb'),
+                          *(base/'01-image-classification/archive').rglob('*.ipynb')]),
+        'pytorch': sorted((base/'03-sentiment-analysis/pytorch/notebooks').glob('*.ipynb')),
+        'paddle': sorted((base/'03-sentiment-analysis/paddle/notebooks').glob('*.ipynb')),
+        'detection': sorted((base/'02-object-detection/notebooks').glob('*.ipynb')),
     }
-    groups = {key: [p for p in paths if '.ipynb_checkpoints' not in p.parts]
+    # archive/legacy-notebooks is read-only course history: it is never re-executed.
+    # The original Chinese PaddleYOLO/YOLO11 lesson lives in notebooks/ again by request,
+    # but it still depends on that external project, so it stays out of every execution run.
+    groups = {key: [p for p in paths
+                    if '.ipynb_checkpoints' not in p.parts and 'legacy-notebooks' not in p.parts
+                    and p.stem != '01-yolo11-rock-paper-scissors']
               for key, paths in groups.items()}
     reports = ROOT/'reports'
-    if args.language == 'zh-CN':
-        groups['detection'] = [ROOT.parent/'02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb']
     suffix = '' if args.language == 'en' else '-zh-CN'
     report_file = reports/f'{args.group}{suffix}-executed.json'
-    results = json.loads(report_file.read_text(encoding='utf-8'))['results'] if args.resume and report_file.exists() else []
+    # Reports accumulate: a targeted --notebook run must not drop the rows of other notebooks.
+    results = []
+    report_extra = {}
+    if report_file.exists():
+        try:
+            previous = json.loads(report_file.read_text(encoding='utf-8'))
+            results = previous.get('results', [])
+            report_extra = {key: value for key, value in previous.items()
+                            if key not in {'group', 'language', 'python', 'executable', 'results'}}
+        except (json.JSONDecodeError, OSError):
+            results = []
     os.environ['COURSE_SMOKE'] = '0'
     epochs_override = os.environ.get('COURSE_EPOCHS')
     run_mode = (f'{epochs_override}-epoch pipeline check via COURSE_EPOCHS'
                 if epochs_override else 'Default classroom training parameters')
+    run_mode_label = (('通过 COURSE_EPOCHS 指定的 ' + str(epochs_override) + ' 轮流程检查'
+                       if epochs_override else '课堂默认训练参数')
+                      if args.language == 'zh-CN' else run_mode)
     os.environ['PYTHONIOENCODING'] = 'utf-8'
     os.environ['OMP_NUM_THREADS'] = '2'
     os.environ['MKL_NUM_THREADS'] = '2'
     # Matplotlib inline produces display_data PNGs in the saved notebook.
     os.environ.pop('MPLBACKEND', None)
+    if args.notebook:
+        groups[args.group] = [path for path in groups[args.group]
+                              if path.stem in set(args.notebook)]
+        if not groups[args.group]:
+            parser.error(f'No notebook matched {args.notebook} in group {args.group}.')
     for path in groups[args.group]:
         relative = Path(os.path.relpath(path, ROOT)).as_posix()
         if args.resume and any(row['notebook']==relative and row['status']=='passed'
@@ -56,16 +79,28 @@ def main():
         nb.cells = [cell for cell in nb.cells if 'course-runtime-info' not in cell.get('metadata', {}).get('tags', [])]
         package = 'paddlepaddle' if args.group=='paddle' else 'torch'
         expected = '3.3.1' if args.group=='paddle' else '2.14.1'
+        if args.language == 'zh-CN':
+            runtime_source = (
+                'import sys\nfrom importlib.metadata import version\n'
+                'from IPython import get_ipython\n'
+                'get_ipython().run_line_magic("matplotlib", "inline")\n'
+                'assert sys.version_info[:2] == (3, 12), "请选择项目的 Python 3.12 内核。"\n'
+                f'assert version({package!r}).split("+")[0] == {expected!r}, "请选择项目锁定的运行环境。"\n'
+                'print("Python：", sys.version.split()[0])\n'
+                f'print({package!r} + "：", version({package!r}))\n'
+                f'print("运行模式：", {run_mode_label!r})')
+        else:
+            runtime_source = (
+                'import sys\nfrom importlib.metadata import version\n'
+                'from IPython import get_ipython\n'
+                'get_ipython().run_line_magic("matplotlib", "inline")\n'
+                'assert sys.version_info[:2] == (3, 12), "Select the Python 3.12 project kernel."\n'
+                f'assert version({package!r}).split("+")[0] == {expected!r}, "Select the locked project environment."\n'
+                'print("Python:", sys.version.split()[0])\n'
+                f'print({package!r} + ":", version({package!r}))\n'
+                f'print("Run mode:", {run_mode!r})')
         runtime = nbformat.v4.new_code_cell(
-            'import sys\nfrom importlib.metadata import version\n'
-            'from IPython import get_ipython\n'
-            'get_ipython().run_line_magic("matplotlib", "inline")\n'
-            'assert sys.version_info[:2] == (3, 12), "Select the Python 3.12 project kernel."\n'
-            f'assert version({package!r}).split("+")[0] == {expected!r}, "Select the locked project environment."\n'
-            'print("Python:", sys.version.split()[0])\n'
-            f'print({package!r} + ":", version({package!r}))\n'
-            f'print("Run mode:", {run_mode!r})',
-            metadata={'tags':['course-runtime-info']})
+            runtime_source, metadata={'tags':['course-runtime-info']})
         nb.cells.insert(1, runtime)
         for cell in nb.cells:
             if cell.cell_type=='code':
@@ -74,6 +109,7 @@ def main():
         nb.metadata['execution_environment'] = {
             'python':sys.version.split()[0], 'executable':sys.executable,
             'mode': (f'{epochs_override}-epoch pipeline check' if epochs_override else 'default classroom parameters'),
+            'language': args.language,
             'manager':'uv', 'completed':False}
         start = time.time()
         error = None
@@ -83,7 +119,7 @@ def main():
                 print(f'  Saved cell {cell_index}: {path.name}', flush=True)
 
             client = NotebookClient(nb, timeout=5400, kernel_name='python3',
-                                    resources={'metadata':{'path':str(ROOT)}},
+                                    resources={'metadata':{'path':str(base)}},
                                     allow_errors=False, record_timing=True,
                                     on_cell_executed=cell_saved)
             client.execute()
@@ -100,9 +136,13 @@ def main():
                'png_outputs':sum('image/png' in out.get('data',{}) for c in nb.cells for out in c.get('outputs',[]))}
         if error:
             row['error'] = error
-        results = [item for item in results if item['notebook']!=relative] + [row]
-        report_file.write_text(json.dumps({'group':args.group,'language':args.language,'python':sys.version.split()[0],
-                                           'executable':sys.executable,'results':results},indent=2)+'\n',encoding='utf-8')
+        results = sorted([item for item in results if item['notebook']!=relative] + [row],
+                         key=lambda item: item['notebook'])
+        report = {'group':args.group,'language':args.language,'python':sys.version.split()[0],
+                  'executable':sys.executable}
+        report.update({key: value for key, value in report_extra.items() if key not in report})
+        report['results'] = results
+        report_file.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
         print(json.dumps(row),flush=True)
     if any(row['status']!='passed' for row in results):
         raise SystemExit(1)
