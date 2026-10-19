@@ -1,6 +1,6 @@
 # Project handoff
 
-Updated: 2026-10-19 (Asia/Shanghai). Sessions 18, 19 and 20 are **not committed**; Session 15 is committed on main together with its entry and has not been pushed.
+Updated: 2026-10-19 (Asia/Shanghai). Sessions 18, 19 and 20 are committed together as `750f381` on main and have not been pushed; Session 15 is committed on main together with its entry and has not been pushed.
 Each earlier session states its own commit state in its closing line.
 
 ## Session 20 - the English side of modules 01-03 is audited against the Chinese masters
@@ -53,7 +53,7 @@ to the copies in `00-machine-learning/assets/`.
 All seven checks green after the sweep: `verify_saved_outputs.py` (30 notebooks, 0 problems),
 `check_docs_assets.py` (0 problems), `check_parity.py` (0 problems, 9 nested README pairs),
 `check_course.py` (0 problems), `build_chinese_course.py --check` (11), `build_english_course.py --check`
-(1), `git diff --check`. Nothing committed.
+(1), `git diff --check`. Committed as `750f381` together with Sessions 18 and 19; not pushed.
 
 中文小结：把 `english/01|02|03` 与中文母本逐文件对了一遍。真正的缺漏有两处
 `english/03-sentiment-analysis/outputs/{paddle,pytorch}/README.md`，根因是 `english/.gitignore` 的
@@ -63,7 +63,7 @@ All seven checks green after the sweep: `verify_saved_outputs.py` (30 notebooks,
 "仓库规则=中文母本 + Migration status=这两模块生成器仍以英文文本为键"；英文视觉 legacy README 原本套的是 NLP 模板，
 已按中文母本重写（归档原因、opt-in 重跑命令、逐本状态表、两处硬缺失）；`english/03/.../$d/` 模板占位符已修；
 英文 01/03 README 补回指中文课程入口行，英文检测清单补上第 8 项只读原件。
-七项校验全绿，全部未提交。
+七项校验全绿，与 Session 18/19 一并提交为 `750f381`（未推送）。
 
 ## Session 19 - the course direction turns around: Chinese is the master, English is derived
 
@@ -71,7 +71,7 @@ The user asked whether the "English-first, `english/` holds the masters" rule sh
 deleted from the repository, or replaced with "Chinese is the master, English is derived".
 A bare deletion would leave no direction at all while `check_parity.py` and both builders still
 need one, so the second option was implemented: **the Chinese lessons are the masters and
-`english/` holds derived mirrors**. Uncommitted from Session 18; nothing committed yet.
+`english/` holds derived mirrors**. Landed in commit `750f381` together with Session 18's work; not pushed.
 
 What landed:
 
@@ -155,7 +155,7 @@ dataset-formats 仍是英文母本，门面 11 处 "English (default)" 改为母
 `scripts/build_chinese_course.py` 的「english/ 是唯一母本」改写成「过渡工具，视觉与 NLP 这 11 本的翻译来源暂时在英文侧」，
 `scripts/check_parity.py` 去掉「英文侧是母本」注释，`01-image-classification/data/README.md`、
 `docs/environment-setup.md`、`english/README.md`、`english/docs/environment-setup.md` 四处门面/镜像表述统一为
-母本/镜像口径（启动器的"默认"只归因于启动器本身）。七项校验重跑全绿。全部改动未提交。
+母本/镜像口径（启动器的"默认"只归因于启动器本身）。七项校验重跑全绿。改动与 Session 18/20 一并提交为 `750f381`（未推送）。
 
 ## Session 18 - the classical-ML Titanic lesson lands as `00-machine-learning/`
 
@@ -202,7 +202,8 @@ Checks after the change (all from the repository root): `verify_saved_outputs.py
 `check_course.py` 0 problems, `build_chinese_course.py --check` 11 mirrors, `git diff --check`
 clean. `tests/check-launcher.ps1` was not run this session (no `pwsh` on this host; the launcher
 is untouched). Docs updated: both environment-setup guides (coverage, `--group ml`, `--cwd module`)
-and the Chinese README module table. Untracked, not yet committed at the time of writing.
+and the Chinese README module table. Untracked at the time of writing; committed later as `750f381`
+together with Sessions 19 and 20.
 
 中文小结：新增的泰坦尼克号经典机器学习课按课程既有流程落地为 `00-machine-learning/`（仅中文侧）。环境按用户
 改定的方案并入课堂主环境 `~/env_dl_uv`（补 seaborn/scikit-learn/xgboost/lightgbm/skl2onnx/onnxruntime，
