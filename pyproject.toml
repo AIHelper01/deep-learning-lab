@@ -1,0 +1,45 @@
+[project]
+name = "deep-learning-lab"
+version = "0.1.0"
+description = "Bilingual deep-learning teaching notebooks: one uv environment for every module on both language sides"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  # Core deep-learning stack (01-image-classification, 02-object-detection, 03-sentiment-analysis)
+  "torch==2.14.1",
+  "torchvision==0.29.1",
+  "paddlepaddle==3.3.1",
+  "setuptools>=68,<81",
+  # Object detection (02-object-detection, incl. ByteTrack tracking)
+  "ultralytics==8.4.177",
+  "lapx>=0.5.9",
+  "pyyaml>=6,<7",
+  "opencv-python>=4.10,<5",
+  # NLP (03-sentiment-analysis: gensim word2vec, jieba, HF transformers)
+  "gensim==4.4.0",
+  "transformers>=4.45,<5",
+  "jieba>=0.42,<1",
+  # Data and plotting (shared loaders in common/ and english/common/)
+  "numpy>=1.26,<2",
+  "pandas>=2.2,<3",
+  "pyarrow>=18,<25",
+  "pillow>=10,<13",
+  "matplotlib>=3.8,<4",
+  "requests>=2.32,<3",
+  # Classical ML (00-machine-learning: Titanic lesson, ONNX export)
+  "seaborn>=0.13,<1",
+  "scikit-learn>=1.5,<1.8",
+  "joblib>=1.3,<2",
+  "xgboost>=2.1,<4",
+  "lightgbm>=4.5,<5",
+  "skl2onnx>=1.17,<2",
+  "onnxruntime>=1.19,<2",
+  # Notebook tooling and the course runners in scripts/ and english/scripts/
+  "jupyterlab>=4,<5",
+  "ipykernel>=6,<8",
+  "ipython>=8,<10",
+  "nbclient>=0.10,<1",
+  "nbformat>=5,<6",
+]
+
+[tool.uv]
+package = false

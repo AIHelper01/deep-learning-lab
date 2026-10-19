@@ -15,7 +15,7 @@ Both conversion and the round-trip check read the YOLO export that lives in the 
 ```bash
 mkdir -p /workspace/DataSet/yolo
 cp "/path/to/Rock-Paper-Scissors.v1i.yolo26.zip" /workspace/DataSet/yolo/
-~/env_dl_uv/.venv/bin/python english/scripts/fetch_rps.py \
+uv run python english/scripts/fetch_rps.py \
   --archive /workspace/DataSet/yolo/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 

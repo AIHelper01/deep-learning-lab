@@ -10,17 +10,17 @@ Reference: [Rock-Paper-Scissors versions](https://universe.roboflow.com/melikeav
 
 Labeled crops were visually reviewed: original ID **0=paper, 1=rock, 2=scissors**. The original numeric names are mapped at their existing IDs; annotation IDs are not reordered. Keep the exported README attribution. The older flattened 6,455-image VOC archive is not this version and is excluded from the current course.
 
-From the repository root, use the detection environment described in [setup](../../docs/environment-setup.md):
+From the repository root, after `uv sync` described in [setup](../../docs/environment-setup.md):
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
+uv run python .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
-macOS/Linux with the single classroom interpreter, after staging the archive in the DataSet folder (see the
+macOS/Linux with the root uv environment (`uv sync` first), after staging the archive in the DataSet folder (see the
 [data guide](../data/README.md)):
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/fetch_rps.py \
+uv run python english/scripts/fetch_rps.py \
   --archive /workspace/DataSet/yolo/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
@@ -52,10 +52,10 @@ Traditional VOC tools often use 1-based inclusive pixel corners. This tutorial's
 
 ## Convert a real held-out split
 
-The converter uses Pillow and PyYAML already present in the detection environment. All commands below run from the repository root. Start with the test split so you can inspect all 186 images without converting the training data unnecessarily.
+The converter uses Pillow and PyYAML already present in the root environment. All commands below run from the repository root. Start with the test split so you can inspect all 186 images without converting the training data unnecessarily.
 
 ```powershell
-$py = '.\english\02-object-detection\.venv\Scripts\python.exe'
+$py = '.venv\\Scripts\\python.exe'
 $source = '.\english\02-object-detection\data\rock-paper-scissors-ishcs-v1'
 & $py .\english\scripts\dataset_formats.py --source $source --input-format yolo --output-format voc --split test --destination .\english\02-object-detection\dataset-formats\data\rps-voc-test
 & $py .\english\scripts\dataset_formats.py --source $source --input-format yolo --output-format coco --split test --destination .\english\02-object-detection\dataset-formats\data\rps-coco-test
@@ -64,7 +64,7 @@ $source = '.\english\02-object-detection\data\rock-paper-scissors-ishcs-v1'
 ```
 
 ```bash
-py=~/env_dl_uv/.venv/bin/python
+py=.venv/bin/python
 source=english/02-object-detection/data/rock-paper-scissors-ishcs-v1
 $py english/scripts/dataset_formats.py --source $source --input-format yolo --output-format voc --split test --destination english/02-object-detection/dataset-formats/data/rps-voc-test
 $py english/scripts/dataset_formats.py --source $source --input-format yolo --output-format coco --split test --destination english/02-object-detection/dataset-formats/data/rps-coco-test
@@ -107,13 +107,13 @@ Run the [round-trip check](../../scripts/check_dataset_formats.py) using the det
 Sources: [Ultralytics YOLO detection format](https://docs.ultralytics.com/datasets/detect/), [COCO format](https://cocodataset.org/#format-data), [Pascal VOC](http://host.robots.ox.ac.uk/pascal/VOC/), and the viewer pages linked above.
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\check_dataset_formats.py
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\check_dataset_formats.py --source .\english\02-object-detection\data\rock-paper-scissors-ishcs-v1
+uv run python .\english\scripts\check_dataset_formats.py
+uv run python .\english\scripts\check_dataset_formats.py --source .\english\02-object-detection\data\rock-paper-scissors-ishcs-v1
 ```
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/check_dataset_formats.py
-~/env_dl_uv/.venv/bin/python english/scripts/check_dataset_formats.py --source english/02-object-detection/data/rock-paper-scissors-ishcs-v1
+uv run python english/scripts/check_dataset_formats.py
+uv run python english/scripts/check_dataset_formats.py --source english/02-object-detection/data/rock-paper-scissors-ishcs-v1
 ```
 
 The second command creates the example output folders above and refuses existing destinations. For a repeat run, choose a new empty `--output-root`; do not delete or overwrite source data.

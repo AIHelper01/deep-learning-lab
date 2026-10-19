@@ -4,8 +4,8 @@
 2. [Word embeddings](notebooks/02-word-embeddings.ipynb)
 3. [LSTM sentiment classification](notebooks/03-lstm-sentiment.ipynb)
 
-Use this directory's requirements.txt in an independent environment (on macOS/Linux the
-verified single environment `~/env_dl_uv` runs both routes). The two routes share English
+Run both routes in the one environment created by `uv sync` in the repository root; module
+directories no longer carry their own dependency files. The two routes share English
 IMDb data but keep outputs separate. See [setup](../../docs/environment-setup.md).
 
 The Chinese route in `03-sentiment-analysis/paddle/` pairs cell by cell with these notebooks. The

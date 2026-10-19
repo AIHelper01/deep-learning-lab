@@ -25,14 +25,14 @@ unchanged). Historic mirror and flat-VOC packages are excluded from default trai
 # from the repository root; one archive per dataset in the staging folder
 mkdir -p /workspace/DataSet/yolo
 cp "/path/to/Rock-Paper-Scissors.v1i.yolo26.zip" /workspace/DataSet/yolo/
-~/env_dl_uv/.venv/bin/python english/scripts/fetch_rps.py \
+uv run python english/scripts/fetch_rps.py \
   --archive /workspace/DataSet/yolo/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
-Windows PowerShell, after `uv sync --project english/02-object-detection`:
+Windows PowerShell, after `uv sync` in the repository root:
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
+uv run python .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
 An already unpacked official export can be copied anywhere and passed with `--export-dir <folder>`. A plain
@@ -82,16 +82,16 @@ the count in `provenance.json`.
 # from the repository root
 mkdir -p /workspace/DataSet/yolo
 cp "/path/to/vehicle counting.v4i.yolo26.zip" /workspace/DataSet/yolo/
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --from-staging
+uv run python english/scripts/import_vehicle_counting.py --from-staging
 # or point at one archive explicitly
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --archive "/workspace/DataSet/yolo/vehicle counting.v4i.yolo26.zip"
+uv run python english/scripts/import_vehicle_counting.py --archive "/workspace/DataSet/yolo/vehicle counting.v4i.yolo26.zip"
 ```
 
 Use `--staging <folder>` when the DataSet folder lives elsewhere. Windows PowerShell equivalent after
-`uv sync --project english/02-object-detection`:
+`uv sync` in the repository root:
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\import_vehicle_counting.py --from-staging
+uv run python .\english\scripts\import_vehicle_counting.py --from-staging
 ```
 
 The importer checks the embedded Roboflow project and version metadata, the counts, the names, and the archive

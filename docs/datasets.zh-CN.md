@@ -40,12 +40,12 @@
 - **获取方式**：在 Roboflow 网页下载 v1 的 YOLO26 导出，或用个人 API key 调用导出 REST 接口取同一个包（两种方式的具体命令见 `02-object-detection/data/README.md`）。下载后先放入仓库外的 DataSet 暂存区（课堂镜像 `/workspace/DataSet/yolo/`），再从暂存区导入：
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
+uv run python .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 ```bash
-# macOS/Linux，仓库根目录，统一课堂环境
+# macOS/Linux，仓库根目录，仓库根环境（先 `uv sync`）
 cp "/path/to/Rock-Paper-Scissors.v1i.yolo26.zip" /workspace/DataSet/yolo/
-~/env_dl_uv/.venv/bin/python english/scripts/fetch_rps.py \
+uv run python english/scripts/fetch_rps.py \
   --archive /workspace/DataSet/yolo/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
@@ -66,12 +66,12 @@ cp "/path/to/Rock-Paper-Scissors.v1i.yolo26.zip" /workspace/DataSet/yolo/
 - **获取方式**：v4 的 YOLO26 导出需要 Roboflow 账号，可在网页下载，或用个人 API key 调用导出 REST 接口（命令见 `02-object-detection/data/README.md`）。下载后放入仓库外的 DataSet 暂存区（课堂镜像 `/workspace/DataSet/yolo/`），在仓库根目录导入：
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\import_vehicle_counting.py --from-staging
+uv run python .\english\scripts\import_vehicle_counting.py --from-staging
 ```
 ```bash
-# macOS/Linux, repository root, single classroom interpreter (add --staging <dir> for another DataSet folder)
+# macOS/Linux，仓库根目录，仓库根环境（暂存区不在默认位置时加 --staging <目录>）
 cp "/path/to/vehicle counting.v4i.yolo26.zip" /workspace/DataSet/yolo/
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --from-staging
+uv run python english/scripts/import_vehicle_counting.py --from-staging
 ```
 
 - **存放位置**：`english/02-object-detection/data/vehicle-counting-tksu5-v4/`（与手势数据同目录约定，只读共用），中英文产物分别写入各自模块 `outputs/`。跟踪依赖 `lapx`（提供 `lap` 模块），已在检测锁定环境中。

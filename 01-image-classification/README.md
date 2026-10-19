@@ -38,15 +38,15 @@
 
 ```bash
 # 在本模块 notebook 内直接运行；或用命令行整本执行并保留真实输出
-~/env_dl_uv/.venv/bin/python ../english/scripts/execute_and_save.py --group vision --language zh-CN
-~/env_dl_uv/.venv/bin/python ../scripts/embed_expected_outputs.py --module 01-image-classification
+uv run python ../english/scripts/execute_and_save.py --group vision --language zh-CN
+uv run python ../scripts/embed_expected_outputs.py --module 01-image-classification
 ```
 
 刷新 archive 里那份 Copy1 对照版（它用自己的目录，且默认不参与内嵌）：
 
 ```bash
-~/env_dl_uv/.venv/bin/python ../english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --notebook 01-lenet-mnist-copy1
-~/env_dl_uv/.venv/bin/python ../scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --notebook 01-lenet-mnist-copy1
+uv run python ../english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --notebook 01-lenet-mnist-copy1
+uv run python ../scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --notebook 01-lenet-mnist-copy1
 ```
 
 环境见[环境准备](../docs/environment-setup.zh-CN.md)，数据见[数据获取](../docs/datasets.zh-CN.md)。

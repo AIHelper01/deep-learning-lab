@@ -243,19 +243,19 @@ reaching for a bigger backbone.
 ```bash
 # 1) Data: import from the DataSet staging area (see ../data/README.md)
 cd /path/to/deep-learning-lab
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --from-staging
+uv run python english/scripts/import_vehicle_counting.py --from-staging
 
 # 2) Build the demo clip (optional; the notebook generates it when missing)
-~/env_dl_uv/.venv/bin/python english/scripts/build_traffic_demo_video.py \
+uv run python english/scripts/build_traffic_demo_video.py \
   --export-dir english/02-object-detection/data/vehicle-counting-tksu5-v4 \
   --output     english/02-object-detection/outputs/traffic-demo.mp4 --fps 12 --frames 108
 
 # 3) Execute and save the outputs (classroom defaults; about 16 minutes on Apple silicon MPS)
 cd english
-~/env_dl_uv/.venv/bin/python scripts/execute_and_save.py \
+uv run python scripts/execute_and_save.py \
   --group detection --language en --notebook 02-yolo26-vehicle-counting
 
-# A pinned per-module environment can be recreated with: uv sync --locked --project 02-object-detection
+# The whole-course environment is recreated from the repository root with: uv sync --locked
 ```
 
 `COURSE_SMOKE=1` switches to the COCO8 pipeline check; its numbers are **not** vehicle counting results for this

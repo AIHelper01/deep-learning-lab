@@ -10,16 +10,16 @@
 
 查看带框样本后确认原编号：**0=paper（布）、1=rock（石头）、2=scissors（剪刀）**。只将数字类别名称对应为英文语义，不重排标注编号。保留包内 README 与署名。早先 6,455 张图片的扁平 VOC 包不作为当前课程数据。
 
-在仓库根目录准备检测环境后执行（只需导入一次，已存在目标目录时脚本拒绝覆盖）：
+在仓库根目录 `uv sync` 后执行（只需导入一次，已存在目标目录时脚本拒绝覆盖）：
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
+uv run python .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
-macOS/Linux 用课堂统一解释器，压缩包先按[数据说明](../data/README.md)放进 DataSet 暂存区：
+macOS/Linux 用仓库根环境（先 `uv sync`），压缩包先按[数据说明](../data/README.md)放进 DataSet 暂存区：
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/fetch_rps.py \
+uv run python english/scripts/fetch_rps.py \
   --archive /workspace/DataSet/yolo/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
@@ -49,10 +49,10 @@ COCO 类别 ID 不保证从 0 开始或连续，本脚本导出为 1/2/3，通�
 
 ## 3. 实际转换命令
 
-脚本位置是 [english/scripts/dataset_formats.py](../../english/scripts/dataset_formats.py)，使用检测环境中已有的 Pillow 和 PyYAML。所有命令从仓库根目录运行。先选独立测试集的 186 张图片做教学验证，不改变训练数据：
+脚本位置是 [english/scripts/dataset_formats.py](../../english/scripts/dataset_formats.py)，使用根环境里已有的 Pillow 和 PyYAML。所有命令从仓库根目录运行。先选独立测试集的 186 张图片做教学验证，不改变训练数据：
 
 ```powershell
-$py = '.\english\02-object-detection\.venv\Scripts\python.exe'
+$py = '.venv\\Scripts\\python.exe'
 $source = '.\english\02-object-detection\data\rock-paper-scissors-ishcs-v1'
 & $py .\english\scripts\dataset_formats.py --source $source --input-format yolo --output-format voc --split test --destination .\english\02-object-detection\dataset-formats\data\rps-voc-test
 & $py .\english\scripts\dataset_formats.py --source $source --input-format yolo --output-format coco --split test --destination .\english\02-object-detection\dataset-formats\data\rps-coco-test
@@ -61,7 +61,7 @@ $source = '.\english\02-object-detection\data\rock-paper-scissors-ishcs-v1'
 ```
 
 ```bash
-py=~/env_dl_uv/.venv/bin/python
+py=.venv/bin/python
 source=english/02-object-detection/data/rock-paper-scissors-ishcs-v1
 $py english/scripts/dataset_formats.py --source $source --input-format yolo --output-format voc --split test --destination english/02-object-detection/dataset-formats/data/rps-voc-test
 $py english/scripts/dataset_formats.py --source $source --input-format yolo --output-format coco --split test --destination english/02-object-detection/dataset-formats/data/rps-coco-test
@@ -104,13 +104,13 @@ YOLO                          VOC                          COCO
 参考：[Ultralytics YOLO 检测格式](https://docs.ultralytics.com/datasets/detect/)、[COCO 格式](https://cocodataset.org/#format-data)、[Pascal VOC](http://host.robots.ox.ac.uk/pascal/VOC/)，以及上面的三个查看器页面。
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\check_dataset_formats.py
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\check_dataset_formats.py --source .\english\02-object-detection\data\rock-paper-scissors-ishcs-v1
+uv run python .\english\scripts\check_dataset_formats.py
+uv run python .\english\scripts\check_dataset_formats.py --source .\english\02-object-detection\data\rock-paper-scissors-ishcs-v1
 ```
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/check_dataset_formats.py
-~/env_dl_uv/.venv/bin/python english/scripts/check_dataset_formats.py --source english/02-object-detection/data/rock-paper-scissors-ishcs-v1
+uv run python english/scripts/check_dataset_formats.py
+uv run python english/scripts/check_dataset_formats.py --source english/02-object-detection/data/rock-paper-scissors-ishcs-v1
 ```
 
 第二条命令生成上面的示例目录；目录已存在时拒绝覆盖。重复验证可指定新的空 `--output-root`，不要删除或覆盖原始数据。

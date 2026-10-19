@@ -1,7 +1,82 @@
 # Project handoff
 
-Updated: 2026-10-19 (Asia/Shanghai). Sessions 18, 19 and 20 are committed together as `750f381` on main and have not been pushed; Session 15 is committed on main together with its entry and has not been pushed.
+Updated: 2026-10-19 (Asia/Shanghai). Session 21 is committed on `main` together with its entry and has not been pushed; Sessions 18, 19 and 20 are committed together as `750f381` on main and have not been pushed; Session 15 is committed on main together with its entry and has not been pushed.
 Each earlier session states its own commit state in its closing line.
+
+## Session 21 - one uv project at the repository root replaces the per-module environments
+
+The course is launched with uv, but the repository root had no `pyproject.toml`, no `uv.lock` and no
+`.python-version`: a fresh clone could not `uv sync` anything. Dependency declarations lived in 7
+module `pyproject.toml`, 4 English `uv.lock`, 8 module `.python-version` and 9 module
+`requirements.txt`, and the two newest of those lock sets disagreed with the interpreter that
+actually produced every saved output (torch 2.8.0 / paddlepaddle 2.6.2 on the Chinese side,
+torch 2.14.1 / paddlepaddle 3.3.1 on the English side). The user asked for the repository to be
+out-of-the-box runnable with the uv files at the root, and for the subdirectories to stop carrying them.
+
+Added at the root, as a virtual project (`[tool.uv] package = false`, `requires-python = ">=3.12,<3.13"`):
+
+- `pyproject.toml` - 27 declared dependencies, derived two ways and cross-checked: the versions actually
+  installed in the validated `~/env_dl_uv`, and an import scan of every committed notebook plus
+  `common/`, `english/common/`, `scripts/` and `english/scripts/` (IPython, PIL, cv2, gensim, jieba,
+  joblib, lightgbm, matplotlib, nbclient, nbformat, numpy, onnxruntime, paddle, pandas, pyarrow,
+  requests, seaborn, skl2onnx, sklearn, torch, torchvision, transformers, ultralytics, xgboost, yaml).
+  `lapx` is declared because Ultralytics' ByteTrack path imports it without depending on it;
+  `setuptools` because Paddle imports it; `pyarrow` because `english/common/vision_data.py` imports it
+  lazily for the CIFAR Parquet fallback. `tensorboard` is not declared: nothing imports it and it was
+  not installed in the validated environment either.
+- `.python-version` (`3.12`) and `uv.lock` - 168 packages, and the lock keeps `macosx_11_0_arm64`,
+  `manylinux1_x86_64` and `win_amd64` wheels for `paddlepaddle==3.3.1`, so one lock covers the
+  macOS classroom machine and the Windows launcher target.
+- 26 module-level env files removed (7 `pyproject.toml`, 4 `uv.lock`, 8 `.python-version`,
+  7 `requirements.txt`); `archive/environment/` keeps its 3 historical sets untouched as history, which
+  is why `archive/environment/README.md` still points at them.
+
+Launchers and guard:
+
+- `start-notebooks.ps1` now routes both languages itself (English under `english/`, Chinese at the
+  root), runs `uv sync --locked` once at the repository root, then
+  `uv run jupyter lab --notebook-dir <module>/notebooks`; the old per-module
+  `.venv/Scripts/python.exe` requirement is gone.
+- `english/start-notebooks.ps1` is now a shim that forwards `-Language`, `-Module` and `-DryRun` to the
+  root launcher, keeping its `vision` default because it is documented and tested.
+- `tests/check-launcher.ps1` was rewritten for the new contract: root `pyproject.toml`/`uv.lock`/
+  `.python-version` must exist, every route's `ProjectRoot` must be the repository root, Chinese routes
+  must stay out of `english/`, the shim must keep its default and forward `zh-CN`, and none of the 7
+  module directories may keep a `pyproject.toml`, `uv.lock`, `.python-version` or `requirements.txt`.
+
+Documentation, 29 Markdown files: about 90 `~/env_dl_uv/.venv/bin/python ...` and
+`.\english\02-object-detection\.venv\Scripts\python.exe ...` command prefixes became
+`uv run python ...` (uv walks up to the root manifest, so `uv run` works from any subdirectory and no
+command needs `--project`); the `py=` / `$py =` helpers in the dataset-format topic now point at the
+root `.venv`; both environment guides were rewritten around the root project, keeping the
+`#one-kernel-for-the-whole-course-macoslinux` and `#device-selection` anchors that other pages link to;
+`english/docs/environment-setup.md` replaced the deleted per-module `requirements.txt` pip path with a
+`uv export --locked --no-hashes --no-emit-project` fallback that still builds one environment; and
+`~/env_dl_uv` is now documented as what produced the committed evidence, not as the setup path.
+
+Verified: `uv lock` resolves 168 packages; `uv sync --locked` builds the root `.venv` on Python 3.12.12;
+`uv sync --locked --check` reports "Would make no changes"; an import smoke test of all 25 course
+third-party modules plus `lap` and `ultralytics.nn.tasks` passes (torch 2.14.1, MPS available,
+numpy 1.26.4 - the same versions as the validated interpreter); `uv run python` from
+`02-object-detection/` resolves the root project without `--project`; `uv run jupyter --version` and
+`execute_and_save.py --help` work. All seven checks are green: `verify_saved_outputs.py`
+(30 notebooks, 0 problems), `check_parity.py` (42 notebooks, 0 problems, the known 81 English-figure
+prose items in Chinese masters unchanged), `check_docs_assets.py` (0 problems),
+`english/scripts/check_course.py` (92 sources, 16 notebooks, 0 problems),
+`build_english_course.py --check` (1 mirror), `build_chinese_course.py --check` (11 mirrors),
+`git diff --check` clean.
+
+Not verified: `pwsh` is not installed on this machine, so `tests/check-launcher.ps1` was never executed -
+its route assertions were reproduced in Python against the real filesystem (every route's module and
+notebook directory exists, no module-level env file survived) and the two scripts reuse constructs the
+previous versions already used. No notebook was re-executed: the saved outputs are the committed
+evidence produced in `~/env_dl_uv` on these same locked versions, and re-running would rewrite them.
+
+Commit state: this session's 60 files and this entry go into one commit on `main`; nothing is pushed.
+
+中文小结：课程是 uv 启动的，但仓库根没有 `pyproject.toml`/`uv.lock`/`.python-version`，克隆下来 `uv sync` 无从下手；依赖散在
+7 份模块 pyproject、4 份英文 uv.lock、8 份 `.python-version`、9 份 requirements.txt 里，而且最新的两套锁定与真正跑出全部「预期输出」的解释器并不一致（中文侧 torch 2.8.0 / paddle 2.6.2，英文侧 torch 2.14.1 / paddle 3.3.1）。按要求把 uv 工程收编到仓库根：新增根 `pyproject.toml`（27 项依赖，按已验证 `~/env_dl_uv` 的实际版本 + 全仓 notebook 与脚本 import 扫描双向对齐；`lapx`/`setuptools`/`pyarrow` 这类运行期才 import 的补齐；`tensorboard` 没人用也不装）、根 `.python-version`（3.12）与 `uv.lock`（168 个包，paddle 同时含 macOS arm64 / manylinux x86_64 / win_amd64 wheel，一份锁覆盖课堂 Mac 与 Windows 启动器），删掉 26 份模块级环境文件，`archive/environment/` 的 3 份历史记录原样留着。启动器改为两侧共用根工程（`uv sync --locked` + `uv run jupyter lab --notebook-dir <模块>/notebooks`），`english/start-notebooks.ps1` 退化成转发的薄壳，`tests/check-launcher.ps1` 重写为校验根三件套、各路由 `ProjectRoot` 都是仓库根、中文路由不落进 `english/`，并反向钉住 7 个模块目录不得再留任何环境文件。29 份文档同步：约 90 处 `~/env_dl_uv/.venv/bin/python`/模块 `.venv\Scripts\python.exe` 命令统一成 `uv run python`（uv 会向上找到根 pyproject，任何子目录都不用 `--project`），两篇环境指南按根工程重写并保留被引用的 `#one-kernel-...`、`#device-selection` 锚点，英文篇用 `uv export` 方案替换被删的模块 requirements 路径，`~/env_dl_uv` 改为「产出既有证据的解释器」而不再是安装路径。验证：`uv lock` 168 包、`uv sync --locked` 建出 Python 3.12.12 的 `.venv`、`--check` 报 Would make no changes、25 个课程第三方模块 + `lap` + `ultralytics.nn.tasks` 全部导入通过（torch 2.14.1、MPS 可用、numpy 1.26.4），在 `02-object-detection/` 里 `uv run` 免 `--project` 可用；七项校验全绿（30 本输出一致性、42 本对齐、文档链接、92 源/16 notebook 英文检查、1 + 11 份镜像、`git diff --check`）。本机没有 `pwsh`，启动器测试脚本没能真跑，只按同样断言在 Python 里逐条核对了路由与文件；本轮没有重跑任何 notebook，已保存输出就是既有证据，重跑会改写它们。60 个文件与本篇进同一个 `main` 提交，未推送。
+
 
 ## Session 20 - the English side of modules 01-03 is audited against the Chinese masters
 

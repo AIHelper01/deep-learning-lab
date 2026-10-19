@@ -12,8 +12,8 @@
 命令行整本执行并保留真实输出：
 
 ```bash
-~/env_dl_uv/.venv/bin/python ../../../english/scripts/execute_and_save.py --group pytorch --language zh-CN
-~/env_dl_uv/.venv/bin/python ../../../scripts/embed_expected_outputs.py --module 03-sentiment-analysis
+uv run python ../../../english/scripts/execute_and_save.py --group pytorch --language zh-CN
+uv run python ../../../scripts/embed_expected_outputs.py --module 03-sentiment-analysis
 ```
 
 本路线与 `../../english/03-sentiment-analysis/pytorch/notebooks/` 逐单元对应，训练逻辑一致；两侧以哪一侧充当翻译来源，见 `../../AGENTS.md` 的 Migration status。

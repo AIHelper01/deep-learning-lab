@@ -4,16 +4,17 @@
 
 中文课程与英文课程**逐单元一一对应**：同样的实验与训练逻辑，中文讲解、中文输出、中文图表，语言相关的环节直接用中文数据（NLP 用 ChnSentiCorp 中文评论 + jieba 分词，不是把英文 IMDb 翻译一遍）。
 
-macOS/Linux 推荐用仓库外的单一 uv 环境 `~/env_dl_uv`（已注册同名 Jupyter 内核 `env_dl_uv`），在 JupyterLab 里选这个内核即可运行四个模块（依赖 `paddlenlp`/`visualdl` 的历史 Paddle Notebook 除外），见[环境准备](docs/environment-setup.zh-CN.md)。Windows 下仍可用 `./start-notebooks.ps1 -Language zh-CN -Module vision`。
+全课只有一个环境：**uv 工程就放在仓库根**（`pyproject.toml` + `uv.lock` + `.python-version`）。在根目录跑一次 `uv sync`，生成的 `.venv` 就是四个模块、中英两侧共用的内核（依赖 `paddlenlp`/`visualdl` 的历史 Paddle Notebook 除外），见[环境准备](docs/environment-setup.zh-CN.md)。PowerShell 里 `./start-notebooks.ps1 -Language zh-CN -Module vision` 会先同步环境再打开 JupyterLab。
 
 命令行执行并保留真实输出：
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN
-~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py      # 把实跑结果写回 notebook（预期输出 + assets 图片）
-~/env_dl_uv/.venv/bin/python scripts/check_parity.py                # 中英对齐与输出语言检查
-~/env_dl_uv/.venv/bin/python scripts/check_docs_assets.py           # 全仓链接、图片本地化与 assets 命名检查
-~/env_dl_uv/.venv/bin/python english/scripts/verify_saved_outputs.py # 中英两侧 28 本 notebook 的输出一致性
+uv sync                                          # 仓库根跑一次，装齐全部模块
+uv run python english/scripts/execute_and_save.py --group vision --language zh-CN
+uv run python scripts/embed_expected_outputs.py      # 把实跑结果写回 notebook（预期输出 + assets 图片）
+uv run python scripts/check_parity.py                # 中英对齐与输出语言检查
+uv run python scripts/check_docs_assets.py           # 全仓链接、图片本地化与 assets 命名检查
+uv run python english/scripts/verify_saved_outputs.py # 中英两侧 28 本 notebook 的输出一致性
 ```
 
 围绕经典机器学习、图像分类、目标检测与中文情感分析的 Notebook 教学项目。**根目录的中文课件是母本**，`english/` 下的英文课件由 `scripts/build_english_course.py` 逐单元派生。
@@ -32,7 +33,7 @@ macOS/Linux 推荐用仓库外的单一 uv 环境 `~/env_dl_uv`（已注册同�
 - [数据获取与放置路径](docs/datasets.zh-CN.md)
 - [目录整理记录](docs/migration/reorganization.md)
 
-课堂机器统一用 `~/env_dl_uv` 一个内核，各模块的 `pyproject.toml`/`uv.lock` 仍保留，需要独立环境时可用 uv 重建。运行时的
+依赖只在仓库根声明并锁定一次，模块目录不再各自保存 `pyproject.toml`、`uv.lock` 或 `requirements.txt`；仓库外的 `~/env_dl_uv` 只是课堂机上版本一致的参照环境。运行时的
 工作目录是 Notebook 所在目录；数据放在各模块 `data/`，训练产物放在 `outputs/`，讲解图片放在 `assets/`。
 
 ## 数据：先放暂存区，再拷进模块

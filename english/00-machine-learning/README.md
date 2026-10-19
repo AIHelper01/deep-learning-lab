@@ -3,7 +3,7 @@
 English course · derived mirror of the Chinese master [`00-machine-learning/`](../../00-machine-learning/README.md) · [English overview](../README.md)
 
 An introductory classical machine-learning lesson. One notebook walks through a complete project on the
-same `~/env_dl_uv` kernel the other lessons use: data preparation, EDA, preprocessing and feature
+same root `.venv` kernel the other lessons use: data preparation, EDA, preprocessing and feature
 engineering, six classical classifiers plus XGBoost/LightGBM, GridSearchCV tuning, pickle/joblib/ONNX
 model export, and a reusable Pipeline workflow.
 
@@ -18,8 +18,8 @@ model export, and a reusable Pipeline workflow.
   relative to the **module** directory, hence `--cwd module`):
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group ml --cwd module
-~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 00-machine-learning
+uv run python english/scripts/execute_and_save.py --group ml --cwd module
+uv run python scripts/embed_expected_outputs.py --module 00-machine-learning
 ```
 
 - Generated at run time and kept out of Git: `models/*.pkl` / `models/*.onnx`, `result/Submission.csv`,
@@ -34,9 +34,9 @@ Do not hand-edit this mirror. Edit the Chinese master
 then regenerate this side:
 
 ```bash
-~/env_dl_uv/.venv/bin/python scripts/build_english_course.py --force   # Chinese master -> English mirror
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group ml --cwd module
-~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 00-machine-learning
+uv run python scripts/build_english_course.py --force   # Chinese master -> English mirror
+uv run python english/scripts/execute_and_save.py --group ml --cwd module
+uv run python scripts/embed_expected_outputs.py --module 00-machine-learning
 ```
 
 `scripts/titanic_en.py` holds the English translation tables and is keyed on exact Chinese source text, so a

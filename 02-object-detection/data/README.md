@@ -16,14 +16,14 @@
 # 在仓库根目录执行；暂存区按“一个数据集一个压缩包”保存
 mkdir -p /workspace/DataSet/yolo
 cp "/path/to/Rock-Paper-Scissors.v1i.yolo26.zip" /workspace/DataSet/yolo/
-~/env_dl_uv/.venv/bin/python english/scripts/fetch_rps.py \
+uv run python english/scripts/fetch_rps.py \
   --archive /workspace/DataSet/yolo/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
-Windows PowerShell（先 `uv sync --project english/02-object-detection`）：
+Windows PowerShell（先在仓库根 `uv sync`）：
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
+uv run python .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
 已解压的正式导出可放在任意目录，再用 `--export-dir <目录>` 导入。直接 `cp -R <已解压导出> english/02-object-detection/data/rock-paper-scissors-ishcs-v1/` 也能跑通，但会缺少导入器写出的 `provenance.json`，因此推荐走导入器。
@@ -58,15 +58,15 @@ curl -sSL "$LINK" -o "/workspace/DataSet/yolo/Rock-Paper-Scissors.v1i.yolo26.zip
 # 在仓库根目录执行
 mkdir -p /workspace/DataSet/yolo
 cp "/path/to/vehicle counting.v4i.yolo26.zip" /workspace/DataSet/yolo/
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --from-staging
+uv run python english/scripts/import_vehicle_counting.py --from-staging
 # 或者显式指定某个压缩包
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --archive "/workspace/DataSet/yolo/vehicle counting.v4i.yolo26.zip"
+uv run python english/scripts/import_vehicle_counting.py --archive "/workspace/DataSet/yolo/vehicle counting.v4i.yolo26.zip"
 ```
 
-暂存区不在默认位置时加 `--staging <目录>`。Windows PowerShell 等价命令（先 `uv sync --project english/02-object-detection`）：
+暂存区不在默认位置时加 `--staging <目录>`。Windows PowerShell 等价命令（先在仓库根 `uv sync`）：
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\import_vehicle_counting.py --from-staging
+uv run python .\english\scripts\import_vehicle_counting.py --from-staging
 ```
 
 导入器核对 Roboflow 元数据、类别、数量与压缩包 SHA-256 后写入 `data/vehicle-counting-tksu5-v4/` 与 `provenance.json`。

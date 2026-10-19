@@ -35,10 +35,10 @@
 ## 运行
 
 ```bash
-~/env_dl_uv/.venv/bin/python ../english/scripts/execute_and_save.py --group pytorch --language zh-CN
-~/env_dl_uv/.venv/bin/python ../english/scripts/execute_and_save.py --group paddle  --language zh-CN
-~/env_dl_uv/.venv/bin/python ../scripts/embed_expected_outputs.py --module 03-sentiment-analysis
+uv run python ../english/scripts/execute_and_save.py --group pytorch --language zh-CN
+uv run python ../english/scripts/execute_and_save.py --group paddle  --language zh-CN
+uv run python ../scripts/embed_expected_outputs.py --module 03-sentiment-analysis
 ```
 
 依赖 `paddlenlp` / `visualdl` 的只是归档里的历史 notebook；现行中文 Paddle 课只用到
-`paddlepaddle` + `gensim`，在 `~/env_dl_uv` 中可直接运行。
+`paddlepaddle` + `gensim`，在仓库根环境里可直接运行。

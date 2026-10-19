@@ -38,9 +38,9 @@ Open one route and run its notebooks top to bottom, or execute a whole lesson fr
 keep its real output:
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group pytorch
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group paddle
-~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 03-sentiment-analysis
+uv run python english/scripts/execute_and_save.py --group pytorch
+uv run python english/scripts/execute_and_save.py --group paddle
+uv run python scripts/embed_expected_outputs.py --module 03-sentiment-analysis
 ```
 
 [Dataset provenance](../docs/datasets.md) · [Environment setup](../docs/environment-setup.md)

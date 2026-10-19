@@ -19,20 +19,21 @@ YOLO26 export: 3,939 training / 338 validation / 186 test images. Visually verif
 
 ## Run
 
-The classroom machine uses the single environment outside the repository, `~/env_dl_uv` (Jupyter kernel
-`env_dl_uv`), for both languages. Import the official archives once from the repository root; importers refuse to
+Both languages share one dependency set and one read-only dataset, pinned by `pyproject.toml` + `uv.lock`
+in the repository root (`uv sync` once covers both; the classroom `~/env_dl_uv` kernel is the equivalent
+reference environment). Import the official archives once from the repository root; importers refuse to
 overwrite an existing destination, and the verified export needs no second import (see
 [data/README.md](data/README.md) for the cp and download methods of each dataset):
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/fetch_rps.py \
+uv run python english/scripts/fetch_rps.py \
   --archive /workspace/DataSet/yolo/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --from-staging
+uv run python english/scripts/import_vehicle_counting.py --from-staging
 ```
 
-Windows: `uv sync --locked --project english/02-object-detection`, then
+Windows: `uv sync --locked --default-index https://pypi.org/simple` in the repository root, then
 `.\start-notebooks.ps1 -Module detection` and
-`.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors`.
+`uv run python .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors`.
 
 Data is read-only and shared: `data/rock-paper-scissors-ishcs-v1/` and `data/vehicle-counting-tksu5-v4/`. Each
 language keeps its own runs: English in this module's `outputs/`, Chinese in
@@ -50,7 +51,7 @@ aggregate rather than bit for bit.
 Every code cell in both notebooks is followed by an *Expected output* cell: text is quoted verbatim and figures are
 exported to `assets/` and linked with relative paths, so the recorded results stay readable after
 *Kernel -> Clear All Outputs*, and a rerun should reproduce them. Refresh them from the repository root with
-`~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 02-object-detection`.
+`uv run python scripts/embed_expected_outputs.py --module 02-object-detection`.
 
 ## Vehicle counting notebook
 

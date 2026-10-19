@@ -2,14 +2,16 @@
 
 ## Recommended: uv with Python 3.12
 
-Historical image/NLP runs pin Python 3.12.15; the current shared English/Chinese
-detection project pins locally available Python 3.12.12. PyTorch is 2.14.1, torchvision is
-0.29.1, and PaddlePaddle is 3.3.1, the stable versions checked for this update.
-The classroom runs every module in one interpreter, `~/env_dl_uv`, whose Jupyter kernel is
-also named `env_dl_uv` (see
-[One kernel for the whole course](../../docs/environment-setup.md#one-kernel-for-the-whole-course-macoslinux)).
-Each module still keeps its own `pyproject.toml` and committed `uv.lock`, so an isolated
-module `.venv` can be rebuilt with `uv sync --locked --project <module>` when preferred.
+The repository root is the course's only uv project: `pyproject.toml` declares the
+dependencies, `uv.lock` pins them, and `.python-version` asks for CPython 3.12. One
+`uv sync` at the root installs every module on both language sides into the root `.venv`;
+module directories no longer carry a `pyproject.toml`, `uv.lock`, or `requirements.txt`.
+The lock pins Python 3.12, PyTorch 2.14.1, torchvision 0.29.1, PaddlePaddle 3.3.1, and
+Ultralytics 8.4.177, the versions used for the current validation, and records macOS
+arm64, manylinux x86_64, and Windows amd64 wheels (see
+[One kernel for the whole course](../../docs/environment-setup.md#one-kernel-for-the-whole-course)).
+The classroom interpreter `~/env_dl_uv`, kernel `env_dl_uv`, carries the same locked
+versions and is what actually produced the saved outputs in this repository.
 
 From the project root in PowerShell, start the image-classification course, which the launcher
 selects by default, with:
@@ -19,7 +21,8 @@ selects by default, with:
 ```
 
 Use `-Module pytorch`, `-Module paddle`, or `-Module detection` for the other modules.
-The existing `english/start-notebooks.ps1` also defaults to `vision`.
+The legacy `english/start-notebooks.ps1` is now a shim that forwards here, and also defaults
+to `vision`.
 For the separate Chinese course, see the [language-aware launcher guide](../../docs/environment-setup.md).
 The launcher uses `uv` when available on PATH and otherwise uses `python -m uv`.
 It explicitly selects the PyPI index recorded by the lockfile, avoiding a machine-specific
@@ -31,17 +34,20 @@ Before detection, import the official v1 YOLO26 archive as shown in the
 The Chinese detection launcher uses this same locked environment with a separate
 notebook/output directory. Set `COURSE_SMOKE=1` only for a deliberate COCO8 check.
 
-From an individual module directory, the equivalent commands are:
+The equivalent manual commands, from the repository root:
 
 ```powershell
-python -m uv sync --locked
-python -m uv run --locked jupyter lab --notebook-dir notebooks
+uv sync --locked
+uv run jupyter lab --notebook-dir english/01-image-classification/notebooks
 ```
+
+`uv run` walks up to the root `pyproject.toml`, so `uv run python …` also works from inside a
+module directory without `--project`.
 
 The notebooks now retain actual executed output, including embedded charts. The first
 code cell identifies the environment and run mode. When running them again, use the
-`env_dl_uv` kernel, or the rebuilt module kernel; selecting a different global kernel
-bypasses the lockfile.
+kernel from the root `.venv`, or the equivalent `env_dl_uv` classroom kernel; selecting a
+different global kernel bypasses the lockfile.
 Model training selects CUDA first, then Apple Silicon MPS, then CPU; see
 [device selection](../../docs/environment-setup.md#device-selection). All saved outputs in this
 repository were produced with that selection on the machine named in each report.
@@ -49,28 +55,25 @@ repository were produced with that selection on the machine named in each report
 The general pip instructions below remain an alternative; uv is the reproducible local
 workflow used for the current validation.
 
-Use Python 3.12. The validated `~/env_dl_uv` interpreter covers the image, PyTorch NLP,
-Paddle NLP and detection tracks together; `paddlenlp` and `visualdl` are left out because
+Use Python 3.12. The root lock covers the image, PyTorch NLP, Paddle NLP and detection
+tracks together; `paddlenlp` and `visualdl` are left out because
 their pinned `protobuf` conflicts with `paddlepaddle==3.3.1`, and the lessons that needed
 them are archived. The detection environment includes Ultralytics with YOLO26 support.
 
-## Windows PowerShell
+## Without uv
 
-From a module directory containing requirements.txt:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\python.exe -m pip install -r requirements.txt
-.venv\Scripts\python.exe -m jupyterlab
-```
-
-## Linux or macOS
+uv is the supported path because `uv.lock` is what makes the course reproducible. On a machine
+that cannot run uv, export the lock once from any machine that can, then install it with pip:
 
 ```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
+uv export --locked --no-hashes --no-emit-project -o requirements-root.txt
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements-root.txt
 .venv/bin/python -m jupyterlab
 ```
+
+Build one environment for the whole course this way, not one per module: the root lock is a
+single coherent resolution, and the exported file keeps the per-platform markers.
 
 Open the notebook with the kernel from that environment. The first cell finds the English
 course root, so opening notebooks at different depths does not change data paths. Course

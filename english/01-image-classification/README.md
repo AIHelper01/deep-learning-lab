@@ -53,15 +53,15 @@ Data and experiment products stay out of Git.
 Open a notebook and run it top to bottom, or execute a whole lesson and keep its real output:
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision
-~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification
+uv run python english/scripts/execute_and_save.py --group vision
+uv run python scripts/embed_expected_outputs.py --module 01-image-classification
 ```
 
 The archived comparison notebook is refreshed separately:
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --cwd notebook --notebook 01-lenet-mnist-copy1
-~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --notebook 01-lenet-mnist-copy1
+uv run python english/scripts/execute_and_save.py --group vision --cwd notebook --notebook 01-lenet-mnist-copy1
+uv run python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --notebook 01-lenet-mnist-copy1
 ```
 
 [Environment setup](../docs/environment-setup.md) · [Data and provenance](../docs/datasets.md)

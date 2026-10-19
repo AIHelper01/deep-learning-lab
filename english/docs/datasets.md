@@ -61,7 +61,7 @@ Labeled crop inspection confirms numeric class order: 0=paper, 1=rock, 2=scissor
 From the repository root, after preparing the detection environment:
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
+uv run python .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
 The importer extracts safely into a temporary directory, checks official v1 metadata,
@@ -82,7 +82,7 @@ rock-paper-scissors-ishcs-v1/
   test/images/ and test/labels/
 ```
 
-Both languages share this read-only dataset and detection environment, with separate
+Both languages share this read-only dataset and the locked root environment, with separate
 output directories. The course validator requires the matching official source;
 it does not silently accept the previous mirror or flattened VOC package. Near-duplicate
 or video leakage in the upstream split is still a limitation; exact duplicate checks do
@@ -118,15 +118,15 @@ outside the repository in a DataSet staging folder (classroom mirror
 provenance. From the repository root:
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\import_vehicle_counting.py --from-staging
+uv run python .\english\scripts\import_vehicle_counting.py --from-staging
 ```
 
-On macOS/Linux the classroom machine uses the single `~/env_dl_uv` interpreter and stages the archive
+On macOS/Linux the root uv environment is enough (`uv sync` first), after staging the archive
 first (`--staging <dir>` moves the DataSet folder):
 
 ```bash
 cp "/path/to/vehicle counting.v4i.yolo26.zip" /workspace/DataSet/yolo/
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --from-staging
+uv run python english/scripts/import_vehicle_counting.py --from-staging
 ```
 
 or point at any archive with `--archive /path/to/vehicle counting.v4i.yolo26.zip`, or at an

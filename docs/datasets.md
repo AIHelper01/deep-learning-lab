@@ -42,16 +42,16 @@ This guide describes what each dataset teaches, where it comes from, and how the
 - **Get it:** download the v1 YOLO26 export from the browser, or request the same export from the Roboflow REST API with a personal API key; both routes are documented in `english/02-object-detection/data/README.md`. Datasets are staged outside the repository in a DataSet folder (classroom mirror `/workspace/DataSet/yolo/`), then imported from there:
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
+uv run python .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 ```bash
-# macOS/Linux, repository root, single classroom interpreter
+# macOS/Linux, repository root, root uv environment (after `uv sync`)
 cp "/path/to/Rock-Paper-Scissors.v1i.yolo26.zip" /workspace/DataSet/yolo/
-~/env_dl_uv/.venv/bin/python english/scripts/fetch_rps.py \
+uv run python english/scripts/fetch_rps.py \
   --archive /workspace/DataSet/yolo/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
-- **Local location:** `english/02-object-detection/data/rock-paper-scissors-ishcs-v1/`; both language lessons share this verified dataset and locked detection environment. Outputs remain separate by language. Do not import again if this validated destination already exists.
+- **Local location:** `english/02-object-detection/data/rock-paper-scissors-ishcs-v1/`; both language lessons share this verified dataset and the locked root environment. Outputs remain separate by language. Do not import again if this validated destination already exists.
 - **Integrity:** the importer refuses existing destinations and validates source identity, class IDs, normalized boxes, and cross-split exact duplicates. It records ZIP SHA-256 and counts in `provenance.json`. The original supplied ZIP hash is `2cf65dffbaa92483bbf99e7903f7c23c934ccf57d1cb097a66b7d38eadac0e59`. No invalid boxes or cross-split exact duplicates were found in this export; this does not rule out near-duplicate/video leakage in the upstream split.
 - **Attribution:** retain the exported READMEs, credit melikeavan, and link the selected version and [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Record modifications such as English class names.
 
@@ -70,16 +70,16 @@ Dataset conversion and inspection are a separate [YOLO / VOC / COCO topic](../en
 - **Get it:** the v4 YOLO26 export needs a Roboflow account: use the browser download, or the export REST endpoint with a personal API key (`english/02-object-detection/data/README.md` lists both commands). Datasets are staged outside the repository in a DataSet folder (classroom mirror `/workspace/DataSet/yolo/`); the importer copies, verifies, and records provenance. From the repository root:
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\import_vehicle_counting.py --from-staging
+uv run python .\english\scripts\import_vehicle_counting.py --from-staging
 ```
 ```bash
-# macOS/Linux, repository root, single classroom interpreter (add --staging <dir> for another DataSet folder)
+# macOS/Linux, repository root, root uv environment (add --staging <dir> for another DataSet folder)
 cp "/path/to/vehicle counting.v4i.yolo26.zip" /workspace/DataSet/yolo/
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --from-staging
+uv run python english/scripts/import_vehicle_counting.py --from-staging
 ```
 
 - **Local location:** `english/02-object-detection/data/vehicle-counting-tksu5-v4/` alongside the shared gesture dataset; each language writes its own
-  `outputs/` (English `english/02-object-detection/outputs/`, Chinese `02-object-detection/outputs/`). Tracking needs the `lapx` package (provides the `lap` module), already pinned in the locked detection environment.
+  `outputs/` (English `english/02-object-detection/outputs/`, Chinese `02-object-detection/outputs/`). Tracking needs the `lapx` package (provides the `lap` module), already pinned in the root `pyproject.toml`.
 - **Integrity:** the importer verifies embedded Roboflow identity, class set, split independence, cross-split duplicates, and box geometry. Three label lines in the source package were segmentation polygons; they are rewritten to their enclosing detection boxes and the count (3) is recorded with the archive SHA-256 `3945432ed7ce76c9af3b83db7f0ee68ad898b0996bd7577f88a3b6ee6f0cea20` in `provenance.json`. Existing destinations are refused.
 - **Attribution:** credit vehicle-counting-rtvul on Roboflow Universe, link the version page and [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), and note the lower-cased names plus the three normalized segmentation lines.
 

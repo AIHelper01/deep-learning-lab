@@ -209,19 +209,19 @@ Notebook 里两次计数用的是**不同图片数**（零样本 6 张、微调 
 ```bash
 # 1) 数据：从 DataSet 暂存区导入（详见 ../data/README.md）
 cd /path/to/deep-learning-lab
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --from-staging
+uv run python english/scripts/import_vehicle_counting.py --from-staging
 
 # 2) 生成演示视频（可选，Notebook 缺失时会自动生成）
-~/env_dl_uv/.venv/bin/python english/scripts/build_traffic_demo_video.py \
+uv run python english/scripts/build_traffic_demo_video.py \
   --export-dir english/02-object-detection/data/vehicle-counting-tksu5-v4 \
   --output     02-object-detection/outputs/traffic-demo.mp4 --fps 12 --frames 108
 
 # 3) 执行并保存输出（课堂默认参数，Apple 芯片 MPS 约 16 分钟）
 cd english
-~/env_dl_uv/.venv/bin/python scripts/execute_and_save.py \
+uv run python scripts/execute_and_save.py \
   --group detection --language zh-CN --notebook 02-yolo26-vehicle-counting
 
-# 需要锁定到检测模块环境时可用 uv sync --locked --project english/02-object-detection 重建
+# 全课环境在仓库根用 uv sync --locked 重建
 ```
 
 `COURSE_SMOKE=1` 会切换到 COCO8 流程检查，其数字**不能**当作本案例的车流量结果；`COURSE_EPOCHS=1` 只验证流程连通性。

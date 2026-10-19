@@ -2,7 +2,7 @@
 
 English mirror · [中文课程环境（母本）](environment-setup.zh-CN.md)
 
-The English mirror has four independent uv projects with committed lockfiles. See the [full English environment guide](../english/docs/environment-setup.md) for versions, alternate platforms, and smoke mode.
+The whole course is **one uv project: the repository root** (`pyproject.toml` + `uv.lock` + `.python-version`). `uv sync` once at the root installs every module on both language sides into one `.venv`; module directories no longer carry their own `pyproject.toml`, `uv.lock`, or `requirements.txt`. See the [full English environment guide](../english/docs/environment-setup.md) for versions, alternate platforms, and smoke mode.
 
 From the repository root in PowerShell:
 
@@ -13,7 +13,7 @@ From the repository root in PowerShell:
 .\start-notebooks.ps1 -Module detection
 ```
 
-The launcher runs `uv sync --locked` and opens JupyterLab in the selected English module. It falls back to `python -m uv` when uv is not on PATH. First setup requires network access if dependencies are not cached. Select the module's Python kernel.
+The launcher runs `uv sync --locked` in the repository root, then `uv run jupyter lab --notebook-dir <module>/notebooks`. It falls back to `python -m uv` when uv is not on PATH. First setup requires network access if dependencies are not cached, and the JupyterLab server offers exactly the one root kernel.
 
 To inspect the selection without installing packages or starting Jupyter:
 
@@ -22,40 +22,45 @@ To inspect the selection without installing packages or starting Jupyter:
 .\start-notebooks.ps1 -Language zh-CN -Module pytorch -DryRun
 ```
 
-Chinese notebooks need no separate environment on macOS/Linux: the single [`env_dl_uv`](#one-kernel-for-the-whole-course-macoslinux) kernel below runs both languages. On Windows, recreate the pinned module environment first (see the [Chinese setup guide](environment-setup.zh-CN.md)), then launch:
+Chinese notebooks need no separate environment on any platform: the single root environment described in [`One kernel for the whole course`](#one-kernel-for-the-whole-course) runs both languages. Sync the root project once (see the [Chinese setup guide](environment-setup.zh-CN.md)), then launch:
 
 ```powershell
 .\start-notebooks.ps1 -Language zh-CN -Module vision
 ```
 
-Chinese sessions start from the notebook directory because their relative data paths require it. For extensions or archived notebooks, start Jupyter from that notebook's directory as described in the Chinese guide. Chinese YOLO26 detection uses the same pinned dependencies and the official RPS v1 dataset as the English lesson; on the classroom machine both languages run in the one `env_dl_uv` interpreter. Launch it on Windows with `.\start-notebooks.ps1 -Language zh-CN -Module detection`; outputs remain in the Chinese module. Other Chinese dependencies retain their original validation limitations.
+Notebooks locate the course root through the `CHINESE_COURSE_ROOT` and `english/COURSE_ROOT` marker files, so a kernel whose working directory is either the notebook directory or the repository root works. For extensions or archived notebooks, start Jupyter from that notebook's directory as described in the Chinese guide. Chinese YOLO26 detection uses the same pinned dependencies and the official RPS v1 dataset as the English lesson, and both languages run in the one root interpreter. Launch it with `.\start-notebooks.ps1 -Language zh-CN -Module detection`; outputs remain in the Chinese module.
 
-The existing `english/start-notebooks.ps1` remains available and now also defaults to image classification.
+The legacy `english/start-notebooks.ps1` remains available as a thin shim that forwards to the root launcher, and also defaults to image classification.
 
-The [dataset-format topic](../english/02-object-detection/dataset-formats/README.md) reuses this detection environment for its conversion scripts; training does not require conversion.
+The [dataset-format topic](../english/02-object-detection/dataset-formats/README.md) reuses the root environment for its conversion scripts; training does not require conversion.
 
-## One kernel for the whole course (macOS/Linux)
+## One kernel for the whole course
 
-`~/env_dl_uv` is a single uv project outside the repository that merges the four module
-lockfiles into one interpreter, so a local machine only needs one Jupyter kernel named
-`env_dl_uv`. It covers image classification, object detection (including the
-vehicle-counting notebook), the dataset-format topic, the PyTorch NLP track, and the
-classical-ML Titanic lesson `00-machine-learning/` (a CPU scikit-learn/XGBoost/LightGBM
-stack added on top of the merged module lockfiles):
+The `.venv` created at the repository root is that single interpreter: after `uv sync` it covers
+image classification, object detection (including the vehicle-counting notebook), the
+dataset-format topic, the PyTorch NLP track, and the classical-ML Titanic lesson
+`00-machine-learning/` (a CPU scikit-learn/XGBoost/LightGBM stack), for both language editions:
 
 ```bash
-cd ~/env_dl_uv
-uv sync
-.venv/bin/python -m ipykernel install --user --name env_dl_uv --display-name env_dl_uv
-uv run --no-sync jupyter lab /path/to/deep-learning-lab
+cd /path/to/deep-learning-lab
+uv sync --locked
+uv run jupyter lab --notebook-dir english/01-image-classification/notebooks
 ```
 
-Then pick **env_dl_uv** in JupyterLab (Notebook → Change Kernel). The same interpreter also
-registers an equivalent `python3` kernel, which is what the command-line runner uses. English
-notebooks resolve `english/COURSE_ROOT` and Chinese notebooks resolve `CHINESE_COURSE_ROOT` at
-the repository root, so opening the course from either directory works.
+`uv run` starts JupyterLab with only this environment's own kernel. To select it from another
+Jupyter installation, register it once:
 
-`paddlenlp` and `visualdl` are deliberately not installed there: they pin `protobuf 3.20.x`
+```bash
+uv run python -m ipykernel install --user --name deep-learning-lab --display-name deep-learning-lab
+```
+
+The uv project `~/env_dl_uv` outside the repository (kernel name `env_dl_uv`) is the interpreter
+that actually produced every saved `Expected output` block and run report now committed here, on
+the same locked versions; it stays as the classroom reference and a new machine does not need it.
+English notebooks resolve `english/COURSE_ROOT` and Chinese notebooks resolve
+`CHINESE_COURSE_ROOT` at the repository root, so opening the course from either directory works.
+
+`paddlenlp` and `visualdl` are deliberately not in the root manifest or installed: they pin `protobuf 3.20.x`
 and target Paddle 2.x, which conflicts with the pinned `paddlepaddle==3.3.1` used by the
 validated runs. The current Chinese Paddle lessons (`03-sentiment-analysis/paddle/notebooks/`)
 only need `paddlepaddle` plus `gensim` and run in this environment; the old `paddlenlp`/ERNIE
@@ -92,15 +97,15 @@ state the consequence instead - a rerun matches the recorded metrics in aggregat
 
 | Purpose | Command (repository root) |
 |---|---|
-| Execute a notebook and keep real outputs | `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection\|ml [--language zh-CN] [--notebook <name>] [--cwd root\|notebook\|module] [--include-legacy]` |
-| Quote executed results back into the notebook (`Expected output` + `assets` figures) | `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py [--module <module>] [--notebook <name>] [--include-archive] [--include-legacy]` |
-| Derive the English mirror from a Chinese master | `~/env_dl_uv/.venv/bin/python scripts/build_english_course.py [--check] [--force]` |
-| Regenerate the Chinese mirrors (vision/NLP, still English -> Chinese) | `~/env_dl_uv/.venv/bin/python scripts/build_chinese_course.py` |
-| Keep the Chinese detection lesson's console text Chinese | `~/env_dl_uv/.venv/bin/python scripts/localize_chinese_detection.py` |
-| Chinese/English pairing and output-language audit | `~/env_dl_uv/.venv/bin/python scripts/check_parity.py` |
-| English course static checks (no CJK inside `english/`) | `~/env_dl_uv/.venv/bin/python english/scripts/check_course.py` |
-| Repository-wide link, image-localisation and `assets` naming checks | `~/env_dl_uv/.venv/bin/python scripts/check_docs_assets.py` |
-| Saved outputs still match their code | `~/env_dl_uv/.venv/bin/python english/scripts/verify_saved_outputs.py` |
+| Execute a notebook and keep real outputs | `uv run python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection\|ml [--language zh-CN] [--notebook <name>] [--cwd root\|notebook\|module] [--include-legacy]` |
+| Quote executed results back into the notebook (`Expected output` + `assets` figures) | `uv run python scripts/embed_expected_outputs.py [--module <module>] [--notebook <name>] [--include-archive] [--include-legacy]` |
+| Derive the English mirror from a Chinese master | `uv run python scripts/build_english_course.py [--check] [--force]` |
+| Regenerate the Chinese mirrors (vision/NLP, still English -> Chinese) | `uv run python scripts/build_chinese_course.py` |
+| Keep the Chinese detection lesson's console text Chinese | `uv run python scripts/localize_chinese_detection.py` |
+| Chinese/English pairing and output-language audit | `uv run python scripts/check_parity.py` |
+| English course static checks (no CJK inside `english/`) | `uv run python english/scripts/check_course.py` |
+| Repository-wide link, image-localisation and `assets` naming checks | `uv run python scripts/check_docs_assets.py` |
+| Saved outputs still match their code | `uv run python english/scripts/verify_saved_outputs.py` |
 
 `COURSE_SMOKE=1` swaps in a pipeline check (COCO8 for detection, random weights for ResNet) and
 `COURSE_EPOCHS=<n>` shortens training; neither score describes model quality, and reports must

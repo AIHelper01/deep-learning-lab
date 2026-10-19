@@ -12,7 +12,7 @@ From the repository root in PowerShell:
 .\start-notebooks.ps1
 ```
 
-The default is **English image classification**. The launcher uses the module's locked uv environment and opens JupyterLab. Start with [LeNet on MNIST](english/01-image-classification/notebooks/01-lenet-mnist.ipynb).
+The default is **English image classification**. The launcher syncs the uv project in the repository root and opens JupyterLab. Start with [LeNet on MNIST](english/01-image-classification/notebooks/01-lenet-mnist.ipynb).
 
 ```powershell
 .\start-notebooks.ps1 -Module pytorch
@@ -21,14 +21,15 @@ The default is **English image classification**. The launcher uses the module's 
 .\start-notebooks.ps1 -Language zh-CN -Module vision
 ```
 
-English requires uv (or `python -m uv`); first setup may download Python and dependencies. On macOS/Linux the whole course - English and Chinese, all four modules - runs from one verified uv environment outside the repository, `~/env_dl_uv`, whose Jupyter kernel is also called `env_dl_uv`; see [setup](docs/environment-setup.md).
+The course is **one uv project: the repository root**. English requires uv (or `python -m uv`); `uv sync` there installs all four modules for both language editions into one `.venv`, and first setup may download Python and dependencies. The classroom interpreter `~/env_dl_uv` carries the same locked versions and is what actually produced the saved outputs; see [setup](docs/environment-setup.md).
 
 Execute a lesson and keep its real output with:
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision            # English
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN
-~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py                              # quote results back into the notebooks
+uv sync                                        # once, in the repository root
+uv run python english/scripts/execute_and_save.py --group vision            # English
+uv run python english/scripts/execute_and_save.py --group vision --language zh-CN
+uv run python scripts/embed_expected_outputs.py                              # quote results back into the notebooks
 ```
 
 ## Course

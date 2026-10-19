@@ -15,23 +15,23 @@
 
 ## 运行
 
-中英文共用同一套依赖与同一份只读数据。课堂机器使用仓库外的单一环境 `~/env_dl_uv`（Jupyter 内核名 `env_dl_uv`）；也可以在 Windows 上把依赖锁定到检测模块。首次导入正式数据包，在仓库根目录运行：
+中英文共用同一套依赖与同一份只读数据。依赖由仓库根的 `pyproject.toml` + `uv.lock` 锁定，`uv sync` 一次即覆盖两个语言版本（课堂机器上的等价参照环境是仓库外的 `~/env_dl_uv`，内核名 `env_dl_uv`）。首次导入正式数据包，在仓库根目录运行：
 
 ```bash
 # 课堂机器（macOS/Linux）：先按 data/README.md 把压缩包放进 DataSet 暂存区，再导入
-~/env_dl_uv/.venv/bin/python english/scripts/fetch_rps.py \
+uv run python english/scripts/fetch_rps.py \
   --archive /workspace/DataSet/yolo/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 ```
 
-Windows 上先 `uv sync --locked --project english/02-object-detection`，再用启动器打开 JupyterLab：
+Windows 上在仓库根同步一次环境，再用启动器打开 JupyterLab：
 
 ```powershell
-uv sync --locked --default-index https://pypi.org/simple --project .\english\02-object-detection
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
+uv sync --locked --default-index https://pypi.org/simple
+uv run python .\english\scripts\fetch_rps.py --archive C:/Users/will/Downloads/Rock-Paper-Scissors.v1i.yolo26.zip --class-names paper rock scissors
 .\start-notebooks.ps1 -Language zh-CN -Module detection
 ```
 
-已导入数据时无需再次导入，脚本拒绝合并或覆盖现有目录。选择检测环境内核，逐格执行。中文输出写入 `02-object-detection/outputs/`，英文输出写入 `english/02-object-detection/outputs/`。
+已导入数据时无需再次导入，脚本拒绝合并或覆盖现有目录。选择根环境内核，逐格执行。中文输出写入 `02-object-detection/outputs/`，英文输出写入 `english/02-object-detection/outputs/`。
 
 手势实验与车流量实验共用同一个内核，环境细节见[环境准备](../docs/environment-setup.zh-CN.md)。
 
@@ -41,7 +41,7 @@ uv sync --locked --default-index https://pypi.org/simple --project .\english\02-
 打开「仅告警」的确定性开关，但 MPS 上的自动微分算子 `index_put_with_accumulate_mps` 没有确定性实现，
 因此重跑与记录成绩只在整体上一致，不保证逐位复现。
 
-两个 Notebook 的每个代码单元后面都跟着一个「预期输出」单元：文字输出逐字摘录，图片导出到 `assets/` 并以相对路径引用，因此执行 **Kernel → Clear All Outputs** 之后真实结果仍然看得见，重跑后两者应当一致。输出变了就在仓库根目录刷新：`~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 02-object-detection`。
+两个 Notebook 的每个代码单元后面都跟着一个「预期输出」单元：文字输出逐字摘录，图片导出到 `assets/` 并以相对路径引用，因此执行 **Kernel → Clear All Outputs** 之后真实结果仍然看得见，重跑后两者应当一致。输出变了就在仓库根目录刷新：`uv run python scripts/embed_expected_outputs.py --module 02-object-detection`。
 
 ## 车流量统计案例
 
@@ -51,13 +51,13 @@ uv sync --locked --default-index https://pypi.org/simple --project .\english\02-
 
 ```bash
 # 课堂机器（macOS/Linux），仓库根目录
-~/env_dl_uv/.venv/bin/python english/scripts/import_vehicle_counting.py --from-staging
+uv run python english/scripts/import_vehicle_counting.py --from-staging
 ```
 
-Windows 上先 `uv sync --project english/02-object-detection`：
+Windows 上在仓库根 `uv sync` 之后：
 
 ```powershell
-.\english\02-object-detection\.venv\Scripts\python.exe .\english\scripts\import_vehicle_counting.py --from-staging
+uv run python .\english\scripts\import_vehicle_counting.py --from-staging
 ```
 
 跟踪依赖 `lapx`（提供 `lap` 模块）已在检测锁定环境中；`COURSE_SMOKE=1` 时视频链路仍可用，但模型不是车辆微调权重，计数仅供链路检查。默认演示视频是由数据集真实车辆裁剪合成的短片（每辆车只过一次线，有确定答案），设置 `TRAFFIC_VIDEO=/path/to/你的道路视频.mp4`（Windows 用 `$env:TRAFFIC_VIDEO`）可换成真实视频。计数实现见 `english/common/traffic_counting.py`。
