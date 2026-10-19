@@ -22,9 +22,9 @@ This directory takes part in neither default course execution nor the
 plus `--cwd notebook`, from the repository root:
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN \
+uv run python english/scripts/execute_and_save.py --group vision --language zh-CN \
     --cwd notebook --include-legacy --notebook legacy-notebooks/02-lenet-cifar10.ipynb
-~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification \
+uv run python scripts/embed_expected_outputs.py --module 01-image-classification \
     --include-archive --include-legacy --notebook legacy-notebooks/02-lenet-cifar10.ipynb
 ```
 

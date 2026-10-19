@@ -14,8 +14,8 @@
 - 中文图表字体由 common/course_zh.py 探测，避免中文标签显示成方框。
 
 用法（仓库根目录）：
-    ~/env_dl_uv/.venv/bin/python scripts/build_chinese_course.py            # 生成全部
-    ~/env_dl_uv/.venv/bin/python scripts/build_chinese_course.py --check     # 只校验
+    uv run python scripts/build_chinese_course.py            # 生成全部
+    uv run python scripts/build_chinese_course.py --check     # 只校验
 """
 from pathlib import Path
 import argparse

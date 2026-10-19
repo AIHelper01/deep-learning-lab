@@ -13,8 +13,8 @@
   由各自语言的执行/内嵌脚本生成，不参与镜像翻译。
 
 用法（仓库根目录）：
-    ~/env_dl_uv/.venv/bin/python scripts/build_english_course.py            # 生成
-    ~/env_dl_uv/.venv/bin/python scripts/build_english_course.py --check     # 只校验译文覆盖
+    uv run python scripts/build_english_course.py            # 生成
+    uv run python scripts/build_english_course.py --check     # 只校验译文覆盖
 """
 from pathlib import Path
 import argparse

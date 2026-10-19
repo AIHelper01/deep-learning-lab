@@ -10,8 +10,8 @@
   只被归档文件引用的图片移动到 `archive/assets/`，让归档自成一体。
 
 用法（仓库根目录）：
-    ~/env_dl_uv/.venv/bin/python scripts/localize_notebook_images.py --dry-run
-    ~/env_dl_uv/.venv/bin/python scripts/localize_notebook_images.py
+    uv run python scripts/localize_notebook_images.py --dry-run
+    uv run python scripts/localize_notebook_images.py
 """
 from pathlib import Path
 import argparse

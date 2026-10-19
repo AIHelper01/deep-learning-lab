@@ -8,9 +8,9 @@
 - 图注默认取该代码单元上方最近的 markdown 标题（自动中/英对应），也可在任务表里手写覆盖。
 
 用法（仓库根目录）：
-    ~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py                    # 全部任务
-    ~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification
-    ~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification \
+    uv run python scripts/embed_expected_outputs.py                    # 全部任务
+    uv run python scripts/embed_expected_outputs.py --module 01-image-classification
+    uv run python scripts/embed_expected_outputs.py --module 01-image-classification \
         --include-archive --notebook 01-lenet-mnist-copy1                             # 只刷归档课件
 """
 from pathlib import Path
@@ -190,8 +190,8 @@ OVERRIDES = {
             "`result/Submission.csv`, `Submission_SVM_Pipeline.csv`, `tmp.csv`; the writing cells create the "
             "directories themselves, so a fresh checkout runs without setup. To refresh this run "
             "(from the repository root, execute first, then embed):",
-            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group ml --cwd module`",
-            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 00-machine-learning`",
+            "> - `uv run python english/scripts/execute_and_save.py --group ml --cwd module`",
+            "> - `uv run python scripts/embed_expected_outputs.py --module 00-machine-learning`",
         ]),
     },
     "00-machine-learning/notebooks/01_Titanic-Case.ipynb": {
@@ -209,8 +209,8 @@ OVERRIDES = {
             "> 运行会生成并被 Git 忽略的产物：`models/`（pkl/onnx）、`result/Submission.csv`、"
             "`Submission_SVM_Pipeline.csv`、`tmp.csv`；写出单元已自带 `mkdir`，空目录也能直接跑通。"
             "刷新本实跑（仓库根目录，先执行、再内嵌）：",
-            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group ml --language zh-CN --cwd module`",
-            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 00-machine-learning`",
+            "> - `uv run python english/scripts/execute_and_save.py --group ml --language zh-CN --cwd module`",
+            "> - `uv run python scripts/embed_expected_outputs.py --module 00-machine-learning`",
         ]),
     },
     "01-image-classification/archive/legacy-notebooks/01-lenet-mnist.ipynb": {
@@ -231,8 +231,8 @@ OVERRIDES = {
             ">",
             "> 本目录是历史归档：默认不参与课程执行，也不参与 `verify_saved_outputs.py` 的产出校验。"
             "重跑要显式加 `--include-legacy`（仓库根目录，先实跑、再内嵌）：",
-            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/01-lenet-mnist.ipynb`",
-            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/01-lenet-mnist.ipynb`",
+            "> - `uv run python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/01-lenet-mnist.ipynb`",
+            "> - `uv run python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/01-lenet-mnist.ipynb`",
         ]),
     },
     "01-image-classification/archive/legacy-notebooks/03-resnet-cifar10.ipynb": {
@@ -265,8 +265,8 @@ OVERRIDES = {
             ">",
             "> 摘录时剥掉了彩色终端输出的 ANSI 颜色码，其余文字逐字保留。本目录是历史归档：默认不参与课程执行，"
             "也不参与 `verify_saved_outputs.py` 的产出校验。重跑要显式加 `--include-legacy`（仓库根目录，先实跑、再内嵌）：",
-            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/03-resnet-cifar10.ipynb`",
-            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/03-resnet-cifar10.ipynb`",
+            "> - `uv run python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/03-resnet-cifar10.ipynb`",
+            "> - `uv run python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/03-resnet-cifar10.ipynb`",
         ]),
     },
     "01-image-classification/archive/legacy-notebooks/02-lenet-cifar10.ipynb": {
@@ -290,8 +290,8 @@ OVERRIDES = {
             ">",
             "> 本目录是历史归档：默认不参与课程执行，也不参与 `verify_saved_outputs.py` 的产出校验。"
             "重跑要显式加 `--include-legacy`（仓库根目录，先实跑、再内嵌）：",
-            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/02-lenet-cifar10.ipynb`",
-            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/02-lenet-cifar10.ipynb`",
+            "> - `uv run python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/02-lenet-cifar10.ipynb`",
+            "> - `uv run python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/02-lenet-cifar10.ipynb`",
         ]),
     },
     "01-image-classification/archive/legacy-notebooks/extensions/04-lenet-custom-data.ipynb": {
@@ -319,8 +319,8 @@ OVERRIDES = {
             ">",
             "> 摘录时剥掉了彩色终端输出的 ANSI 颜色码，其余文字逐字保留。本目录是历史归档：默认不参与课程执行，"
             "也不参与 `verify_saved_outputs.py` 的产出校验。重跑要显式加 `--include-legacy`（仓库根目录，先实跑、再内嵌）：",
-            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/extensions/04-lenet-custom-data.ipynb`",
-            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/extensions/04-lenet-custom-data.ipynb`",
+            "> - `uv run python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/extensions/04-lenet-custom-data.ipynb`",
+            "> - `uv run python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/extensions/04-lenet-custom-data.ipynb`",
         ]),
     },
     "01-image-classification/archive/01-lenet-mnist-copy1.ipynb": {
@@ -345,8 +345,8 @@ OVERRIDES = {
             "`assets/` 则是本目录（单图推理用的 `lenet-7.jpg` 就在这里）。",
             ">",
             "> 刷新方式（仓库根目录，先实跑、再内嵌）：",
-            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --notebook 01-lenet-mnist-copy1`",
-            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --notebook 01-lenet-mnist-copy1`",
+            "> - `uv run python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --notebook 01-lenet-mnist-copy1`",
+            "> - `uv run python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --notebook 01-lenet-mnist-copy1`",
         ]),
     },
     "02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb": {
@@ -368,7 +368,7 @@ OVERRIDES = {
             ">",
             "> 复现方式：把 `Rock-Paper-Scissors.v1i.yolo26.zip` 放进 `/workspace/DataSet/yolo/`，"
             "按本模块 `data/README.md` 的 cp 方式或下载方式导入，再在**未设置 `COURSE_EPOCHS`** "
-            "的终端里用 `env_dl_uv` 内核重新运行。注意 MPS 上 Ultralytics 的确定性开关会命中没有确定性实现的 "
+            "的终端里用仓库根环境（`uv run python`）重新运行。注意 MPS 上 Ultralytics 的确定性开关会命中没有确定性实现的 "
             "`index_put_with_accumulate_mps` 内核，所以整体一致，不保证逐位复现。",
         ]),
     },

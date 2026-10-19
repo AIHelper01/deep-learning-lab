@@ -59,7 +59,7 @@ line-crossing counts that matched the video ground truth exactly. Classroom runs
 single `~/env_dl_uv` environment; CUDA has not been validated. Historical mirror scores describe a different
 dataset. See [execution evidence and limits](english/reports/README.md).
 
-- `scripts/check_docs_assets.py`: local link reachability, heading anchors, zero remote images, `assets/<name>-<index>` naming, and bilingual `docs/` pairing across the whole repository.
+- `scripts/check_docs_assets.py`: local link reachability, heading anchors, zero remote images, `assets/<name>-<index>` naming, bilingual `docs/` pairing, and - across every live document, notebook and kernelspec - no leftover command or kernel pointing at a retired interpreter.
 - `english/scripts/verify_saved_outputs.py`: every delivered notebook on both sides executed, no saved errors.
 - `english/common/`: shared data preparation.
 - `english/scripts/`: authoring, execution, and validation tools.

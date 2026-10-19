@@ -5,7 +5,7 @@
 每条规则必须命中，否则报错——避免母本改动后中文悄悄失效。
 
 用法（仓库根目录）：
-    ~/env_dl_uv/.venv/bin/python scripts/localize_chinese_detection.py
+    uv run python scripts/localize_chinese_detection.py
 """
 from pathlib import Path
 import json

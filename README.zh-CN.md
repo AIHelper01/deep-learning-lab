@@ -49,11 +49,12 @@ uv run python english/scripts/verify_saved_outputs.py # 中英两侧 28 本 note
 | `/workspace/DataSet/yolo/*.zip` | 导入到 `english/02-object-detection/data/`（中英文共用的只读数据） |
 | `/workspace/DataSet/nlp/imdb`、`.../ChnSentiCorp` | `03-sentiment-analysis/data/`、`english/03-sentiment-analysis/data/` |
 
-当前状态（2026-10-18）：全部目录与文件名均为英文；`env_dl_uv` 环境已建立并注册同名 Jupyter 内核；中文课程的 13 本
-现行 Notebook（图像分类 4、目标检测 2、PyTorch NLP 4、Paddle NLP 3）全部在本机 `env_dl_uv` 里真实执行完毕，并把真实
+当前状态（2026-10-19）：全部目录与文件名均为英文；依赖与内核收编到仓库根的 uv 工程，`uv sync` 之后 Jupyter 只有根 `.venv` 这一个内核；中文课程的 14 本
+现行 Notebook（经典机器学习 1、图像分类 4、目标检测 2、PyTorch NLP 4、Paddle NLP 3）全部在课堂机上真实执行完毕，并把真实
 结果内嵌为「预期输出」文字块与 `assets/` 图片，清掉输出后仍可对照。四项校验
 （`check_parity.py`、`english/scripts/check_course.py`、`scripts/check_docs_assets.py`、
-`english/scripts/verify_saved_outputs.py`）当前均为 0 问题；`check_docs_assets.py` 现在还检查链接锚点与 `data/README.md`。
+`english/scripts/verify_saved_outputs.py`）当前均为 0 问题；`check_docs_assets.py` 现在还检查链接锚点、`data/README.md`，
+以及现行课件是否还在教人用已经淘汰的解释器命令或内核。
 设备选择统一为 CUDA → MPS → CPU，本机实跑走 MPS。数据集现状：MNIST、CIFAR-10、石头剪刀布 v1、车辆计数 v4、COCO8 已落地到各模块
 `data/`（`data/` 被 Git 忽略，缺失时按每个 `data/README.md` 里的 cp 方式或下载方式补齐）；检测两本中文 Notebook
 已在 Apple 芯片 MPS 上按课堂默认轮数实跑完毕，与英文版同参数同种子成绩一致；中英文两侧的车流量 Notebook 共用同一份

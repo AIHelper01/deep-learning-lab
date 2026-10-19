@@ -16,9 +16,9 @@
 需要复现时用 `--include-legacy` 显式打开，并配合 `--cwd notebook`（仓库根目录执行）：
 
 ```bash
-~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN \
+uv run python english/scripts/execute_and_save.py --group vision --language zh-CN \
     --cwd notebook --include-legacy --notebook legacy-notebooks/02-lenet-cifar10.ipynb
-~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification \
+uv run python scripts/embed_expected_outputs.py --module 01-image-classification \
     --include-archive --include-legacy --notebook legacy-notebooks/02-lenet-cifar10.ipynb
 ```
 

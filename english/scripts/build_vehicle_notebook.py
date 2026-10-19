@@ -53,11 +53,11 @@ Place the dataset in the course data directory first. Classroom data is staged o
 DataSet (classroom mirror `/workspace/DataSet/yolo`); from the repository root:
 
 ```powershell
-.\\english\\02-object-detection\\.venv\\Scripts\\python.exe .\\english\\scripts\\import_vehicle_counting.py --from-staging
+uv run python .\\english\\scripts\\import_vehicle_counting.py --from-staging
 .\\start-notebooks.ps1 -Module detection
 ```
 
-On macOS/Linux the single uv environment `~/env_dl_uv` (Jupyter kernel `env_dl_uv`) replaces the launcher;
+On macOS/Linux the same root uv project replaces the launcher: run `uv sync` once in the repository root;
 see [environment setup](../../docs/environment-setup.md). `COURSE_SMOKE=1` switches to COCO8 as a pure
 pipeline check and is not the vehicle experiment; `COURSE_EPOCHS` only shortens training. The video defaults
 to a short clip that `build_traffic_demo_video.py` composes from real vehicle crops in the dataset (every

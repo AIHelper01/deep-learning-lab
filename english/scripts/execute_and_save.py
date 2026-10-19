@@ -40,7 +40,7 @@ def main():
         'paddle': sorted((base/'03-sentiment-analysis/paddle/notebooks').glob('*.ipynb')),
         'detection': sorted((base/'02-object-detection/notebooks').glob('*.ipynb')),
         # 经典机器学习课（00-machine-learning）两侧都有：中文母本在仓库根，英文镜像在 english/。
-        # 数据与产物都落在模块目录内，所以配 --cwd module 运行；解释器与其余课程同为 ~/env_dl_uv。
+        # 数据与产物都落在模块目录内，所以配 --cwd module 运行；解释器与其余课程同为仓库根的 uv 环境。
         'ml': sorted((base/'00-machine-learning/notebooks').glob('*.ipynb')),
     }
     # archive/legacy-notebooks is read-only course history: it is never re-executed.

@@ -3,6 +3,59 @@
 Updated: 2026-10-19 (Asia/Shanghai). Session 21 is committed on `main` together with its entry and has not been pushed; Sessions 18, 19 and 20 are committed together as `750f381` on main and have not been pushed; Session 15 is committed on main together with its entry and has not been pushed.
 Each earlier session states its own commit state in its closing line.
 
+## Session 22 - the shipped course text stops pointing at the deleted environments
+
+Session 21 moved the uv project to the repository root and rewrote the documentation, but the courseware
+itself still taught the old setup. Grepping for the deleted interpreter found three classes of leftovers,
+all of which a learner would hit on day one.
+
+Fixed:
+
+- **The Titanic lesson told students to install `requirements.txt`, a file that no longer exists.** The tip
+  in the Chinese master (`00-machine-learning/notebooks/01_Titanic-Case.ipynb`) now says to run `uv sync`
+  in the repository root and open the notebook from that same root; `scripts/titanic_en.py` carries the
+  matching English translation, and the English mirror was patched in place after confirming that a full
+  rebuild differs from the committed mirror in exactly that one cell - so its saved run outputs survived.
+- **54 lines of retired interpreter commands across the shipped course**: 44 `~/env_dl_uv/.venv/bin/python ...`
+  in the usage blocks and embedded "refresh this run" footers of 7 scripts, 7 notebooks and 2 legacy-notebook
+  READMEs, plus 5 PowerShell lines that ran a deleted per-module `.venv\\Scripts\\python.exe`, plus 5 sentences
+  that described `~/env_dl_uv` / the module venv as the thing to launch (the macOS/Linux note in the vehicle
+  lesson now points at the root uv project). All of them now read `uv run python`.
+- **Two live notebooks still pinned `kernelspec: env_dl_uv`**, a kernel that does not exist on a fresh clone
+  (`02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb`,
+  `03-sentiment-analysis/pytorch/notebooks/03-lstm-sentiment.ipynb`); both are now `python3`, matching the
+  other 27 live notebooks and their English mirrors. `execution_environment.executable`, the reports, and the
+  prose that names `~/env_dl_uv` as the interpreter which produced the saved outputs stay as evidence.
+
+Guard added: `scripts/check_docs_assets.py` gained check 7 - no live document, notebook markdown or notebook
+kernelspec may reference a retired interpreter (`~/env_dl_uv/.venv/...`, module `.venv/bin|Scripts/python`);
+archived courseware, `docs/migration/` and this handoff file are reported instead of failed, which keeps the 2
+archived notebooks with legacy kernels visible. Verified by planting a probe document and watching it fail.
+
+Checks after the change, all green: `check_docs_assets.py` (0 problems, 29 live notebooks kernel-checked,
+2 archived kernel notes), `check_parity.py` (42 notebooks, 0 problems), `verify_saved_outputs.py`
+(30 notebooks, 0 problems), `english/scripts/check_course.py` (92 sources / 16 notebooks, 0 problems),
+`build_english_course.py --check` (1 mirror), `build_chinese_course.py --check` (11 mirrors),
+`git diff --check` clean. No notebook was re-executed: every edit is prose, a script usage block, or notebook
+metadata, and the saved outputs are still the committed evidence.
+
+Commit state: this session's 27 files and this entry go into one commit on `main`; nothing is pushed.
+
+中文小结：Session 21 把 uv 工程搬到仓库根并重写了文档，但课件正文还在教旧环境，学生第一天就会踩到。三类残留全部修好：
+泰坦尼克号课的提示还在让人装已删除的 `requirements.txt`（中文母本改成"先在仓库根 `uv sync`，再用同一个根启动的 Jupyter 打开"，
+`scripts/titanic_en.py` 同步补英文译文，英文镜像按"重建结果与已提交文件只差这一个单元"逐单元核对后就地打补丁，已保存输出原样保住）；
+课件与脚本里 54 处已淘汰解释器写法（7 份脚本 usage、7 本 notebook 页脚与 2 份 legacy README 共 44 处
+`~/env_dl_uv/.venv/bin/python`，5 处调用已删除模块 `.venv\\Scripts\\python.exe` 的 PowerShell，5 句把
+`~/env_dl_uv`/模块 venv 说成启动入口的文案）统一成 `uv run python`；两本现行 notebook 的 kernelspec 还钉着
+新克隆机上不存在的 `env_dl_uv` 内核，已改为与其余 27 本及其英文镜像一致的 `python3`，而
+`execution_environment.executable`、执行报告和"这份输出来自 `~/env_dl_uv` 实跑"这类证据性表述保留不动。
+另加一道防回归钉子：`scripts/check_docs_assets.py` 新增第 7 项，现行文档、notebook markdown 与 kernelspec
+一律不得再出现已淘汰解释器路径，归档课件、`docs/migration/` 与本交接文件只登记不报错（2 本归档内核因此仍可见），
+并用临时探针文档验证过它确实会报错。校验全绿：文档检查 0 问题（29 本现行内核检查、2 条归档内核记录）、
+42 本对齐 0 问题、30 本输出一致性 0 问题、92 源/16 notebook 英文检查 0 问题、1 + 11 份镜像校验通过、
+`git diff --check` 干净；本轮没有重跑任何 notebook，改动全是文案、脚本 usage 与 notebook 元数据，
+已保存输出仍是既有证据。27 个文件与本篇进同一个 `main` 提交，未推送。
+
 ## Session 21 - one uv project at the repository root replaces the per-module environments
 
 The course is launched with uv, but the repository root had no `pyproject.toml`, no `uv.lock` and no

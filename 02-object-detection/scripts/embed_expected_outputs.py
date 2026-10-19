@@ -10,7 +10,7 @@
 
 用法（检测解释器或 ~/env_dl_uv 均可，任意目录执行）：
 
-    ~/env_dl_uv/.venv/bin/python 02-object-detection/scripts/embed_expected_outputs.py
+    uv run python 02-object-detection/scripts/embed_expected_outputs.py
 
 脚本可重复执行：带 course-expected-output 标签的单元会先删除再重新生成。
 english/ 目录禁止出现中日韩文字，因此英文 Notebook 使用英文标签与说明。

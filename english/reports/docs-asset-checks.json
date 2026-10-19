@@ -13,6 +13,11 @@
   "historical_asset_dirs": [
     "01-image-classification/archive/assets/lenet: restores ../assets/lenet/test_cifar10.png, the input image read by legacy-notebooks/02-lenet-cifar10.ipynb; the path follows docs/migration/file-map.json"
   ],
+  "kernel_checked_notebooks": 29,
+  "archived_kernel_notes": [
+    "Archived notebook kernel: 01-image-classification/archive/legacy-notebooks/extensions/04-lenet-custom-data.ipynb -> env_dl_uv",
+    "Archived notebook kernel: 03-sentiment-analysis/pytorch/archive/legacy-notebooks/01-nlp-overview.ipynb -> env_llm_agent"
+  ],
   "legacy_external_link_reason": "read-only history notebooks (archive/legacy-notebooks and the original YOLO11 lesson kept in 02-object-detection/notebooks/) point into the external PaddleYOLO project (yml configs and deploy docs) that never entered this repository",
   "problems": [],
   "scope": "All authored Markdown and notebook markdown on both course sides; raw data, generated outputs, virtual environments and the migration snapshot excluded."

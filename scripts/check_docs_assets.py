@@ -7,10 +7,13 @@
 3. assets 命名规范：每个文件必须是 `<名称>-<序号>.<扩展名>`，assets 目录内不再嵌套子目录；
 4. 双语配对：`docs/*.md` 必须有同名 `.zh-CN.md`，含 `README.zh-CN.md` 的目录必须有 `README.md`，且互相链接；
 5. 链接锚点：`文档.md#小节` 指向的小节标题必须真的存在（按 GitHub 的 slug 规则比对）；
-6. notebook 内的 markdown 同样参与检查 1、2 与 5。
+6. notebook 内的 markdown 同样参与检查 1、2、5 与 7；
+7. 环境与内核一致性：现行课件与文档不得再给出已被淘汰的解释器命令（`~/env_dl_uv/.venv/bin/python`、
+   模块级 `.venv/Scripts/python.exe`），现行 notebook 的 kernelspec 必须是 `python3`
+   （仓库根 `uv sync` 之后 Jupyter 只有这一个内核）。归档课件与迁移记录按历史对待，只登记不报错。
 
 用法（仓库根目录）：
-    ~/env_dl_uv/.venv/bin/python scripts/check_docs_assets.py
+    uv run python scripts/check_docs_assets.py
 """
 from pathlib import Path
 import json
@@ -146,6 +149,49 @@ def check_bilingual(problems):
             problems.append(f"README does not link its Chinese half: {english.relative_to(ROOT)}")
 
 
+# 已被淘汰的解释器写法：仓库根 uv 工程（`uv sync` + `uv run python`）之后不应再出现在现行课件里。
+RETIRED_ENV_COMMANDS = (
+    re.compile(r"~/env_dl_uv/\.venv/(?:bin/python|Scripts/python\.exe)"),
+    re.compile(r"[0-9]{2}-[a-z-]+[/\\]+\.venv[/\\]+(?:bin[/\\]+python|Scripts[/\\]+python\.exe)"),
+)
+# 历史记录：归档课件、迁移快照与本交接文档会原样保留当时的命令。
+HISTORY_PATHS = ("/archive/", "/archive", "docs/migration/", "HANDOFF.md")
+
+
+def is_history(path):
+    rel = path.relative_to(ROOT).as_posix()
+    return any(marker in f"/{rel}" for marker in HISTORY_PATHS)
+
+
+def check_retired_environment(problems, history_notes):
+    """现行文档与课件不得再指导读者使用已删除的解释器或内核。"""
+    for path, chunks in author_markdown():
+        if is_history(path):
+            continue
+        for label, text in chunks:
+            for pattern in RETIRED_ENV_COMMANDS:
+                match = pattern.search(text)
+                if match:
+                    problems.append(f"Retired interpreter command: {path.relative_to(ROOT)} "
+                                    f"{label}: {match.group(0)}")
+    live, archived = 0, 0
+    for path in sorted(ROOT.rglob("*.ipynb")):
+        rel = path.relative_to(ROOT)
+        if any(part in SKIP_DIRS for part in rel.parts):
+            continue
+        name = json.loads(path.read_text(encoding="utf-8")).get("metadata", {}) \
+            .get("kernelspec", {}).get("name")
+        if is_history(path):
+            archived += 1
+            if name != "python3":
+                history_notes.append(f"Archived notebook kernel: {rel} -> {name}")
+            continue
+        live += 1
+        if name != "python3":
+            problems.append(f"Notebook kernel is not python3: {rel} -> {name}")
+    return live, archived
+
+
 def github_slug(heading_line):
     """按 GitHub 的规则把标题行变成锚点：小写、去标点、空格转连字符，保留字母数字与 CJK。"""
     text = heading_line.strip().lstrip("#").strip().lower()
@@ -183,11 +229,12 @@ def check_anchors(problems):
 
 
 def main():
-    problems, legacy_notes, historical_asset_dirs = [], [], []
+    problems, legacy_notes, historical_asset_dirs, history_notes = [], [], [], []
     remote_images = check_links(problems, legacy_notes)
     fragments = check_anchors(problems)
     check_assets(problems, historical_asset_dirs)
     check_bilingual(problems)
+    live_notebooks, archived_notebooks = check_retired_environment(problems, history_notes)
     report = {
         "markdown_documents": sum(1 for p, _ in author_markdown() if p.suffix == ".md"),
         "link_fragments_checked": fragments,
@@ -195,6 +242,8 @@ def main():
         "legacy_external_links": len(legacy_notes),
         "legacy_external_link_examples": legacy_notes[:5],
         "historical_asset_dirs": historical_asset_dirs,
+        "kernel_checked_notebooks": live_notebooks,
+        "archived_kernel_notes": history_notes,
         "legacy_external_link_reason": "read-only history notebooks (archive/legacy-notebooks and the "
         "original YOLO11 lesson kept in 02-object-detection/notebooks/) point into "
                                        "the external PaddleYOLO project (yml configs and deploy docs) that "
