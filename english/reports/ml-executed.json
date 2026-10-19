@@ -1,0 +1,17 @@
+{
+  "group": "ml",
+  "language": "en",
+  "python": "3.12.12",
+  "executable": "/Users/will/env_dl_uv/.venv/bin/python",
+  "results": [
+    {
+      "notebook": "00-machine-learning/notebooks/01_Titanic-Case.ipynb",
+      "status": "passed",
+      "run_mode": "Default classroom training parameters",
+      "seconds": 85.02,
+      "code_cells": 98,
+      "output_items": 97,
+      "png_outputs": 28
+    }
+  ]
+}

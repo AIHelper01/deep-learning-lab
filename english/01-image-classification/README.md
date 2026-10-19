@@ -1,5 +1,7 @@
 # Image classification
 
+[Chinese course](../../01-image-classification/README.md) · [Project](../README.md)
+
 1. [LeNet on MNIST](notebooks/01-lenet-mnist.ipynb)
 2. [LeNet on CIFAR-10](notebooks/02-lenet-cifar10.ipynb)
 3. [ResNet18 on CIFAR-10](notebooks/03-resnet-cifar10.ipynb)
@@ -22,9 +24,12 @@ test data back for final evaluation. The default short runs prioritize teaching 
 
 ## Relationship to the Chinese course
 
-These four notebooks are the masters of the Chinese lessons in `01-image-classification/`:
-`scripts/build_chinese_course.py` mirrors them cell by cell, translating only narration,
-console text, plot labels and class names. Change the master, then regenerate the mirror.
+The repository rule is that the Chinese lessons are the masters and this side is the derived mirror
+(see `AGENTS.md`), but this module is still mid-migration: the tables in
+`scripts/build_chinese_course.py` key on the English text, so today these notebooks are the effective
+translation source. Both sides match cell by cell and differ only in narration, console text, plot
+labels and class names. Before editing a lesson, read the Migration status section of `AGENTS.md` and
+do not regenerate either side from the wrong direction.
 
 The custom-folder lesson exports MNIST into `train/zero`, `train/one`, ... folders; the
 original LEDNUM collection has no verified public download, so the lesson teaches folder

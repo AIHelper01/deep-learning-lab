@@ -1,11 +1,220 @@
 # Project handoff
 
-Updated: 2026-10-19 (Asia/Shanghai). Session 15 is committed on main together with this entry; it has not been pushed.
+Updated: 2026-10-19 (Asia/Shanghai). Sessions 18, 19 and 20 are **not committed**; Session 15 is committed on main together with its entry and has not been pushed.
 Each earlier session states its own commit state in its closing line.
+
+## Session 20 - the English side of modules 01-03 is audited against the Chinese masters
+
+The user asked whether `english/01-image-classification`, `english/02-object-detection` and
+`english/03-sentiment-analysis` are missing anything, now that the Chinese tree is the master.
+`check_parity.py` was green the whole time, which is exactly the problem: it never looked at committed
+documents inside `data/` and `outputs/`, and nobody had re-read the archive and route READMEs after the
+direction flip.
+
+Fixed:
+
+- Two committed documents existed only on the Chinese side
+  (`03-sentiment-analysis/outputs/paddle/README.md`, `.../outputs/pytorch/README.md`); the English twins
+  are now written. They could never have been committed before: `english/.gitignore` had
+  `**/outputs/**` with a top-level `!**/outputs/README.md` only, while the root file also re-includes
+  `!**/outputs/**/` and `!**/outputs/**/README.md`. The nested negations are now in both files.
+- `scripts/check_parity.py` now treats a `README.md` under `data/` or `outputs/` as a course document
+  when it belongs to the repository (`git ls-files --cached --others --exclude-standard`), so local
+  download notes and caches stay out of pairing while authored guides cannot be one-sided again.
+  Verified with a probe file: the check reports the missing English twin and goes quiet once removed.
+- 16 statements in 12 files still said English was the master - module READMEs for 01 and 03 on both
+  sides, plus all six `archive/legacy-notebooks/README.md`. Each now states the repository rule
+  (Chinese master) together with the Migration status (these two modules' generator still keys on
+  English text, so do not regenerate either side from the wrong direction), which is what the
+  `AGENTS.md` rule already said.
+- `english/01-image-classification/archive/legacy-notebooks/README.md` was the generic NLP template and
+  contradicted its Chinese master. It now mirrors that master: the vision-specific archiving reasons
+  (including the notebook-directory working convention), the `--include-legacy --cwd notebook` rerun
+  commands, the per-notebook status table with the recorded numbers, and the two genuine skips
+  (old-server ResNet checkpoint, missing LEDNUM images).
+- `english/03-sentiment-analysis/pytorch/README.md` and `.../paddle/README.md` both shipped a leaked
+  template placeholder, `03-sentiment-analysis/$d/`; each now names its own route.
+- `english/01-image-classification/README.md` and `english/03-sentiment-analysis/README.md` lacked the
+  "Chinese course / Project" header line that the detection module already had, and the English
+  detection lesson list stopped at 7 while the Chinese master lists the read-only YOLO11 original as
+  item 8. Both aligned.
+
+Audited and deliberately left as they are: the seven Chinese-only `archive/legacy-notebooks/*.ipynb`
+plus the four YOLO11 figures they embed (the English course never had these drafts; the archive READMEs
+and `ONE_SIDED` say so), the `04-pretrained-{chinese,english}-sentiment` alias pair,
+`english/02-object-detection/data/coco8/README.md` (English smoke-mode download, upstream text,
+gitignored), the two byte-identical gitignored `01-image-classification/archive/data/DOWNLOAD.md`
+provenance notes, and module `scripts/*.py` (parity pairs documents; the English generator lives in
+`english/scripts/` and `02-object-detection/scripts/embed_expected_outputs.py` is only an entry shim for
+the shared root script). Different heading counts in a few READMEs turned out to be folded sections,
+not missing content. Three untracked `reference-*.png` files sit at the repository root, byte-identical
+to the copies in `00-machine-learning/assets/`.
+
+All seven checks green after the sweep: `verify_saved_outputs.py` (30 notebooks, 0 problems),
+`check_docs_assets.py` (0 problems), `check_parity.py` (0 problems, 9 nested README pairs),
+`check_course.py` (0 problems), `build_chinese_course.py --check` (11), `build_english_course.py --check`
+(1), `git diff --check`. Nothing committed.
+
+中文小结：把 `english/01|02|03` 与中文母本逐文件对了一遍。真正的缺漏有两处
+`english/03-sentiment-analysis/outputs/{paddle,pytorch}/README.md`，根因是 `english/.gitignore` 的
+`**/outputs/**` 缺少嵌套 README 例外，英文侧这类说明文件本来就进不了库；补齐文件并补齐例外规则。
+`check_parity.py` 新增守卫：属于仓库的 `data/`、`outputs/` 内 README 也必须中英成对（用探针文件验证会报错、移除后恢复干净）。
+另清掉 12 个文件里 16 处仍称"英文母本"的表述（01/03 模块 README 两侧 + 6 份 legacy README），统一成
+"仓库规则=中文母本 + Migration status=这两模块生成器仍以英文文本为键"；英文视觉 legacy README 原本套的是 NLP 模板，
+已按中文母本重写（归档原因、opt-in 重跑命令、逐本状态表、两处硬缺失）；`english/03/.../$d/` 模板占位符已修；
+英文 01/03 README 补回指中文课程入口行，英文检测清单补上第 8 项只读原件。
+七项校验全绿，全部未提交。
+
+## Session 19 - the course direction turns around: Chinese is the master, English is derived
+
+The user asked whether the "English-first, `english/` holds the masters" rule should simply be
+deleted from the repository, or replaced with "Chinese is the master, English is derived".
+A bare deletion would leave no direction at all while `check_parity.py` and both builders still
+need one, so the second option was implemented: **the Chinese lessons are the masters and
+`english/` holds derived mirrors**. Uncommitted from Session 18; nothing committed yet.
+
+What landed:
+
+- `scripts/build_english_course.py`: a ZH -> EN mirror generator, deliberately symmetric with
+  `scripts/build_chinese_course.py`. Markdown is keyed on the exact first line of the Chinese
+  cell, code on the exact de-indented Chinese line; a cell or line containing Chinese that is not
+  in the tables is a build error, and so is a translation the master no longer uses. It refuses to
+  overwrite a mirror that already carries saved outputs unless `--force`.
+- `scripts/titanic_en.py`: the 00 lesson's tables - 53 whole-cell markdown translations and
+  206 line-level code translations (comments plus user-visible text). Keys were extracted from the
+  master itself, and every pair was read back to confirm alignment.
+- `english/00-machine-learning/`: the derived English notebook, a byte-identical copy of the
+  Titanic CSVs (both READMEs publish the two SHA-256 values), an English `assets/README.md`, and a
+  module `README.md` matching the one-README-per-side convention of the other modules. The
+  Chinese side's redundant `README.zh-CN.md` (created in Session 18, never committed) moved to
+  Trash: inside a module directory the repo keeps one `README.md` per side, and a Chinese file
+  under `english/` would break `check_course.py`.
+- `00-machine-learning/README.md` is now Chinese prose on the master side, states that it is the
+  master, and documents the edit -> derive -> execute -> embed loop.
+- `execute_and_save.py --group ml` follows `--language` instead of hard-coding the Chinese tree, so
+  the same group runs either side. `check_parity.py` gained `00-machine-learning`, and
+  `embed_expected_outputs.py` carries the English intro for the mirror.
+- Direction documentation: `AGENTS.md` (new Project direction with an explicit **Migration status**
+  list), both root READMEs (the module table now reads Chinese master / English mirror and gained
+  the 00 row), both environment-setup guides, and the eleven "English (default)" front-door labels
+  across the root, module and `docs/` guides, which now say master/mirror.
+
+Execution of the English mirror (`--group ml --cwd module`, `env_dl_uv`, CPU, default parameters):
+**passed, 85.02 s**, 98 code cells, 97 output items, 28 figures - the same shape as the Chinese
+master's 84.82 s run, and the headline metrics agree cell for cell (SVM test 81.78% / CV 82.13%
+with the defaults confirmed optimal, Pipeline best CV 82.18% and test 80.6%, XGBoost CV 82.38%,
+LightGBM CV 82.71%). Embedding wrote 75 text blocks and 28 figures per side and left the Chinese
+notebook byte-identical.
+
+Checks after the change (repository root): `check_course.py` 0 problems over 97 course source files
+and 16 notebooks - which is also the proof that the derived notebook kept no Chinese,
+`check_parity.py` 0 problems with 00 included, `verify_saved_outputs.py` 0 problems,
+`check_docs_assets.py` 0 problems, `build_chinese_course.py --check` 11 mirrors,
+`build_english_course.py --check` clean, `git diff --check` clean. `tests/check-launcher.ps1`
+still cannot run here (no `pwsh`); the launcher is untouched.
+
+A follow-up sweep then removed the last wording that still claimed English was primary, because the
+direction rule has to hold in the tooling and not just in the front door:
+`scripts/build_chinese_course.py` no longer calls English "the only master" (its docstring now says
+it is a transitional EN -> ZH generator for the eleven vision/NLP notebooks, and its missing-source
+message says so too), `scripts/check_parity.py` dropped its "English side is the master" comment,
+`01-image-classification/data/README.md` links to the "English mirror" guide instead of the "default
+English" one, `docs/environment-setup.md` calls its own file the English mirror, `english/README.md`
+now states that it is derived and that the Chinese course is the master, and
+`english/docs/environment-setup.md` attributes "default" to the launcher rather than to the course.
+All seven checks were re-run after those edits and are still green.
+
+Deliberately **not** done, and worth a decision:
+
+- `01-image-classification` and `03-sentiment-analysis` are still generated in the old direction by
+  `scripts/build_chinese_course.py` (EN -> ZH, tables keyed on English text), and
+  `english/02-object-detection/dataset-formats/` is still English-authored. AGENTS.md records this
+  as Migration status instead of pretending the flip is already global. Reversing those two modules
+  means re-keying a 529-line generator onto the Chinese side and can be proven equivalent by
+  comparing the reverse-generated mirrors with the current English notebooks cell by cell.
+- `start-notebooks.ps1` still defaults to `-Language en` / `vision`, because `tests/check-launcher.ps1`
+  pins that routing and the default is a user-facing choice.
+- `check_parity.py` now reports 81 English-only user-visible strings in the Chinese 00 master
+  (plot titles and labels inherited from the original Kaggle notebook). It is a metric, not a
+  failure, and it is the master's own text: localising it changes the master's outputs and both
+  mirrors, so it is offered as follow-up work rather than done silently.
+
+中文小结：按用户给的第二条路线翻转课程方向 - **中文课件为母本，`english/` 为派生镜像**（"English-first"
+不再是仓库约定）。新增 `scripts/build_english_course.py`（与 `build_chinese_course.py` 对称的中 → 英
+派生器，Markdown 按中文单元首行、代码按去缩进原行精确匹配，漏译与失效译文都直接报错）与
+`scripts/titanic_en.py`（53 个整元 Markdown + 206 行代码译文，键取自母本原文并逐对回读校验）。
+英文侧 `english/00-machine-learning/` 落地：派生课件、与母本 SHA-256 相同的数据副本（两侧 README 公布
+哈希）、英文 `assets/README.md`、与其余模块一致的单份 `README.md`；母本侧多余的 `README.zh-CN.md`
+（上一会话新建、未提交）已移入废纸篓，因为模块目录按约定每侧只有一份 README，且 `english/` 下不允许中文。
+`--group ml` 改为跟随 `--language`，`check_parity.py` 纳入 00 模块。英文镜像实跑 **85.02 s 通过**，
+98 单元 / 97 输出 / 28 图，关键指标与母本逐字一致；两侧各内嵌 75 文字块 + 28 图，母本逐字节不变。
+文档翻转：`AGENTS.md` 新增「Migration status」如实标注视觉/NLP 仍是旧的英文 → 中文生成器、
+dataset-formats 仍是英文母本，门面 11 处 "English (default)" 改为母本/镜像表述，启动器默认值与
+`tests/check-launcher.ps1` 保持原样（改默认属另一决策）。视觉/NLP 反向重做、母本侧 81 处遗留英文图表
+文案、启动器默认语言三项，留待用户定夺。收尾再扫了一遍仍在宣称英文为主的措辞，把
+`scripts/build_chinese_course.py` 的「english/ 是唯一母本」改写成「过渡工具，视觉与 NLP 这 11 本的翻译来源暂时在英文侧」，
+`scripts/check_parity.py` 去掉「英文侧是母本」注释，`01-image-classification/data/README.md`、
+`docs/environment-setup.md`、`english/README.md`、`english/docs/environment-setup.md` 四处门面/镜像表述统一为
+母本/镜像口径（启动器的"默认"只归因于启动器本身）。七项校验重跑全绿。全部改动未提交。
+
+## Session 18 - the classical-ML Titanic lesson lands as `00-machine-learning/`
+
+The user added a classical machine-learning module (Titanic survival prediction, Chinese prose,
+from a Kaggle-style notebook) at the repository root and asked to execute it for real in the
+course's uv workflow and quote the run back into the notebook like every other lesson. The user
+first asked for a separate `~/env_ml_uv`, then changed direction mid-session: **share the existing
+`~/env_dl_uv`**, and `env_ml_uv` was deleted (kernelspec removed, directory moved to Trash).
+
+What landed:
+
+- `00-machine-learning/` (Chinese course only, no English mirror; `check_parity.py` accepts it):
+  `notebooks/01_Titanic-Case.ipynb`, data under `titanic/` (Kaggle LabeledData/UnlabeledData CSV,
+  not in Git), bilingual module README pair, `assets/README.md` documenting the three unreferenced
+  teaching-tool screenshots (renamed to `reference-1..3.png` to satisfy the `<name>-<N>` asset rule).
+- `~/env_dl_uv/pyproject.toml` gained seaborn, scikit-learn 1.7.2, xgboost 3.4.1, lightgbm 4.7.0,
+  skl2onnx 1.20.0, onnxruntime 1.31.0 (`uv sync` clean). The ML stack, the paddle/gensim stack and
+  the torch/ultralytics stack each import fine in their own process, as every lesson kernel uses
+  one stack; importing paddle and torch together in one process hits the known OMP conflict and is
+  not something any course notebook does.
+- Tooling: `execute_and_save.py` accepts `--group ml` (runtime-cell pin: scikit-learn 1.7.2) and a
+  new `--cwd module` (kernel cwd = the module directory: the notebook lives in `notebooks/` but
+  reads `titanic/` and writes `models/`/`result/` from the module root). `embed_expected_outputs.py`
+  lists the module by default and carries its registered Chinese intro; `verify_saved_outputs.py`
+  discovers `00-machine-learning/notebooks`.
+- Lesson fixes needed to execute on a clean tree: the submission/model cells wrote to
+  `result/`/`models/` that never existed - each writer now creates its directory first
+  (`Path(Path.cwd(), 'result').mkdir(exist_ok=True)`; plain `Path('../result')` does **not**
+  collapse `..`, which is what made the first two runs fail), and the Pipeline submission now
+  writes `Submission_SVM_Pipeline.csv` where the prose says (the module directory). `.gitignore`
+  excludes `models/`, `result/`, `*.pkl`, the submissions and `tmp.csv`.
+
+Execution (`--group ml --language zh-CN --cwd module`, env_dl_uv, CPU, default parameters):
+**passed, 84.82 s**, 98 code cells, 97 output items, 28 figures. Headline numbers quoted into the
+intro: model table best SVM (10-fold CV 0.8146); GridSearchCV confirms SVM defaults are already
+optimal (CV 82.13%, test 81.78%); Pipeline + GridSearchCV best CV 82.18% (test 80.6%);
+XGBoost CV 82.38%; LightGBM CV 82.71%; the ONNX export re-scored by onnxruntime matches sklearn
+predictions. `scripts/embed_expected_outputs.py --module 00-machine-learning` embedded 75 text
+blocks and 28 figures into `notebooks/assets/01_Titanic-Case-<N>.png`; a second embed run leaves
+the file byte-identical.
+
+Checks after the change (all from the repository root): `verify_saved_outputs.py` 29 notebooks /
+0 problems, `check_docs_assets.py` 0 problems, `check_parity.py` 40 notebooks / 0 problems,
+`check_course.py` 0 problems, `build_chinese_course.py --check` 11 mirrors, `git diff --check`
+clean. `tests/check-launcher.ps1` was not run this session (no `pwsh` on this host; the launcher
+is untouched). Docs updated: both environment-setup guides (coverage, `--group ml`, `--cwd module`)
+and the Chinese README module table. Untracked, not yet committed at the time of writing.
+
+中文小结：新增的泰坦尼克号经典机器学习课按课程既有流程落地为 `00-machine-learning/`（仅中文侧）。环境按用户
+改定的方案并入课堂主环境 `~/env_dl_uv`（补 seaborn/scikit-learn/xgboost/lightgbm/skl2onnx/onnxruntime，
+临时建的 `env_ml_uv` 已删除）。为能在干净仓库跑通，写出单元补了建目录逻辑（`Path('../x')` 不折叠 `..`
+是前两次失败的根因，改用 `Path(Path.cwd(), x)`），Pipeline 提交文件按正文写回模块目录。`--group ml
+--cwd module` 实跑通过（CPU，84.82 s，98 单元、28 图），真实结果内嵌 75 个「预期输出」块 + 28 张
+`assets/` 图，重复内嵌逐字节幂等；四项目检 + 镜像校验 + diff 检查全部 0 问题。校验报告见
+`english/reports/ml-zh-CN-executed.json`。
 
 ## Current user direction
 
-The project is English-first with Chinese compatibility. The user supplied the official `Rock-Paper-Scissors.v1i.yolo26.zip` and selected **YOLO26n** for both language lessons. The user explicitly stopped the earlier flattened VOC package workflow. Dataset conversion and Xiaotudui Labs viewer instructions must be a **separate parallel topic**, not part of model-training notebooks.
+The project is **Chinese-master-first**: the root-level Chinese lessons are the masters and `english/` holds derived mirrors (see Session 19 and Migration status in AGENTS.md). The user supplied the official `Rock-Paper-Scissors.v1i.yolo26.zip` and selected **YOLO26n** for both language lessons. The user explicitly stopped the earlier flattened VOC package workflow. Dataset conversion and Xiaotudui Labs viewer instructions must be a **separate parallel topic**, not part of model-training notebooks.
 
 ## Delivered structure
 

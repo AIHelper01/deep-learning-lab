@@ -2,13 +2,13 @@
 
 这里保存的是本仓库早期的中文 notebook，模块为「视觉分类」。归档原因：
 
-- 结构与重构后的英文母本（`english/01-image-classification/notebooks/`）不一致，无法逐单元对齐；
+- 结构与重构后的课程 notebook 不一致，无法逐单元对齐；
 - 目录约定与课程 notebook 不同：它们按自身所在目录解析 `../data`、`../outputs`、`../../assets`，
   而课程 notebook 以课程根目录为工作目录；
 - 部分单元依赖仓库外的旧服务器资产（见下）。
 
-现行中文课程位于 `01-image-classification/notebooks/`，由仓库根目录的 `scripts/build_chinese_course.py`
-从英文母本镜像生成：中文讲解、中文输出、中文图表，且与英文课程一一对应。
+现行中文课程位于 `01-image-classification/notebooks/`，与英文侧同名课程一一对应（由 `scripts/check_parity.py` 校验）。
+两侧目前以哪一侧充当翻译来源，见仓库根目录 `AGENTS.md` 的 Migration status。
 
 ## 在锁定环境里实跑（opt-in）
 

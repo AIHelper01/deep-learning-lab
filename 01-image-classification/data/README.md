@@ -10,7 +10,7 @@ MNIST 与 CIFAR-10 通过 Notebook 的 torchvision 下载流程准备；保留�
 
 如需无需额外外部数据的自定义图片目录实验，可用英文课程由 MNIST 生成的扩展，位置是 `english/01-image-classification/data/custom-digits-balanced/`，不应与中文 LEDNUM 混为同一数据。
 
-详细规模、获取方式、许可注意事项见[中文数据集介绍](../../docs/datasets.zh-CN.md)；[默认英文说明](../../docs/datasets.md)。`data/` 下除 README 外均不入库。
+详细规模、获取方式、许可注意事项见[中文数据集介绍](../../docs/datasets.zh-CN.md)；[英文镜像说明](../../docs/datasets.md)。`data/` 下除 README 外均不入库。
 
 ## 从 DataSet 拉取（cp 方式）
 

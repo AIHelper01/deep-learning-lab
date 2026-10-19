@@ -15,6 +15,6 @@
 ~/env_dl_uv/.venv/bin/python ../../../scripts/embed_expected_outputs.py --module 03-sentiment-analysis
 ```
 
-本路线由英文母本 `../../english/03-sentiment-analysis/paddle/notebooks/` 镜像生成，训练逻辑与英文一致。
+本路线与 `../../english/03-sentiment-analysis/paddle/notebooks/` 逐单元对应，训练逻辑一致；两侧以哪一侧充当翻译来源，见 `../../AGENTS.md` 的 Migration status。
 [环境准备](../../docs/environment-setup.zh-CN.md) · [数据获取](../../docs/datasets.zh-CN.md)
 历史版本在 [archive/legacy-notebooks/](archive/legacy-notebooks/README.md)，只读参考。

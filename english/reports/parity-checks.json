@@ -1,6 +1,16 @@
 {
-  "notebooks_checked": 40,
+  "notebooks_checked": 42,
   "pairs": [
+    {
+      "module": "00-machine-learning",
+      "file": "README.md",
+      "status": "paired"
+    },
+    {
+      "module": "00-machine-learning",
+      "file": "notebooks/01_Titanic-Case.ipynb",
+      "status": "paired"
+    },
     {
       "module": "01-image-classification",
       "file": "README.md",
@@ -23,6 +33,11 @@
     },
     {
       "module": "01-image-classification",
+      "file": "data/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "01-image-classification",
       "file": "notebooks/01-lenet-mnist.ipynb",
       "status": "paired"
     },
@@ -39,6 +54,11 @@
     {
       "module": "01-image-classification",
       "file": "notebooks/extensions/04-lenet-custom-data.ipynb",
+      "status": "paired"
+    },
+    {
+      "module": "01-image-classification",
+      "file": "outputs/README.md",
       "status": "paired"
     },
     {
@@ -71,7 +91,17 @@
     },
     {
       "module": "02-object-detection",
+      "file": "data/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
       "file": "dataset-formats/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "02-object-detection",
+      "file": "dataset-formats/data/README.md",
       "status": "paired"
     },
     {
@@ -116,6 +146,11 @@
       "status": "paired"
     },
     {
+      "module": "02-object-detection",
+      "file": "outputs/README.md",
+      "status": "paired"
+    },
+    {
       "module": "03-sentiment-analysis",
       "file": "README.md",
       "status": "paired"
@@ -123,6 +158,26 @@
     {
       "module": "03-sentiment-analysis",
       "file": "archive/environment/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "data/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "outputs/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "outputs/paddle/README.md",
+      "status": "paired"
+    },
+    {
+      "module": "03-sentiment-analysis",
+      "file": "outputs/pytorch/README.md",
       "status": "paired"
     },
     {
@@ -182,9 +237,48 @@
     }
   ],
   "parity_problems": [],
-  "chinese_notebooks_with_english_outputs": [],
-  "chinese_notebooks_with_english_outputs_total": 0,
+  "chinese_notebooks_with_english_outputs": [
+    {
+      "file": "00-machine-learning/notebooks/01_Titanic-Case.ipynb",
+      "english_only_outputs": 81,
+      "examples": [
+        "Number of rows :",
+        "Number of columns:",
+        "Number of people Survived vs  Deceased",
+        "Survived vs  Deceased",
+        "Number of people",
+        "Survived or Not"
+      ]
+    }
+  ],
+  "chinese_notebooks_with_english_outputs_total": 81,
   "notebooks": [
+    {
+      "file": "00-machine-learning/notebooks/01_Titanic-Case.ipynb",
+      "language": "zh",
+      "code_cells": 97,
+      "markdown_cells": 55,
+      "executed_cells": 96,
+      "error_outputs": 0,
+      "english_only_outputs": 81,
+      "examples": [
+        "Number of rows :",
+        "Number of columns:",
+        "Number of people Survived vs  Deceased",
+        "Survived vs  Deceased",
+        "Number of people",
+        "Survived or Not"
+      ]
+    },
+    {
+      "file": "00-machine-learning/notebooks/01_Titanic-Case.ipynb",
+      "language": "en",
+      "code_cells": 97,
+      "markdown_cells": 55,
+      "executed_cells": 96,
+      "error_outputs": 0,
+      "english_only_outputs": 0
+    },
     {
       "file": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
       "language": "zh",

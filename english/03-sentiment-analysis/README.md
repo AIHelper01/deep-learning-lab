@@ -1,5 +1,7 @@
 # English sentiment analysis
 
+[Chinese course](../../03-sentiment-analysis/README.md) · [Project](../README.md)
+
 Learning order: NLP basics -> word embeddings -> LSTM sentiment classification -> optional pretrained
 model. Choose [PyTorch](pytorch/README.md) or [Paddle](paddle/README.md) and complete all three
 lessons in that route. Compare frameworks only after understanding the experiment.
@@ -18,8 +20,10 @@ checkpoint. It is a separate inference demonstration, not a substitute for train
 
 ## Relationship to the Chinese course
 
-These notebooks are the masters of the Chinese lessons in `03-sentiment-analysis/`;
-`scripts/build_chinese_course.py` mirrors them cell by cell. The Chinese route is not a
+The Chinese lessons in `03-sentiment-analysis/` pair one file per file with these notebooks. The
+repository rule makes the Chinese side the master, while this module's generator
+(`scripts/build_chinese_course.py`) still keys on the English text - see the Migration status section
+of `AGENTS.md`. The Chinese route is not a
 translation of IMDb: it trains on ChnSentiCorp Chinese reviews segmented with jieba through
 `common/sentiment_cn.py`, which keeps this course's loader interface, and its optional
 pretrained lesson uses a Chinese checkpoint fine-tuned on JD shopping reviews. The name

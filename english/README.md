@@ -1,8 +1,9 @@
 # Deep Learning Lab — English Training Edition
 
-The default English-language course covering image classification, object detection,
-and sentiment analysis. Start from the [project entry point](../README.md); the separate
-[Chinese course](../README.zh-CN.md) retains its original notebook and data paths.
+The English mirror of the course, derived unit by unit from the Chinese masters. It covers
+image classification, object detection, and sentiment analysis. Start from the
+[project entry point](../README.md); the [Chinese course](../README.zh-CN.md) is the master
+and keeps the original notebook and data paths.
 
 | Module | Learning path | Dataset and output language |
 |---|---|---|

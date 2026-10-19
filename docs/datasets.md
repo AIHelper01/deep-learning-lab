@@ -1,6 +1,6 @@
 # Dataset guide
 
-English (default) · [中文说明](datasets.zh-CN.md) · [Preparation details](../english/docs/datasets.md)
+English mirror · [中文说明（母本）](datasets.zh-CN.md) · [Preparation details](../english/docs/datasets.md)
 
 This guide describes what each dataset teaches, where it comes from, and how the course uses it. All local paths below are relative to the repository root. Source pages were reviewed on 2026-10-18; provider counts and download options may change. Source dataset sizes are distinct from the smaller classroom subsets configured in notebooks.
 

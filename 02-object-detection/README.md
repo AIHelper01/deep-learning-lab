@@ -1,6 +1,6 @@
 # 目标检测：YOLO26
 
-中文课程 · [English (default)](../english/02-object-detection/README.md) · [中文总览](../README.zh-CN.md)
+中文课程（母本） · [English mirror](../english/02-object-detection/README.md) · [中文总览](../README.zh-CN.md)
 
 中英文统一采用 **Ultralytics YOLO26n（yolo26n.pt）**，使用 [melikeavan / Rock-Paper-Scissors v1](https://universe.roboflow.com/melikeavan/rock-paper-scissors-ishcs/dataset/1) 正式 YOLO26 导出。训练 3,939 张、验证 338 张、测试 186 张；原编号为 `0=paper、1=rock、2=scissors`，已查看带框样本确认。
 

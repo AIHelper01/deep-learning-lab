@@ -1,4 +1,4 @@
-[English (default)](environment-setup.md) · 中文
+中文（母本） · [English mirror](environment-setup.md)
 
 # 环境准备
 
@@ -44,7 +44,8 @@ python -m venv .venv
 
 `~/env_dl_uv` 是仓库外的单个 uv 项目，把四个模块的锁定依赖合并成一个解释器，本机只需要一个名为
 `env_dl_uv` 的 Jupyter 内核即可跑通图像分类、目标检测（含车流量统计 Notebook）、数据格式专题和
-PyTorch NLP 轨道：
+PyTorch NLP 轨道，以及经典机器学习课 `00-machine-learning/`（泰坦尼克号：在合并后的锁定依赖之上
+另加 CPU 侧的 scikit-learn/XGBoost/LightGBM 栈）：
 
 ```bash
 cd ~/env_dl_uv
@@ -90,9 +91,10 @@ Ultralytics 的训练入口在 `deterministic=True`（默认值）时会调用
 
 | 目的 | 命令（仓库根目录） |
 |---|---|
-| 整本执行并保留真实输出 | `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection [--language zh-CN] [--notebook <名>] [--cwd root\|notebook] [--include-legacy]` |
+| 整本执行并保留真实输出 | `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection\|ml [--language zh-CN] [--notebook <名>] [--cwd root\|notebook\|module] [--include-legacy]` |
 | 把实跑结果写回 notebook（`预期输出` + `assets` 图片） | `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py [--module <模块>] [--notebook <名>] [--include-archive] [--include-legacy]` |
-| 由英文母本生成中文镜像 | `~/env_dl_uv/.venv/bin/python scripts/build_chinese_course.py` |
+| 由中文母本派生英文镜像 | `~/env_dl_uv/.venv/bin/python scripts/build_english_course.py [--check] [--force]` |
+| 重新生成中文镜像（视觉/NLP，暂时仍是英文 → 中文） | `~/env_dl_uv/.venv/bin/python scripts/build_chinese_course.py` |
 | 中文检测课文案本地化 | `~/env_dl_uv/.venv/bin/python scripts/localize_chinese_detection.py` |
 | 中英对齐与输出语言检查 | `~/env_dl_uv/.venv/bin/python scripts/check_parity.py` |
 | 英文课程静态检查（禁止 `english/` 出现中文） | `~/env_dl_uv/.venv/bin/python english/scripts/check_course.py` |
@@ -108,3 +110,8 @@ Copy1 对照版按它自己开头写明的约定，用 `--cwd notebook` 以 note
 才会内嵌。`archive/legacy-notebooks/` 里重构前的课件默认不参与课程执行与产出校验；加 `--include-legacy`
 会按同样的 `--cwd notebook` 约定把它们整本实跑，再用 `scripts/embed_expected_outputs.py --include-legacy`
 把结果内嵌回去，只有依赖仓库外资产、带 `skip-execution` 标签的单元除外。
+
+`00-machine-learning` 课件放在 `<模块>/notebooks/`，但按**模块目录**读写 `titanic/`、`models/`、`result/`，
+所以必须用 `--cwd module`。这门课中英两侧都有，`--group ml` 跟着 `--language` 走：
+`--language zh-CN --cwd module` 跑中文母本，省掉 `--language` 就跑 `english/` 下的英文镜像。
+`scripts/build_english_course.py --force` 会清掉英文镜像的已保存输出，之后按「派生 → 执行 → 内嵌」的顺序刷新。

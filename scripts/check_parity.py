@@ -7,7 +7,8 @@
 
 检查项：
 1. 仓库内所有目录名与文件名必须是 ASCII（英文）。
-2. 中文课程（根目录模块）与英文课程（english/ 模块）的 notebook、lesson、README 必须一一对应。
+2. 中文课程（根目录模块）与英文课程（english/ 模块）的 notebook、lesson、README 必须一一对应；
+   `data/`、`outputs/` 里入库的 `README.md` 也算课程文档，同样要求成对。
 3. 同名 notebook 的代码单元数量与 Markdown 单元数量应当一致。
 4. 用户可见文案语言：中文 notebook 的 print/图表标题应为中文，英文 notebook 不得含中文。
 5. 中文 notebook 的已保存输出不得包含执行错误。
@@ -20,9 +21,14 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 CJK = re.compile(r"[\u3400-\u9fff\uf900-\ufaff]")
-MODULES = ["01-image-classification", "02-object-detection", "03-sentiment-analysis"]
+MODULES = ["00-machine-learning", "01-image-classification", "02-object-detection",
+           "03-sentiment-analysis"]
 SKIP_DIRS = {".git", ".venv", "__pycache__", ".ipynb_checkpoints", "data", "outputs",
              "assets", "logs", "node_modules", ".pytest_cache"}
+# 产物目录里也有入库的说明文件（data/README.md、outputs/paddle/README.md 等）。
+# 它们同样是课程文档，必须中英成对，所以从 SKIP_DIRS 里单独放行——只放行入了 Git 的 README.md，
+# 本地产物与未跟踪的下载说明继续忽略。
+DOC_DIRS = {"data", "outputs"}
 # 单侧内容：键为（语言侧, 模块内相对路径），值是“不镜像”的原因，保证每处差异都是有意为之。
 ONE_SIDED = {
     ("en", "02-object-detection/archive/01-yolo26-rps-legacy-executed.ipynb"):
@@ -101,6 +107,32 @@ def author_files():
             yield path
 
 
+def deliverable_paths():
+    """返回"属于仓库内容"的文件集合：已入库的，以及没被 .gitignore 排除的新文件。
+
+    产物目录里的下载包说明、本机缓存等被 .gitignore 排除的文件不会出现在这里，
+    所以不会被误判成课程文档。不在 Git 仓库里时返回 None，跳过这项检查。
+    """
+    import subprocess
+    result = subprocess.run(["git", "-C", str(ROOT), "ls-files",
+                             "--cached", "--others", "--exclude-standard"],
+                            capture_output=True, text=True)
+    if result.returncode != 0:
+        return None
+    return set(result.stdout.split())
+
+
+DELIVERABLE = deliverable_paths()
+
+
+def documented_product_readme(path):
+    """data/ 与 outputs/ 里属于仓库的 README.md 是课程文档，纳入中英配对。"""
+    if DELIVERABLE is None or path.name != "README.md":
+        return False
+    blocked = {part for part in path.relative_to(ROOT).parts if part in SKIP_DIRS}
+    return bool(blocked) and blocked <= DOC_DIRS and path.relative_to(ROOT).as_posix() in DELIVERABLE
+
+
 def module_files(base, module):
     root = base / module
     if not root.is_dir():
@@ -108,6 +140,9 @@ def module_files(base, module):
     found = set()
     for path in root.rglob("*"):
         if any(part in SKIP_DIRS or part.startswith(".venv") for part in path.relative_to(root).parts):
+            if not documented_product_readme(path):
+                continue
+        elif not path.is_file():
             continue
         if path.suffix in {".ipynb", ".md"} and path.is_file():
             found.add(path.relative_to(root).as_posix())
@@ -210,7 +245,7 @@ def main():
             return mapped[len(module) + 1:] if mapped != key else item
 
         zh_norm = {alias(item) for item in zh_all}
-        en_norm = set(en)   # 英文侧是母本，配对方向由中文侧别名表给出
+        en_norm = set(en)   # 配对方向由中文侧别名表给出（两侧文件名可能不同）
         for item in sorted(zh_norm | en_norm):
             key = f"{module}/{item}"
             in_zh, in_en = item in zh_norm, item in en_norm

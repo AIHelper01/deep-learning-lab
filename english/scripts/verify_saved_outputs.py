@@ -6,7 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # English course lives in this directory, the mirrored Chinese course one level up.
 COURSE_ROOTS = [ROOT, ROOT.parent]
-MODULE_DIRS = ['01-image-classification/notebooks',
+MODULE_DIRS = ['00-machine-learning/notebooks',
+               '01-image-classification/notebooks',
                '02-object-detection/notebooks',
                '03-sentiment-analysis/pytorch/notebooks',
                '03-sentiment-analysis/paddle/notebooks']

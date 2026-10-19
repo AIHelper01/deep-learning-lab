@@ -1,4 +1,4 @@
-[English (default)](learning-path.md) · 中文
+中文（母本） · [English mirror](learning-path.md)
 
 # 学习路线（中文课程）
 

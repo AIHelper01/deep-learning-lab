@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""从英文母本生成中文镜像 notebook（中文 Markdown + 中文用户可见输出）。
+"""从英文课件生成中文镜像 notebook（中文 Markdown + 中文用户可见输出）。
+
+过渡工具：课程方向已翻转为「中文课件为母本，`english/` 为派生镜像」（见 AGENTS.md）。
+视觉与 NLP 这 11 本仍由本脚本从 `english/` 既有英文课件生成，英文原文暂时充当它们的翻译
+来源；新增课件请以中文课件为母本，再用 `scripts/build_english_course.py` 派生英文。
 
 设计要点：
-- 英文课程（english/）是唯一母本；中文课程按同名同结构镜像生成，保证中英一一对应。
-- Markdown 以“英文原文精确匹配”为键；英文母本一旦改动而译文表未同步，构建直接报错，
+- 中文课程按同名同结构镜像生成，保证中英一一对应。
+- Markdown 以“英文原文精确匹配”为键；英文原文一旦改动而译文表未同步，构建直接报错，
   不会静默留下过期中文。
 - 代码单元只改“用户可见文案”和数据入口（course_data -> sentiment_cn），训练逻辑保持
   与英文一致，因此两门课的成绩口径可以互相印证。
@@ -494,7 +498,7 @@ def main():
         try:
             notebook = build_notebook(key, problems)
         except FileNotFoundError:
-            problems.append(f"缺少英文母本：english/{key}")
+            problems.append(f"缺少英文源课件：english/{key}")
             continue
         target = ROOT / ZH_NAME_OVERRIDES.get(key, key)
         if not args.check and target.exists() and not args.force:

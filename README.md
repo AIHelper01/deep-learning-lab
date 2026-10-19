@@ -1,8 +1,8 @@
 # Deep Learning Lab
 
-English-first deep learning lessons, with a mirrored Chinese course: the same lessons cell by cell, in Chinese prose, with Chinese output, and Chinese datasets where the language matters.
+Deep learning lessons written in Chinese first, with an English mirror of every lesson: the same lessons cell by cell, in English prose, with English output, and Chinese datasets where the language matters. The Chinese notebooks at the repository root are the masters; `scripts/build_english_course.py` derives this side's notebooks from them.
 
-**English (default)** · [中文课程与说明](README.zh-CN.md)
+[中文课程（母本）](README.zh-CN.md) · English mirror
 
 ## Start here
 
@@ -33,11 +33,12 @@ Execute a lesson and keep its real output with:
 
 ## Course
 
-| Module | Default English course | Chinese counterpart |
+| Module | Chinese course (master) | English course (mirror) |
 |---|---|---|
-| Image classification | [LeNet, MNIST, CIFAR-10, ResNet18, custom folders](english/01-image-classification/README.md) | [图像分类](01-image-classification/README.md) |
-| Object detection | [CNN, YOLO26, rock-paper-scissors detection, vehicle counting](english/02-object-detection/README.md) | [CV、CNN、YOLO26 检测与车流量统计](02-object-detection/README.md) |
-| Sentiment analysis | [IMDb, embeddings, LSTM, optional DistilBERT](english/03-sentiment-analysis/README.md) | [中文评论、词向量与 LSTM](03-sentiment-analysis/README.md) |
+| Machine learning | [泰坦尼克号生存预测：EDA → 六种分类器 + XGBoost/LightGBM → 超参寻优 → 模型保存与 Pipeline](00-machine-learning/README.md) | [Titanic: EDA, six classifiers + XGBoost/LightGBM, tuning, Pipeline](english/00-machine-learning/README.md) |
+| Image classification | [图像分类](01-image-classification/README.md) | [LeNet, MNIST, CIFAR-10, ResNet18, custom folders](english/01-image-classification/README.md) |
+| Object detection | [CV、CNN、YOLO26 检测与车流量统计](02-object-detection/README.md) | [CNN, YOLO26, rock-paper-scissors detection, vehicle counting](english/02-object-detection/README.md) |
+| Sentiment analysis | [中文评论、词向量与 LSTM](03-sentiment-analysis/README.md) | [IMDb, embeddings, LSTM, optional DistilBERT](english/03-sentiment-analysis/README.md) |
 
 Follow the [learning path](docs/learning-path.md), [environment setup](docs/environment-setup.md), and [dataset guide](docs/datasets.md).
 
@@ -69,9 +70,10 @@ Edit delivered notebooks in place to preserve their saved outputs. English autho
 
 ## How the two languages stay aligned
 
-- `english/` holds the masters. `scripts/build_chinese_course.py` mirrors the vision and NLP lessons into the Chinese tree: identical cells and training logic, Chinese narration, prints, plot labels and class names. Translation tables key on exact English text, so an untranslated master edit fails the build.
+- The Chinese lessons at the repository root are the masters, and `english/` holds the derived mirrors; a mirror records its source in `metadata.derived_from`. Edit the Chinese notebook, then regenerate the English side with `scripts/build_english_course.py`, whose tables key on exact Chinese text so an unmirrored edit fails the build instead of leaving stale English prose.
+- Migration caveat: `01-image-classification` and `03-sentiment-analysis` are still generated in the old direction by `scripts/build_chinese_course.py` (English -> Chinese), and `english/02-object-detection/dataset-formats/` is still English-authored. Until those tables are re-keyed onto the Chinese side, the English notebooks are the effective master for those two modules - see Migration status in [AGENTS.md](AGENTS.md).
 - The Chinese NLP lessons are not a translation of IMDb: they train on ChnSentiCorp Chinese reviews with jieba segmentation via `common/sentiment_cn.py`, which keeps the English module's loader interface.
-- `CHINESE_COURSE_ROOT` marks the Chinese course root; `scripts/check_parity.py` checks ASCII paths, one-to-one file pairing, cell counts per notebook, and the language of user-visible output, and records every exception with a reason.
+- `CHINESE_COURSE_ROOT` marks the Chinese course root; `scripts/check_parity.py` checks ASCII paths, one-to-one file pairing, cell counts per notebook, and the language of user-visible output, and records every exception with a reason. Committed `README.md` files inside `data/` and `outputs/` count as course documents and must pair as well, so a route folder cannot exist on one side only.
 - `scripts/embed_expected_outputs.py` writes each executed run back into its notebook as `**Expected output:**` / `**预期输出：**` blocks plus `assets/<notebook>-N.png` figures, so a cleared notebook still shows real results.
 - Pre-rebuild Chinese notebooks stay in the `archive/legacy-notebooks/` folder of the vision and NLP modules, while the
   original Chinese detection notebook stays in `02-object-detection/notebooks/` next to the current lesson (reference

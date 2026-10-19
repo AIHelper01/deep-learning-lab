@@ -1,6 +1,6 @@
 # 数据集介绍与准备
 
-[English (default)](datasets.md) · 中文 · [英文课程操作细节](../english/docs/datasets.md)
+中文（母本） · [English mirror](datasets.md) · [英文课程操作细节](../english/docs/datasets.md)
 
 本页按“数据内容、课程用途、来源地址、获取方法、存放路径、处理与署名”介绍数据集。路径均相对于仓库根目录。来源页面核对日期为 2026-10-18，页面数量和下载选项可能变化；原始数据规模与 Notebook 实际使用的课堂子集规模需要区分。
 

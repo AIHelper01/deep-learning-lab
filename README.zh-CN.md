@@ -1,8 +1,8 @@
 # 深度学习实验室（中文课程）
 
-[English (default)](README.md) · 中文
+中文课程（母本） · [English mirror](README.md)
 
-项目默认使用英文课程；中文课程与英文课程**逐单元一一对应**：同样的实验与训练逻辑，中文讲解、中文输出、中文图表，语言相关的环节直接用中文数据（NLP 用 ChnSentiCorp 中文评论 + jieba 分词，不是把英文 IMDb 翻译一遍）。
+中文课程与英文课程**逐单元一一对应**：同样的实验与训练逻辑，中文讲解、中文输出、中文图表，语言相关的环节直接用中文数据（NLP 用 ChnSentiCorp 中文评论 + jieba 分词，不是把英文 IMDb 翻译一遍）。
 
 macOS/Linux 推荐用仓库外的单一 uv 环境 `~/env_dl_uv`（已注册同名 Jupyter 内核 `env_dl_uv`），在 JupyterLab 里选这个内核即可运行四个模块（依赖 `paddlenlp`/`visualdl` 的历史 Paddle Notebook 除外），见[环境准备](docs/environment-setup.zh-CN.md)。Windows 下仍可用 `./start-notebooks.ps1 -Language zh-CN -Module vision`。
 
@@ -16,10 +16,11 @@ macOS/Linux 推荐用仓库外的单一 uv 环境 `~/env_dl_uv`（已注册同�
 ~/env_dl_uv/.venv/bin/python english/scripts/verify_saved_outputs.py # 中英两侧 28 本 notebook 的输出一致性
 ```
 
-围绕图像分类、目标检测与中文情感分析的 Notebook 教学项目。
+围绕经典机器学习、图像分类、目标检测与中文情感分析的 Notebook 教学项目。**根目录的中文课件是母本**，`english/` 下的英文课件由 `scripts/build_english_course.py` 逐单元派生。
 
 | 模块 | 入口 | 内容 |
 |---|---|---|
+| 00 机器学习 | [课程说明](00-machine-learning/README.md) | 泰坦尼克号生存预测：EDA → 六种分类器 + XGBoost/LightGBM → 超参寻优 → 模型保存与 Pipeline |
 | 01 图像分类 | [课程说明](01-image-classification/README.md) | MNIST → CIFAR-10 → ResNet → 自定义数据 |
 | 02 目标检测 | [课程说明](02-object-detection/README.md) | CV 与 CNN 基础 → YOLO → 剪刀石头布检测 → 车流量统计 |
 | 03 情感分析 | [课程说明](03-sentiment-analysis/README.md) | NLP → 词向量 → LSTM，Paddle/PyTorch 两条路线 |

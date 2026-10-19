@@ -11,7 +11,8 @@ also named `env_dl_uv` (see
 Each module still keeps its own `pyproject.toml` and committed `uv.lock`, so an isolated
 module `.venv` can be rebuilt with `uv sync --locked --project <module>` when preferred.
 
-From the project root in PowerShell, start the default English image-classification course with:
+From the project root in PowerShell, start the image-classification course, which the launcher
+selects by default, with:
 
 ```powershell
 .\start-notebooks.ps1

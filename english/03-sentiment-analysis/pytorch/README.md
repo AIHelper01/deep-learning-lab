@@ -8,9 +8,10 @@ Use this directory's requirements.txt in an independent environment (on macOS/Li
 verified single environment `~/env_dl_uv` runs both routes). The two routes share English
 IMDb data but keep outputs separate. See [setup](../../docs/environment-setup.md).
 
-These notebooks are the masters of the Chinese route in `03-sentiment-analysis/$d/`;
-`scripts/build_chinese_course.py` mirrors them cell by cell, and the Chinese route trains on
-ChnSentiCorp Chinese reviews segmented with jieba. Superseded Chinese notebooks stay in
+The Chinese route in `03-sentiment-analysis/pytorch/` pairs cell by cell with these notebooks. The
+Chinese side is the master by repository rule, while this module's generator still keys on the English
+text (see the Migration status section of `AGENTS.md`). The Chinese route trains on ChnSentiCorp
+Chinese reviews segmented with jieba. Superseded Chinese notebooks stay in
 `archive/legacy-notebooks/` for reference.
 
 The optional [pretrained English transformer](../pytorch/notebooks/04-pretrained-english-sentiment.ipynb)

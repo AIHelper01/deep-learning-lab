@@ -1,6 +1,6 @@
 # Learning path
 
-English (default) · [中文](learning-path.zh-CN.md)
+English mirror · [中文（母本）](learning-path.zh-CN.md)
 
 1. [LeNet on MNIST](../english/01-image-classification/notebooks/01-lenet-mnist.ipynb): inspect data, understand tensor shapes, train, evaluate, save and reload a model.
 2. [LeNet on CIFAR-10](../english/01-image-classification/notebooks/02-lenet-cifar10.ipynb): move to color images.

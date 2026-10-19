@@ -14,6 +14,8 @@ YOLO26 export: 3,939 training / 338 validation / 186 test images. Visually verif
 5. [Rock Paper Scissors notebook](notebooks/01-yolo26-rock-paper-scissors.ipynb)
 6. [Vehicle counting notebook](notebooks/02-yolo26-vehicle-counting.ipynb)
 7. [Vehicle counting run report](lessons/05-vehicle-counting-run-report.md) (every real output and figure)
+8. [Original PaddleYOLO / YOLO11 notebook](../../02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb)
+   (early course artifact, read-only comparison, never executed)
 
 ## Run
 

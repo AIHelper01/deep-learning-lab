@@ -1,6 +1,6 @@
 # 图像分类
 
-中文课程 · [English (default)](../english/01-image-classification/README.md) · [中文总览](../README.zh-CN.md)
+中文课程（母本） · [English mirror](../english/01-image-classification/README.md) · [中文总览](../README.zh-CN.md)
 
 采用 PyTorch，依次学习数据准备与复现、张量形状、训练与检查点选择、评估与单图预测。
 讲解、控制台输出与图表标签均为中文。
@@ -18,10 +18,12 @@
 
 ## 与英文课程的关系
 
-这四本 notebook 由 `../scripts/build_chinese_course.py` 从英文母本
-`../english/01-image-classification/notebooks/` 镜像生成：单元数量、实验配置、随机种子、
-训练逻辑完全一致，只有讲解语言、控制台文案、图表标签和类别名（`零…九`、`飞机…卡车`）是中文。
-改内容请改英文母本再重新生成，不要直接编辑中文镜像。中文图表字体由 `../common/course_zh.py` 探测并设置。
+仓库规则是中文课件为母本、`english/` 为派生镜像（见 `../AGENTS.md`），但本模块仍在迁移状态里：
+`../scripts/build_chinese_course.py` 的译文表以英文原文为键，所以这两侧目前仍以
+`../english/01-image-classification/notebooks/` 作为实际的翻译来源。两侧单元数量、实验配置、随机种子、
+训练逻辑完全一致，只有讲解语言、控制台文案、图表标签和类别名（`零…九`、`飞机…卡车`）不同。
+改课之前先读 `../AGENTS.md` 的 Migration status，不要在错误的方向上重新生成。
+中文图表字体由 `../common/course_zh.py` 探测并设置。
 
 ## 数据与输出
 

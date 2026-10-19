@@ -1,8 +1,8 @@
 # Environment setup
 
-English (default) · [中文课程环境](environment-setup.zh-CN.md)
+English mirror · [中文课程环境（母本）](environment-setup.zh-CN.md)
 
-The default English course has four independent uv projects with committed lockfiles. See the [full English environment guide](../english/docs/environment-setup.md) for versions, alternate platforms, and smoke mode.
+The English mirror has four independent uv projects with committed lockfiles. See the [full English environment guide](../english/docs/environment-setup.md) for versions, alternate platforms, and smoke mode.
 
 From the repository root in PowerShell:
 
@@ -39,7 +39,9 @@ The [dataset-format topic](../english/02-object-detection/dataset-formats/README
 `~/env_dl_uv` is a single uv project outside the repository that merges the four module
 lockfiles into one interpreter, so a local machine only needs one Jupyter kernel named
 `env_dl_uv`. It covers image classification, object detection (including the
-vehicle-counting notebook), the dataset-format topic, and the PyTorch NLP track:
+vehicle-counting notebook), the dataset-format topic, the PyTorch NLP track, and the
+classical-ML Titanic lesson `00-machine-learning/` (a CPU scikit-learn/XGBoost/LightGBM
+stack added on top of the merged module lockfiles):
 
 ```bash
 cd ~/env_dl_uv
@@ -90,9 +92,10 @@ state the consequence instead - a rerun matches the recorded metrics in aggregat
 
 | Purpose | Command (repository root) |
 |---|---|
-| Execute a notebook and keep real outputs | `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection [--language zh-CN] [--notebook <name>] [--cwd root\|notebook] [--include-legacy]` |
+| Execute a notebook and keep real outputs | `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection\|ml [--language zh-CN] [--notebook <name>] [--cwd root\|notebook\|module] [--include-legacy]` |
 | Quote executed results back into the notebook (`Expected output` + `assets` figures) | `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py [--module <module>] [--notebook <name>] [--include-archive] [--include-legacy]` |
-| Regenerate the Chinese mirrors from the English masters | `~/env_dl_uv/.venv/bin/python scripts/build_chinese_course.py` |
+| Derive the English mirror from a Chinese master | `~/env_dl_uv/.venv/bin/python scripts/build_english_course.py [--check] [--force]` |
+| Regenerate the Chinese mirrors (vision/NLP, still English -> Chinese) | `~/env_dl_uv/.venv/bin/python scripts/build_chinese_course.py` |
 | Keep the Chinese detection lesson's console text Chinese | `~/env_dl_uv/.venv/bin/python scripts/localize_chinese_detection.py` |
 | Chinese/English pairing and output-language audit | `~/env_dl_uv/.venv/bin/python scripts/check_parity.py` |
 | English course static checks (no CJK inside `english/`) | `~/env_dl_uv/.venv/bin/python english/scripts/check_course.py` |
@@ -111,3 +114,9 @@ blocks need `--include-archive` to be refreshed. The pre-rebuild lessons in
 `archive/legacy-notebooks/` stay out of default course runs and output verification; `--include-legacy`
 re-executes them with the same `--cwd notebook` convention and embeds what the run produced, except for
 cells tagged `skip-execution` because they need assets that were never part of the repository.
+The `00-machine-learning` lesson lives in `<module>/notebooks/` but reads `titanic/` and writes
+`models/` and `result/` from the module directory, so it runs with `--cwd module`. The lesson exists
+on both sides and `--group ml` follows `--language`: `--language zh-CN --cwd module` executes the
+Chinese master, omitting `--language` executes the English mirror under `english/`. After
+`scripts/build_english_course.py --force` clears the mirror's outputs, refresh it in this order:
+build, execute, embed.

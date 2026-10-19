@@ -41,3 +41,28 @@ datasets/
 
 # Ultralytics recreates its local config and font on first run.
 english/Ultralytics/
+
+# ---------------------------------------------------------------------------
+# 00-machine-learning lesson artifacts: exported models, submissions, scratch files
+# (the lesson exists on both sides: Chinese master at the root, English mirror under english/)
+# ---------------------------------------------------------------------------
+00-machine-learning/models/
+00-machine-learning/result/
+00-machine-learning/notebooks/tmp.csv
+00-machine-learning/notebooks/result/
+00-machine-learning/notebooks/models/
+00-machine-learning/notebooks/Submission_SVM_Pipeline.csv
+00-machine-learning/Submission_SVM_Pipeline.csv
+00-machine-learning/tmp.csv
+english/00-machine-learning/models/
+english/00-machine-learning/result/
+english/00-machine-learning/notebooks/tmp.csv
+english/00-machine-learning/notebooks/result/
+english/00-machine-learning/notebooks/models/
+english/00-machine-learning/notebooks/Submission_SVM_Pipeline.csv
+english/00-machine-learning/Submission_SVM_Pipeline.csv
+english/00-machine-learning/tmp.csv
+# Kaggle Titanic source files: raw data stays out of Git on both sides.
+00-machine-learning/titanic/
+english/00-machine-learning/titanic/
+*.pkl

@@ -1,6 +1,6 @@
 # 中文情感分析
 
-中文课程 · [English (default)](../english/03-sentiment-analysis/README.md) · [中文总览](../README.zh-CN.md)
+中文课程（母本） · [English mirror](../english/03-sentiment-analysis/README.md) · [中文总览](../README.zh-CN.md)
 
 学习顺序：NLP 基础 → 词向量 → LSTM 情感分类 →（可选）预训练模型对照。
 先在一套框架里走完实验，再对照另一套实现。
@@ -20,8 +20,9 @@
 
 ## 与英文课程的关系
 
-`pytorch/notebooks/` 与 `paddle/notebooks/` 由 `../scripts/build_chinese_course.py` 从英文母本镜像生成：
-单元数量与训练逻辑一致，中文讲解 + 中文控制台输出 + 中文图表；数据与分词按上面说明使用中文语料。
+`pytorch/notebooks/` 与 `paddle/notebooks/` 与英文侧同名课程逐单元对应：单元数量与训练逻辑一致，
+中文讲解 + 中文控制台输出 + 中文图表；数据与分词按上面说明使用中文语料。仓库规则是中文为母本，但本模块
+`../scripts/build_chinese_course.py` 的译文表仍以英文原文为键，改课前先看 `../AGENTS.md` 的 Migration status。
 可选预训练课两侧各自如实命名：中文侧 `04-pretrained-chinese-sentiment.ipynb` 用京东评论二分类检查点，
 英文侧 `04-pretrained-english-sentiment.ipynb` 用 SST-2 检查点，配对关系登记在 `scripts/check_parity.py` 的别名表。
 

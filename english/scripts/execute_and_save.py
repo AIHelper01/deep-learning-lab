@@ -16,15 +16,17 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--group', required=True,
-                        choices=['vision','pytorch','paddle','detection'])
+                        choices=['vision','pytorch','paddle','detection','ml'])
     parser.add_argument('--resume', action='store_true')
     parser.add_argument('--language', choices=['en', 'zh-CN'], default='en')
     parser.add_argument('--notebook', action='append',
                         help='Only execute notebooks whose filename matches this stem. Repeatable.')
-    parser.add_argument('--cwd', choices=['root', 'notebook'], default='root',
+    parser.add_argument('--cwd', choices=['root', 'notebook', 'module'], default='root',
                         help='Kernel working directory. Course notebooks resolve data from the course root; '
                              'the vision archive notebook resolves "../data", "../outputs" and its own '
-                             '"assets/" from the notebook directory, so it needs --cwd notebook.')
+                             '"assets/" from the notebook directory, so it needs --cwd notebook. '
+                             'The 00-machine-learning lesson lives in <module>/notebooks/ but reads "titanic/" '
+                             'and writes "models"/"result" from the module directory, so it needs --cwd module.')
     parser.add_argument('--include-legacy', action='store_true',
                         help='Also execute archive/legacy-notebooks, which are read-only history by default. '
                              'Combine with --cwd notebook: those notebooks resolve their paths from their own directory.')
@@ -37,6 +39,9 @@ def main():
         'pytorch': sorted((base/'03-sentiment-analysis/pytorch/notebooks').glob('*.ipynb')),
         'paddle': sorted((base/'03-sentiment-analysis/paddle/notebooks').glob('*.ipynb')),
         'detection': sorted((base/'02-object-detection/notebooks').glob('*.ipynb')),
+        # 经典机器学习课（00-machine-learning）两侧都有：中文母本在仓库根，英文镜像在 english/。
+        # 数据与产物都落在模块目录内，所以配 --cwd module 运行；解释器与其余课程同为 ~/env_dl_uv。
+        'ml': sorted((base/'00-machine-learning/notebooks').glob('*.ipynb')),
     }
     # archive/legacy-notebooks is read-only course history: it is never re-executed.
     # (`--include-legacy` opts in for a one-off verified re-run; the notebooks stay out of the
@@ -90,8 +95,12 @@ def main():
         print(f'Executing and saving: {relative}', flush=True)
         nb = nbformat.read(path, as_version=4)
         nb.cells = [cell for cell in nb.cells if 'course-runtime-info' not in cell.get('metadata', {}).get('tags', [])]
-        package = 'paddlepaddle' if args.group=='paddle' else 'torch'
-        expected = '3.3.1' if args.group=='paddle' else '2.14.1'
+        if args.group=='paddle':
+            package, expected = 'paddlepaddle', '3.3.1'
+        elif args.group=='ml':
+            package, expected = 'scikit-learn', '1.7.2'
+        else:
+            package, expected = 'torch', '2.14.1'
         if args.language == 'zh-CN':
             runtime_source = (
                 'import sys\nfrom importlib.metadata import version\n'
@@ -132,7 +141,10 @@ def main():
                 print(f'  Saved cell {cell_index}: {path.name}', flush=True)
 
             client = NotebookClient(nb, timeout=5400, kernel_name='python3',
-                                    resources={'metadata': {'path': str(path.parent if args.cwd == 'notebook' else base)}},
+                                    resources={'metadata': {'path': str(
+                                        path.parent if args.cwd == 'notebook'
+                                        else path.parent.parent if args.cwd == 'module'
+                                        else base)}},
                                     allow_errors=False, record_timing=True,
                                     on_cell_executed=cell_saved)
             client.execute()

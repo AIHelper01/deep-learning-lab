@@ -1,6 +1,13 @@
 {
-  "notebooks": 28,
+  "notebooks": 30,
   "results": [
+    {
+      "notebook": "../00-machine-learning/notebooks/01_Titanic-Case.ipynb",
+      "code_cells": 97,
+      "executed_cells": 97,
+      "output_items": 97,
+      "embedded_images": 28
+    },
     {
       "notebook": "../01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
       "code_cells": 15,
@@ -98,6 +105,13 @@
       "executed_cells": 3,
       "output_items": 5,
       "embedded_images": 0
+    },
+    {
+      "notebook": "00-machine-learning/notebooks/01_Titanic-Case.ipynb",
+      "code_cells": 97,
+      "executed_cells": 97,
+      "output_items": 97,
+      "embedded_images": 28
     },
     {
       "notebook": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
