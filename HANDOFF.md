@@ -618,10 +618,9 @@ verified only against delivered notebooks.
 Checks after the change: `verify_saved_outputs.py` 28 notebooks / 0 problems, `check_course.py` 95 sources and
 15 notebooks / 0 problems, `check_docs_assets.py` 0 problems (with the historical asset directory reported),
 `check_parity.py` 0 problems, `build_chinese_course.py --check` 11 mirrors, `git diff --check` clean, and re-embedding
-the whole module twice leaves identical bytes. A module-wide embed also renormalised five cell ids in lessons whose
-blocks predate content-derived ids; those files were reverted so this change stays scoped to the archive. The previous
-session's uncommitted edits (kernelspec metadata on `01` Chinese and English, `02` English, the YOLO11 original) are
-still untouched, and `main` remains one commit ahead of `origin/main`.
+the whole module twice leaves identical bytes. The metadata-only churn a module-wide embed produces (derived cell ids
+on lessons whose blocks predate that scheme, plus the kernelspec edits the previous session left uncommitted) is
+recorded in the follow-up commit "vision lesson metadata is committed so embedding is a no-op", not in this one.
 
 中文小结：按要求把 `legacy-notebooks/` 下四本历史中文课件在 `~/env_dl_uv` 里逐本真跑（前台、串行，避免两个训练抢 MPS），
 并把真实输出内嵌回原 notebook：01（66.73 s，98.32%，14 块 8 图）、02（32.81 s，57.23%，飞机 0.789，5 块 3 图）、
@@ -633,3 +632,25 @@ extensions/04（58.62 s，MNIST test 97.66%、validation 最佳 97.07%、单图 
 依据的 `HISTORICAL_ASSET_DIRS` 豁免，其余 assets 仍要求扁平命名。工具侧：两个脚本加 `--include-legacy`，`--notebook` 支持
 仓库相对路径片段，内嵌摘录剥离 ANSI 颜色码（01 附录原先混入 589 个转义符）。六项校验全绿，重复内嵌逐字节幂等；越界改到
 的课程 notebook（仅单元格 id 规范化）已回退，上一会话遗留的未提交改动未动，`main` 仍领先 `origin/main` 一个提交。
+
+## Session 17 - vision lesson metadata is committed so embedding is a no-op
+
+Nine notebooks carried uncommitted metadata only: `kernelspec.display_name` `Python 3` -> `Python 3 (ipykernel)` on
+`01` Chinese and English, `language_info.version` 3.12.7 -> 3.12.12 on the YOLO11 original (a Jupyter save artifact of
+opening that file in `~/env_dl_uv`; the lesson still never executes there and no course text claims otherwise), and
+content-derived ids on the `course-expected-output` cells of the eight vision lessons whose blocks predated that id
+scheme. A line-by-line check confirmed every changed line is an `"id"`, `display_name` or `version` field: no cell
+source, no saved output and no asset moved.
+
+Why commit instead of reverting again: `scripts/embed_expected_outputs.py` derives the ids of the cells it inserts from
+block content, so while these ids stay uncommitted, running the documented embed command on a clean tree dirties nine
+files every time. After this commit, re-embedding the vision module changes nothing.
+
+Checks after the change: `verify_saved_outputs.py`, `check_course.py`, `check_docs_assets.py` and `check_parity.py` all
+report 0 problems, `build_chinese_course.py --check` still validates 11 mirrors, `git diff --check` is clean, and a
+second embed run leaves the tree identical.
+
+中文小结：把 9 本 notebook 的纯元数据改动提交掉——三本 kernelspec 显示名改成 `Python 3 (ipykernel)`、YOLO11 原件的
+`language_info.version` 记为 3.12.12（只是用 `~/env_dl_uv` 打开保存留下的痕迹，不代表那门课能在本环境运行，课程文案也没这么宣称），
+八本视觉课件的「预期输出」单元格改用内容派生 id。逐行核对确认只动 `id`/`display_name`/`version`，代码、输出、图片零改动。
+不提交的话，任何人按文档跑一次内嵌脚本都会脏 9 个文件；提交后视觉模块重复内嵌零 diff。六项校验全绿。
