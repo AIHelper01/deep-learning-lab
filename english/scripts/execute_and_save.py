@@ -25,6 +25,9 @@ def main():
                         help='Kernel working directory. Course notebooks resolve data from the course root; '
                              'the vision archive notebook resolves "../data", "../outputs" and its own '
                              '"assets/" from the notebook directory, so it needs --cwd notebook.')
+    parser.add_argument('--include-legacy', action='store_true',
+                        help='Also execute archive/legacy-notebooks, which are read-only history by default. '
+                             'Combine with --cwd notebook: those notebooks resolve their paths from their own directory.')
     args = parser.parse_args()
     # 中文课程镜像位于仓库根目录的模块树，英文课程在 english/ 下。
     base = ROOT if args.language == 'en' else ROOT.parent
@@ -36,10 +39,13 @@ def main():
         'detection': sorted((base/'02-object-detection/notebooks').glob('*.ipynb')),
     }
     # archive/legacy-notebooks is read-only course history: it is never re-executed.
+    # (`--include-legacy` opts in for a one-off verified re-run; the notebooks stay out of the
+    #  delivered-output verification either way.)
     # The original Chinese PaddleYOLO/YOLO11 lesson lives in notebooks/ again by request,
     # but it still depends on that external project, so it stays out of every execution run.
     groups = {key: [p for p in paths
-                    if '.ipynb_checkpoints' not in p.parts and 'legacy-notebooks' not in p.parts
+                    if '.ipynb_checkpoints' not in p.parts
+                    and (args.include_legacy or 'legacy-notebooks' not in p.parts)
                     and p.stem != '01-yolo11-rock-paper-scissors']
               for key, paths in groups.items()}
     reports = ROOT/'reports'
@@ -69,8 +75,11 @@ def main():
     # Matplotlib inline produces display_data PNGs in the saved notebook.
     os.environ.pop('MPLBACKEND', None)
     if args.notebook:
+        # 支持文件名主干，也支持路径片段：legacy 与课程 notebook 文件名主干相同时需要靠路径区分。
+        wanted = set(args.notebook)
         groups[args.group] = [path for path in groups[args.group]
-                              if path.stem in set(args.notebook)]
+                              if path.stem in wanted
+                              or any(match in Path(os.path.relpath(path, ROOT)).as_posix() for match in wanted)]
         if not groups[args.group]:
             parser.error(f'No notebook matched {args.notebook} in group {args.group}.')
     for path in groups[args.group]:

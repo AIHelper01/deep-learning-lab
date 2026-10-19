@@ -29,6 +29,8 @@ FENCE_SAFE = re.compile(r"\n```")
 ABS_PATH = re.compile(r"(?:/Users/[^\s'\"]+?|[A-Za-z]:[\\/]+?)(?=deep-learning-lab)")
 # 告警行里的 ipykernel 临时文件路径同样是机器相关的绝对路径前缀，按同样的方式折叠。
 IPYKERNEL_PATH = re.compile(r"(?:/private)?/(?:var/folders/[^\s'\"`]+?|tmp)/ipykernel_\d+/")
+# 彩色终端输出里的 ANSI 控制符在 markdown 里只会变成乱码，摘录时剥掉；文字本身保持逐字。
+ANSI_ESCAPE = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
 
 LABELS = {
     "zh": {
@@ -72,6 +74,7 @@ def heading_caption(cells, index, figure_number, lang):
 
 
 def clean_text(value):
+    value = ANSI_ESCAPE.sub("", value)
     if FENCE_SAFE.search(value):
         return value.replace("```", "'''")
     return value
@@ -166,6 +169,116 @@ def apply_job(job):
 # 少数 notebook 的图注/前言是人工撰写的（并且 lesson 报告已按这些图片名引用），
 # 在这里登记后由本脚本统一下发；未登记的 notebook 使用「文件名主干 + 最近标题」自动图注。
 OVERRIDES = {
+    "01-image-classification/archive/legacy-notebooks/01-lenet-mnist.ipynb": {
+        "captions": {
+            7: "附录「炫酷版」系统：训练过程面板",
+            8: "附录「炫酷版」系统：单张图片推理输出",
+        },
+        "intro": "\n".join([
+            "> **每个代码单元后面都跟着一个「预期输出」单元**：文字输出逐字摘录，图片导出到本目录 `assets/` "
+            "并以相对路径引用，因此执行 **Kernel → Clear All Outputs** 之后仍然看得见这次实跑的结果。",
+            ">",
+            "> 这里保存的输出来自 **课堂环境 `~/env_dl_uv`（Python 3.12.12 + PyTorch 2.14.1）的实跑**："
+            "Apple 芯片 MPS、`seed=42`、全量 MNIST、3 轮，端到端 66.73 s，最佳 test 准确率 **98.32%**"
+            "（加载 checkpoint 复测 98.32%），单图 `../assets/lenet-7.jpg` 预测 **5**。",
+            ">",
+            "> 这本与 `archive/01-lenet-mnist-copy1.ipynb` 是同一条流程、同一个种子，所以逐轮数字完全一致，"
+            "差别只在末尾的附录单元。",
+            ">",
+            "> 本目录是历史归档：默认不参与课程执行，也不参与 `verify_saved_outputs.py` 的产出校验。"
+            "重跑要显式加 `--include-legacy`（仓库根目录，先实跑、再内嵌）：",
+            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/01-lenet-mnist.ipynb`",
+            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/01-lenet-mnist.ipynb`",
+        ]),
+    },
+    "01-image-classification/archive/legacy-notebooks/03-resnet-cifar10.ipynb": {
+        "captions": {
+            1: "第六节 3 轮训练的 loss 曲线",
+            2: "第六节 3 轮训练的 accuracy 曲线",
+            3: "单图推理输入 `../assets/resnet-2.png`：预测 plane（飞机）",
+            4: "「炫酷版」训练面板：loss、accuracy、验证 loss 与最终对比（它重新训练的 3 轮）",
+        },
+        "intro": "\n".join([
+            "> **每个代码单元后面都跟着一个「预期输出」单元**：文字输出逐字摘录，图片导出到本目录 `assets/` "
+            "并以相对路径引用，因此执行 **Kernel → Clear All Outputs** 之后仍然看得见这次实跑的结果。",
+            ">",
+            "> 这里保存的输出来自 **课堂环境 `~/env_dl_uv`（Python 3.12.12 + PyTorch 2.14.1）的实跑**："
+            "Apple 芯片 MPS、ResNet18 用 torchvision 的 ImageNet 预训练权重（首次运行会联网下载 44.7 MB，"
+            "进度条按原样摘录）、CIFAR-10 全量、图片 resize 到 224×224、batch 64、SGD(lr 0.01, momentum 0.9)、"
+            "课堂默认 3 轮。端到端 **3897.96 s（约 65 分钟）**——两遍 3 轮训练，每轮约 10.6 分钟，"
+            "这本比前两本慢一个数量级，原因就是 224×224 的输入。",
+            ">",
+            "> 第六节 test 准确率逐轮 **91.65% → 92.08% → 93.68%**；第九节「炫酷版」重新搭一个预训练 ResNet18 "
+            "再训 3 轮（每轮约 652 s），train 85.30% → 92.20% → 93.93%，被它当验证集使用的 test 90.05% → 91.91% → "
+            "90.99%，**最佳 91.91%（第 2 轮）**，权重写到 `../outputs/resnet18_cifar10/`（不入库）。"
+            "注意它拿 test 选模型，这正是不推荐的做法，现行课程改用 validation。",
+            ">",
+            "> 单图 `../assets/resnet-2.png` 预测 **plane（飞机）**，softmax 首位 1.0000。",
+            ">",
+            "> 唯一被跳过的单元在「炫酷版」末尾：它加载 `models/resnet18_cifar10/best_model/"
+            "resnet18_cifar10_best_epoch_003_acc_93.05.pth`，那份权重在旧服务器上训练、从未进入仓库，"
+            "素材目录里也没有，所以 93.05% 这个成绩无法在本机复现，单元已标 `skip-execution`（见其上方说明）。",
+            ">",
+            "> 摘录时剥掉了彩色终端输出的 ANSI 颜色码，其余文字逐字保留。本目录是历史归档：默认不参与课程执行，"
+            "也不参与 `verify_saved_outputs.py` 的产出校验。重跑要显式加 `--include-legacy`（仓库根目录，先实跑、再内嵌）：",
+            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/03-resnet-cifar10.ipynb`",
+            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/03-resnet-cifar10.ipynb`",
+        ]),
+    },
+    "01-image-classification/archive/legacy-notebooks/02-lenet-cifar10.ipynb": {
+        "captions": {
+            1: "本次 3 轮训练的 loss 曲线",
+            2: "本次 3 轮训练的 accuracy 曲线",
+            3: "单图推理输入：CIFAR-10 test 下标 44（第 45 张，label 0 = airplane）",
+        },
+        "intro": "\n".join([
+            "> **每个代码单元后面都跟着一个「预期输出」单元**：文字输出逐字摘录，图片导出到本目录 `assets/` "
+            "并以相对路径引用，因此执行 **Kernel → Clear All Outputs** 之后仍然看得见这次实跑的结果。",
+            ">",
+            "> 这里保存的输出来自 **课堂环境 `~/env_dl_uv`（Python 3.12.12 + PyTorch 2.14.1）的实跑**："
+            "Apple 芯片 MPS、CIFAR-10 全量、课堂默认 3 轮，端到端 32.81 s，test 准确率逐轮 "
+            "47.66% → 52.90% → **57.23%**；末尾单元加载 `../outputs/model-lenet-cifar10.pth` 对 "
+            "`../assets/lenet/test_cifar10.png` 推理，预测 **飞机**，置信度 **0.789**。",
+            ">",
+            "> 素材说明：`../assets/lenet/test_cifar10.png` 原文件随旧课件丢失，本次按历史输出图片在 CIFAR-10 test 集里"
+            "逐像素搜索还原：它与**下标 44（第 45 张，label 0 = airplane）逐像素完全一致**（次优候选误差 2006），"
+            "也与本模块自带素材 `../assets/resnet-2.png` 像素相同——`03-resnet-cifar10.ipynb` 用的就是那张图，两处预测互相印证。",
+            ">",
+            "> 本目录是历史归档：默认不参与课程执行，也不参与 `verify_saved_outputs.py` 的产出校验。"
+            "重跑要显式加 `--include-legacy`（仓库根目录，先实跑、再内嵌）：",
+            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/02-lenet-cifar10.ipynb`",
+            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/02-lenet-cifar10.ipynb`",
+        ]),
+    },
+    "01-image-classification/archive/legacy-notebooks/extensions/04-lenet-custom-data.ipynb": {
+        "captions": {
+            1: "第一节 3 轮训练的 loss 曲线",
+            2: "第一节 3 轮训练的 accuracy 曲线",
+            3: "单图推理输入 `../../assets/lenet-7.jpg`：预测 5",
+            4: "第二节「炫酷版」训练面板：loss、accuracy、验证 loss 与最终对比",
+            5: "加载 `lenet_mnist_final.pth` 之后再次推理同一张图：仍是 5",
+        },
+        "intro": "\n".join([
+            "> **每个代码单元后面都跟着一个「预期输出」单元**：文字输出逐字摘录，图片导出到上层 "
+            "`../assets/`（本文件在 `extensions/` 下，实跑图片与 01/02/03 落在同一个 `assets/` 目录）"
+            "并以相对路径引用，因此执行 **Kernel → Clear All Outputs** 之后仍然看得见这次实跑的结果。",
+            ">",
+            "> 第一、二节的输出来自 **课堂环境 `~/env_dl_uv`（Python 3.12.12 + PyTorch 2.14.1）的实跑**："
+            "Apple 芯片 MPS、全量 MNIST、课堂默认 3 轮，端到端 58.62 s。第一节 test 准确率逐轮 "
+            "95.10% → 97.22% → **97.66%**；第二节「炫酷版」重新训练 3 轮（每轮约 8.5 s），"
+            "train 89.07% → 96.18% → 97.09%，validation 95.53% → 97.04% → **97.07%（最佳，第 3 轮）**，"
+            "权重写到 `../../outputs/lenet_mnist/`（不入库）。单图 `../../assets/lenet-7.jpg` 两次都预测 **5**。",
+            ">",
+            "> **第三节没有实跑**：本机没有 LEDNUM 数据集，那一节的代码单元全部标了 `skip-execution`，"
+            "执行器原样跳过；原因、以及怎么补齐数据，见第三节开头的说明。因此那一节的单元下方没有「预期输出」，"
+            "这是有意的，不代表跑通了。",
+            ">",
+            "> 摘录时剥掉了彩色终端输出的 ANSI 颜色码，其余文字逐字保留。本目录是历史归档：默认不参与课程执行，"
+            "也不参与 `verify_saved_outputs.py` 的产出校验。重跑要显式加 `--include-legacy`（仓库根目录，先实跑、再内嵌）：",
+            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy --notebook legacy-notebooks/extensions/04-lenet-custom-data.ipynb`",
+            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --include-legacy --notebook legacy-notebooks/extensions/04-lenet-custom-data.ipynb`",
+        ]),
+    },
     "01-image-classification/archive/01-lenet-mnist-copy1.ipynb": {
         "captions": {
             1: "MNIST 训练集类别分布：10 个数字各自的样本数",
@@ -262,7 +375,7 @@ OVERRIDES = {
 }
 
 
-def discover_jobs(module, include_archive=False, only=None):
+def discover_jobs(module, include_archive=False, include_legacy=False, only=None):
     """自动发现中英两侧的 notebook，按文件名主干生成 assets 前缀。"""
     jobs = []
     for side, lang in ((ROOT, "zh"), (ROOT / "english", "en")):
@@ -276,10 +389,12 @@ def discover_jobs(module, include_archive=False, only=None):
             # 归档课件与 `execute_and_save.py` / `verify_saved_outputs.py` 口径一致：
             # archive/ 根下的课件参与实跑与内嵌，legacy-notebooks/ 仍是只读历史，不执行也不内嵌。
             paths.extend(sorted(p for p in (module_dir / "archive").rglob("*.ipynb")
-                                if "legacy-notebooks" not in p.parts
+                                if (include_legacy or "legacy-notebooks" not in p.parts)
                                 and ".ipynb_checkpoints" not in p.parts))
         for path in paths:
-            if only and path.stem not in set(only):
+            # 与 execute_and_save.py 一致：既接受文件名主干，也接受仓库相对路径片段。
+            if only and path.stem not in set(only) \
+                    and not any(match in path.relative_to(ROOT).as_posix() for match in only):
                 continue
             owner = path.parent
             while owner.name in ("notebooks", "extensions"):
@@ -305,14 +420,17 @@ def main():
     parser.add_argument("--module", action="append",
                         help="模块目录名，可重复；默认覆盖三个模块。")
     parser.add_argument("--include-archive", action="store_true",
-                        help="一并处理模块 archive/ 根下的课件；archive/legacy-notebooks/ 始终跳过。")
+                        help="一并处理模块 archive/ 根下的课件。")
+    parser.add_argument("--include-legacy", action="store_true",
+                        help="连同 archive/legacy-notebooks/ 一起内嵌（需配合 --include-archive），"
+                             "只用于已经在 env_dl_uv 里实跑复现过的历史课件。")
     parser.add_argument("--notebook", action="append",
                         help="只处理文件名主干匹配的 notebook，可重复。")
     args = parser.parse_args()
     modules = args.module or ["01-image-classification", "02-object-detection",
                               "03-sentiment-analysis"]
     for module in modules:
-        for job in discover_jobs(module, args.include_archive, args.notebook):
+        for job in discover_jobs(module, args.include_archive, args.include_legacy, args.notebook):
             print(apply_job(job))
     return 0
 

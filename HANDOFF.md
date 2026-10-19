@@ -573,3 +573,63 @@ because the check runs over the working tree.
 重复内嵌逐字节幂等。`legacy-notebooks/` 按只读约定未执行未内嵌，仅给出静态判定（外部数据、`pipline_train`、LEDNUM
 缺失，03 有 15/16 单元从未执行，`!cp -r` 是 IPython 魔法不是语法错误）。清掉一个让 assets 检查失败的 Jupyter
 遗留副本。六项校验全绿。
+
+## Session 16 - every legacy vision lesson is executed in `env_dl_uv` and quotes its own run
+
+Requested directly: run each notebook under `01-image-classification/archive/legacy-notebooks/` in the locked
+environment and quote the result back **into the original notebook** (no copies). All four were executed with
+`english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --include-legacy`
+and quoted back with `scripts/embed_expected_outputs.py --include-archive --include-legacy`, in the foreground and
+one at a time so MPS never runs two training jobs at once:
+
+- `01-lenet-mnist.ipynb` — 66.73 s, full MNIST, three classroom epochs, best test **98.32%** (reloaded checkpoint
+  98.32%), single image `lenet-7.jpg` predicts `5`; 14 text blocks plus 8 figures.
+- `02-lenet-cifar10.ipynb` — 32.81 s, test 47.66% → 52.90% → **57.23%**, single image predicts 飞机 at 0.789;
+  5 blocks plus 3 figures.
+- `03-resnet-cifar10.ipynb` — **3897.96 s (about 65 minutes)** because this lesson resizes CIFAR-10 to 224×224 and
+  trains twice (plain loop plus the "炫酷版" panel): loop test accuracy 91.65% → 92.08% → **93.68%**, the panel's
+  second three-epoch run peaks at 91.91% while using the test set for selection, and `resnet-2.png` predicts `plane`;
+  5 blocks plus 4 figures.
+- `extensions/04-lenet-custom-data.ipynb` — 58.62 s on full MNIST: test 95.10% → 97.22% → **97.66%**, the panel's
+  validation best 97.07%, `lenet-7.jpg` predicts `5` twice; 6 blocks plus 5 figures.
+
+Two parts are deliberately **not** executed, and the notebooks say so instead of pretending to be verified. The last
+cell of `03` loads `models/resnet18_cifar10/best_model/..._acc_93.05.pth`, a checkpoint trained on the old server that
+never entered this repository, and section 三 of `extensions/04` needs the LEDNUM digit images, whose staging directory
+only ever contained `DOWNLOAD.md` (`docs/datasets.zh-CN.md` records that there is no verifiable public download).
+Those cells carry `skip-execution`, each section gained a note naming the missing asset and how to supply it, and
+`README.md` in the legacy folder now tabulates per-notebook status, run times and refresh commands.
+
+Restored teaching asset: `archive/assets/lenet/test_cifar10.png`, the input image of `02`, was missing. A pixel search
+over CIFAR-10's test split shows it is **exactly test index 44 (label 0, airplane; next-best candidate MSE 2006)** and
+pixel-identical to the module's own `assets/resnet-2.png`, which `03` predicts as `plane` - so the two lessons
+cross-check the same image. `scripts/check_docs_assets.py` gained a documented `HISTORICAL_ASSET_DIRS` exception for
+that one directory, because `docs/migration/file-map.json` records the historical `assets/lenet/<name>.png` layout that
+the archived code reads; every other `assets/` directory still has to stay flat.
+
+Tool changes needed to get here: both scripts accept `--include-legacy` (default stays "legacy is history"), `--notebook`
+now matches repository-relative path fragments so a legacy lesson can be selected even when a current lesson shares its
+file name, and embedded quotes strip ANSI colour codes - the "炫酷版" panels are coloured terminal output, and 589
+escape sequences had leaked into the `01` appendix block before this session.
+
+`archive/legacy-notebooks/` stays out of `verify_saved_outputs.py` either way, so delivered-course claims are still
+verified only against delivered notebooks.
+
+Checks after the change: `verify_saved_outputs.py` 28 notebooks / 0 problems, `check_course.py` 95 sources and
+15 notebooks / 0 problems, `check_docs_assets.py` 0 problems (with the historical asset directory reported),
+`check_parity.py` 0 problems, `build_chinese_course.py --check` 11 mirrors, `git diff --check` clean, and re-embedding
+the whole module twice leaves identical bytes. A module-wide embed also renormalised five cell ids in lessons whose
+blocks predate content-derived ids; those files were reverted so this change stays scoped to the archive. The previous
+session's uncommitted edits (kernelspec metadata on `01` Chinese and English, `02` English, the YOLO11 original) are
+still untouched, and `main` remains one commit ahead of `origin/main`.
+
+中文小结：按要求把 `legacy-notebooks/` 下四本历史中文课件在 `~/env_dl_uv` 里逐本真跑（前台、串行，避免两个训练抢 MPS），
+并把真实输出内嵌回原 notebook：01（66.73 s，98.32%，14 块 8 图）、02（32.81 s，57.23%，飞机 0.789，5 块 3 图）、
+03（3897.96 s≈65 分钟，224×224 且训两遍，loop test 93.68%、「炫酷版」validation 最佳 91.91%，单图 plane，5 块 4 图）、
+extensions/04（58.62 s，MNIST test 97.66%、validation 最佳 97.07%、单图 5，6 块 5 图）。两处硬缺失不硬跑：03 末尾加载旧服务器
+权重的单元、04 第三节 LEDNUM 整节，统一打 `skip-execution` 并在段首写清缺什么、怎么补，README 逐本记状态与刷新命令。
+补回丢失素材 `archive/assets/lenet/test_cifar10.png`：在 CIFAR-10 test 集逐像素搜索确认它就是下标 44（label 0 airplane，
+次优误差 2006），并与本模块 `assets/resnet-2.png` 像素一致，两课互为印证；`check_docs_assets.py` 为该目录加了一条有迁移记录
+依据的 `HISTORICAL_ASSET_DIRS` 豁免，其余 assets 仍要求扁平命名。工具侧：两个脚本加 `--include-legacy`，`--notebook` 支持
+仓库相对路径片段，内嵌摘录剥离 ANSI 颜色码（01 附录原先混入 589 个转义符）。六项校验全绿，重复内嵌逐字节幂等；越界改到
+的课程 notebook（仅单元格 id 规范化）已回退，上一会话遗留的未提交改动未动，`main` 仍领先 `origin/main` 一个提交。

@@ -9,8 +9,11 @@
 Superseded Chinese notebooks are archived in [archive/legacy-notebooks/](archive/legacy-notebooks/README.md).
 The comparison notebook is archived but still executed in `~/env_dl_uv` and carries its own
 `**Expected output:**` blocks. Unlike the lessons above, it runs from the notebook's own directory
-(`--cwd notebook`), and its blocks are refreshed with `--include-archive`; `archive/legacy-notebooks/`
-stays read-only and is never executed.
+(`--cwd notebook`), and its blocks are refreshed with `--include-archive`. The legacy lessons stay out of
+default course runs and output verification; `--include-legacy` re-executes them with the same
+`--cwd notebook` convention and quotes each run back into its notebook, except for the cells tagged
+`skip-execution` because their assets (an old server-side checkpoint, the LEDNUM images) never entered the
+repository. See that README for the per-notebook status.
 
 Each main experiment covers data inspection, model definition, training, checkpoint
 selection, evaluation, and inference. The custom-folder experiment also writes CSV indexes.

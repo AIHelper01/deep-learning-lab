@@ -198,7 +198,7 @@
       "file": "01-image-classification/archive/legacy-notebooks/01-lenet-mnist.ipynb",
       "language": "zh",
       "code_cells": 15,
-      "markdown_cells": 17,
+      "markdown_cells": 32,
       "executed_cells": 15,
       "error_outputs": 0,
       "english_only_outputs": 0
@@ -207,8 +207,8 @@
       "file": "01-image-classification/archive/legacy-notebooks/02-lenet-cifar10.ipynb",
       "language": "zh",
       "code_cells": 12,
-      "markdown_cells": 16,
-      "executed_cells": 10,
+      "markdown_cells": 22,
+      "executed_cells": 11,
       "error_outputs": 0,
       "english_only_outputs": 0
     },
@@ -216,8 +216,8 @@
       "file": "01-image-classification/archive/legacy-notebooks/03-resnet-cifar10.ipynb",
       "language": "zh",
       "code_cells": 16,
-      "markdown_cells": 13,
-      "executed_cells": 1,
+      "markdown_cells": 20,
+      "executed_cells": 14,
       "error_outputs": 0,
       "english_only_outputs": 0
     },
@@ -225,9 +225,9 @@
       "file": "01-image-classification/archive/legacy-notebooks/extensions/04-lenet-custom-data.ipynb",
       "language": "zh",
       "code_cells": 30,
-      "markdown_cells": 39,
-      "executed_cells": 18,
-      "error_outputs": 1,
+      "markdown_cells": 47,
+      "executed_cells": 15,
+      "error_outputs": 0,
       "english_only_outputs": 0
     },
     {

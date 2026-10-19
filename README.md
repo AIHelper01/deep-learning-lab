@@ -45,7 +45,7 @@ Follow the [learning path](docs/learning-path.md), [environment setup](docs/envi
 
 English is the default documentation and launcher language. English lessons remain in `english/`; the Chinese modules retain their existing root-level paths so existing notebooks, environments, and local data continue to work. Choose a course by language; changing language does not translate a notebook or switch its dataset in place.
 
-Classification/NLP keep language-specific data processing, vocabularies and caches, and sentiment datasets differ by language, while detection shares YOLO26n and the official RPS v1 export; see the [adaptation map](english/docs/adaptation-map.md). Both languages now run in the same interpreter, and every delivered Chinese notebook was re-executed in it on 2026-10-18; the archived `archive/legacy-notebooks/` lessons are reference only and are never executed. Model outputs always stay separate by language.
+Classification/NLP keep language-specific data processing, vocabularies and caches, and sentiment datasets differ by language, while detection shares YOLO26n and the official RPS v1 export; see the [adaptation map](english/docs/adaptation-map.md). Both languages now run in the same interpreter, and every delivered Chinese notebook was re-executed in it on 2026-10-18; the archived `archive/legacy-notebooks/` lessons stay out of default runs and are re-executed only through the explicit `--include-legacy` opt-in. Model outputs always stay separate by language.
 
 ## Validation and maintenance
 

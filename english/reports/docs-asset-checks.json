@@ -10,6 +10,9 @@
     "Broken link: 02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb cell 37: ./yolo11_l_600e_coco.yml",
     "Broken link: 02-object-detection/notebooks/01-yolo11-rock-paper-scissors.ipynb cell 37: ./yolo11_x_600e_coco.yml"
   ],
+  "historical_asset_dirs": [
+    "01-image-classification/archive/assets/lenet: restores ../assets/lenet/test_cifar10.png, the input image read by legacy-notebooks/02-lenet-cifar10.ipynb; the path follows docs/migration/file-map.json"
+  ],
   "legacy_external_link_reason": "read-only history notebooks (archive/legacy-notebooks and the original YOLO11 lesson kept in 02-object-detection/notebooks/) point into the external PaddleYOLO project (yml configs and deploy docs) that never entered this repository",
   "problems": [],
   "scope": "All authored Markdown and notebook markdown on both course sides; raw data, generated outputs, virtual environments and the migration snapshot excluded."

@@ -25,6 +25,15 @@ MD_IMAGE = re.compile(r'!\[[^\]]*\]\(([^)\s]+)')
 HTML_IMAGE = re.compile(r'<img[^>]+src=["\']([^"\']+)["\']', re.I)
 IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"}
 ASSET_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*-\d+\.(?:png|jpg|jpeg|gif|svg|webp)$")
+# 历史课件的输入图按迁移记录（docs/migration/file-map.json）放在 assets/<子目录>/<名称>.<ext> 下，
+# 归档 notebook 的代码就是按那个相对路径读图的；改路径等于改历史课件，所以这一个目录豁免扁平命名规范，
+# 里面也不是本次实跑产出的「预期输出」图片，不参与 `<名称>-<序号>` 检查。
+HISTORICAL_ASSET_DIRS = {
+    "01-image-classification/archive/assets/lenet":
+        "restores ../assets/lenet/test_cifar10.png, the input image read by "
+        "legacy-notebooks/02-lenet-cifar10.ipynb; the path follows docs/migration/file-map.json",
+}
+
 # docs/ 下的迁移记录只保留英文原文，不参与双语配对。
 BILINGUAL_EXEMPT = {"docs/migration/reorganization.md", "docs/migration/original"}
 
@@ -91,7 +100,7 @@ def check_links(problems, legacy_notes):
     return remote_images
 
 
-def check_assets(problems):
+def check_assets(problems, historical_asset_dirs):
     for assets in sorted(ROOT.rglob("assets")):
         rel = assets.relative_to(ROOT)
         if any(part in SKIP_DIRS or part.startswith(".venv") for part in rel.parts):
@@ -100,6 +109,10 @@ def check_assets(problems):
             continue
         for entry in sorted(assets.iterdir()):
             if entry.is_dir():
+                note = HISTORICAL_ASSET_DIRS.get((rel / entry.name).as_posix())
+                if note:
+                    historical_asset_dirs.append(f"{(rel / entry.name).as_posix()}: {note}")
+                    continue
                 problems.append(f"Nested directory in assets: {entry.relative_to(ROOT)}")
             elif entry.name == "README.md" or entry.suffix.lower() not in IMAGE_SUFFIXES:
                 continue          # 说明文件与非图片数据（如词表 JSON）不受图片命名规范约束
@@ -170,10 +183,10 @@ def check_anchors(problems):
 
 
 def main():
-    problems, legacy_notes = [], []
+    problems, legacy_notes, historical_asset_dirs = [], [], []
     remote_images = check_links(problems, legacy_notes)
     fragments = check_anchors(problems)
-    check_assets(problems)
+    check_assets(problems, historical_asset_dirs)
     check_bilingual(problems)
     report = {
         "markdown_documents": sum(1 for p, _ in author_markdown() if p.suffix == ".md"),
@@ -181,6 +194,7 @@ def main():
         "remote_images": remote_images,
         "legacy_external_links": len(legacy_notes),
         "legacy_external_link_examples": legacy_notes[:5],
+        "historical_asset_dirs": historical_asset_dirs,
         "legacy_external_link_reason": "read-only history notebooks (archive/legacy-notebooks and the "
         "original YOLO11 lesson kept in 02-object-detection/notebooks/) point into "
                                        "the external PaddleYOLO project (yml configs and deploy docs) that "

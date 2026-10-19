@@ -90,8 +90,8 @@ Ultralytics 的训练入口在 `deterministic=True`（默认值）时会调用
 
 | 目的 | 命令（仓库根目录） |
 |---|---|
-| 整本执行并保留真实输出 | `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection [--language zh-CN] [--notebook <名>] [--cwd root\|notebook]` |
-| 把实跑结果写回 notebook（`预期输出` + `assets` 图片） | `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py [--module <模块>] [--notebook <名>] [--include-archive]` |
+| 整本执行并保留真实输出 | `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection [--language zh-CN] [--notebook <名>] [--cwd root\|notebook] [--include-legacy]` |
+| 把实跑结果写回 notebook（`预期输出` + `assets` 图片） | `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py [--module <模块>] [--notebook <名>] [--include-archive] [--include-legacy]` |
 | 由英文母本生成中文镜像 | `~/env_dl_uv/.venv/bin/python scripts/build_chinese_course.py` |
 | 中文检测课文案本地化 | `~/env_dl_uv/.venv/bin/python scripts/localize_chinese_detection.py` |
 | 中英对齐与输出语言检查 | `~/env_dl_uv/.venv/bin/python scripts/check_parity.py` |
@@ -105,4 +105,6 @@ Ultralytics 的训练入口在 `deterministic=True`（默认值）时会调用
 课程 notebook 一律用仓库根目录作为工作目录（`--cwd root`，默认值）；`01-image-classification/archive/` 下那份
 Copy1 对照版按它自己开头写明的约定，用 `--cwd notebook` 以 notebook 所在目录运行，这样 `../data`、`../outputs`
 落在 `01-image-classification/`、`assets/` 落在 `archive/`。归档课件的「预期输出」需要 `--include-archive`
-才会内嵌；`archive/legacy-notebooks/` 始终只读，既不执行也不内嵌。
+才会内嵌。`archive/legacy-notebooks/` 里重构前的课件默认不参与课程执行与产出校验；加 `--include-legacy`
+会按同样的 `--cwd notebook` 约定把它们整本实跑，再用 `scripts/embed_expected_outputs.py --include-legacy`
+把结果内嵌回去，只有依赖仓库外资产、带 `skip-execution` 标签的单元除外。

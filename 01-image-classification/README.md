@@ -10,7 +10,9 @@
 3. [ResNet18 与 CIFAR-10](notebooks/03-resnet-cifar10.ipynb)：冻结主干的迁移学习。
 4. [自定义文件夹数据](notebooks/extensions/04-lenet-custom-data.ipynb)：`ImageFolder` 数据集组织方式。
 
-历史版本保留在 [archive/legacy-notebooks/](archive/legacy-notebooks/README.md)（只读参考，不参与执行与校验）。
+历史版本保留在 [archive/legacy-notebooks/](archive/legacy-notebooks/README.md)。它们默认不参与课程执行与产出校验，
+但同样能在 `~/env_dl_uv` 里整本实跑（`--cwd notebook --include-legacy`）并内嵌「预期输出」；只有依赖仓库外资产的单元
+（旧服务器上训练的 ResNet 权重、无公开下载的 LEDNUM 图片）标了 `skip-execution`，逐本状态见该 README。
 [Copy1 对照版](archive/01-lenet-mnist-copy1.ipynb) 保留供比较，不作为必修入口，但它和课程 notebook 一样
 在 `~/env_dl_uv` 里整本实跑过，并内嵌了「预期输出」；它按文件开头写明的约定以 **notebook 所在目录**为工作目录运行。
 

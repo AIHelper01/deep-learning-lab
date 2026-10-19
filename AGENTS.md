@@ -9,7 +9,7 @@ Deep Learning Lab is an English-first notebook teaching repository with a mirror
 - For the vision and NLP lessons the Chinese notebooks are generated mirrors of the English masters by `scripts/build_chinese_course.py`: identical cell structure and training logic, Chinese narration, Chinese console output, Chinese plot labels, and Chinese class/label names. Edit the English master, then regenerate; never hand-edit a mirrored Chinese notebook. Translation tables key on exact English text, so a master edit fails the build instead of leaving stale Chinese prose.
 - The Chinese NLP route is genuinely Chinese data, not a translation of IMDb: it uses ChnSentiCorp hotel reviews with jieba segmentation through `common/sentiment_cn.py`, which keeps the same `load_reviews / tokenize / build_vocab / encode / LABELS` interface as `english/common/course_data.py`.
 - Detection keeps hand-authored notebooks on both sides (Chinese lesson built first, English mirror by `english/scripts/build_vehicle_notebook.py`); `scripts/localize_chinese_detection.py` keeps the Chinese console text Chinese.
-- Early Chinese notebooks that predate the rebuild live in each module's `archive/legacy-notebooks/`. They stay for history, are excluded from auditing, and are never executed. Keep history; move with `git mv` instead of deleting.
+- Early Chinese notebooks that predate the rebuild live in each module's `archive/legacy-notebooks/`. They stay for history, stay out of default course runs and output audits, and are re-executed only when `--include-legacy` is passed on request (with `--cwd notebook`). Keep history; move with `git mv` instead of deleting.
 
 ## Editing conventions
 

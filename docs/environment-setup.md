@@ -90,8 +90,8 @@ state the consequence instead - a rerun matches the recorded metrics in aggregat
 
 | Purpose | Command (repository root) |
 |---|---|
-| Execute a notebook and keep real outputs | `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection [--language zh-CN] [--notebook <name>] [--cwd root\|notebook]` |
-| Quote executed results back into the notebook (`Expected output` + `assets` figures) | `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py [--module <module>] [--notebook <name>] [--include-archive]` |
+| Execute a notebook and keep real outputs | `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection [--language zh-CN] [--notebook <name>] [--cwd root\|notebook] [--include-legacy]` |
+| Quote executed results back into the notebook (`Expected output` + `assets` figures) | `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py [--module <module>] [--notebook <name>] [--include-archive] [--include-legacy]` |
 | Regenerate the Chinese mirrors from the English masters | `~/env_dl_uv/.venv/bin/python scripts/build_chinese_course.py` |
 | Keep the Chinese detection lesson's console text Chinese | `~/env_dl_uv/.venv/bin/python scripts/localize_chinese_detection.py` |
 | Chinese/English pairing and output-language audit | `~/env_dl_uv/.venv/bin/python scripts/check_parity.py` |
@@ -107,5 +107,7 @@ Course notebooks run with the repository root as the working directory (`--cwd r
 The Copy1 comparison notebook in `01-image-classification/archive/` follows the convention written
 at the top of the file itself and is executed with `--cwd notebook`, so `../data` and `../outputs`
 land in `01-image-classification/` while `assets/` stays inside `archive/`. Its `Expected output`
-blocks need `--include-archive` to be refreshed; `archive/legacy-notebooks/` remains read-only
-history that is never executed or embedded.
+blocks need `--include-archive` to be refreshed. The pre-rebuild lessons in
+`archive/legacy-notebooks/` stay out of default course runs and output verification; `--include-legacy`
+re-executes them with the same `--cwd notebook` convention and embeds what the run produced, except for
+cells tagged `skip-execution` because they need assets that were never part of the repository.
