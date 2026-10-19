@@ -189,7 +189,7 @@
       "file": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
       "language": "zh",
       "code_cells": 14,
-      "markdown_cells": 16,
+      "markdown_cells": 30,
       "executed_cells": 14,
       "error_outputs": 0,
       "english_only_outputs": 0
@@ -224,10 +224,10 @@
     {
       "file": "01-image-classification/archive/legacy-notebooks/extensions/04-lenet-custom-data.ipynb",
       "language": "zh",
-      "code_cells": 28,
+      "code_cells": 30,
       "markdown_cells": 39,
-      "executed_cells": 14,
-      "error_outputs": 0,
+      "executed_cells": 18,
+      "error_outputs": 1,
       "english_only_outputs": 0
     },
     {
@@ -270,7 +270,7 @@
       "file": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
       "language": "en",
       "code_cells": 7,
-      "markdown_cells": 6,
+      "markdown_cells": 13,
       "executed_cells": 7,
       "error_outputs": 0,
       "english_only_outputs": 0

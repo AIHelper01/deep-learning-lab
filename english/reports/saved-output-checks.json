@@ -5,8 +5,8 @@
       "notebook": "../01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
       "code_cells": 15,
       "executed_cells": 15,
-      "output_items": 19,
-      "embedded_images": 5
+      "output_items": 20,
+      "embedded_images": 6
     },
     {
       "notebook": "../01-image-classification/notebooks/01-lenet-mnist.ipynb",

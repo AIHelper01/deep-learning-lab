@@ -8,7 +8,7 @@
       "notebook": "01-image-classification/archive/01-lenet-mnist-copy1.ipynb",
       "status": "passed",
       "run_mode": "Default classroom training parameters",
-      "seconds": 5.17,
+      "seconds": 5.03,
       "code_cells": 8,
       "output_items": 11,
       "png_outputs": 2

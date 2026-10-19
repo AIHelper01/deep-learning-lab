@@ -7,6 +7,10 @@
 
 [Compact MNIST comparison](archive/01-lenet-mnist-copy1.ipynb) is optional.
 Superseded Chinese notebooks are archived in [archive/legacy-notebooks/](archive/legacy-notebooks/README.md).
+The comparison notebook is archived but still executed in `~/env_dl_uv` and carries its own
+`**Expected output:**` blocks. Unlike the lessons above, it runs from the notebook's own directory
+(`--cwd notebook`), and its blocks are refreshed with `--include-archive`; `archive/legacy-notebooks/`
+stays read-only and is never executed.
 
 Each main experiment covers data inspection, model definition, training, checkpoint
 selection, evaluation, and inference. The custom-folder experiment also writes CSV indexes.
@@ -45,5 +49,11 @@ Open a notebook and run it top to bottom, or execute a whole lesson and keep its
 ~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification
 ```
 
-[Environment setup](../docs/environment-setup.md) · [Data and provenance](../docs/datasets.md)
+The archived comparison notebook is refreshed separately:
 
+```bash
+~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --cwd notebook --notebook 01-lenet-mnist-copy1
+~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --notebook 01-lenet-mnist-copy1
+```
+
+[Environment setup](../docs/environment-setup.md) · [Data and provenance](../docs/datasets.md)

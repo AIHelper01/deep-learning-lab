@@ -21,6 +21,10 @@ def main():
     parser.add_argument('--language', choices=['en', 'zh-CN'], default='en')
     parser.add_argument('--notebook', action='append',
                         help='Only execute notebooks whose filename matches this stem. Repeatable.')
+    parser.add_argument('--cwd', choices=['root', 'notebook'], default='root',
+                        help='Kernel working directory. Course notebooks resolve data from the course root; '
+                             'the vision archive notebook resolves "../data", "../outputs" and its own '
+                             '"assets/" from the notebook directory, so it needs --cwd notebook.')
     args = parser.parse_args()
     # 中文课程镜像位于仓库根目录的模块树，英文课程在 english/ 下。
     base = ROOT if args.language == 'en' else ROOT.parent
@@ -119,7 +123,7 @@ def main():
                 print(f'  Saved cell {cell_index}: {path.name}', flush=True)
 
             client = NotebookClient(nb, timeout=5400, kernel_name='python3',
-                                    resources={'metadata':{'path':str(base)}},
+                                    resources={'metadata': {'path': str(path.parent if args.cwd == 'notebook' else base)}},
                                     allow_errors=False, record_timing=True,
                                     on_cell_executed=cell_saved)
             client.execute()

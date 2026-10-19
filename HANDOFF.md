@@ -1,6 +1,7 @@
 # Project handoff
 
-Updated: 2026-10-18 (Asia/Shanghai). The session changes are committed on main and pushed to origin.
+Updated: 2026-10-19 (Asia/Shanghai). Session 15 is committed on main together with this entry; it has not been pushed.
+Each earlier session states its own commit state in its closing line.
 
 ## Current user direction
 
@@ -524,3 +525,51 @@ Jupyter 内核仍只有 `env_dl_uv`。英文课程 13 本 Notebook、54 个说�
 只剥离正文公共缩进，保留嵌套列表与代码围栏内的相对缩进（车辆课 JSON 与示例代码缩进保持原样）。已交付 Notebook 就地修，
 不重新生成：每个单元都必须在沙箱生成结果中逐字出现才写入，并断言代码单元与已保存输出数量不变。全套校验再次全绿，
 车辆课派生验证仍零漂移。石头剪刀布介绍单元的生成器文案旧于交付版，属生成后就地加详的既有约定，仅记录不改。未提交。
+
+## Session 15 - the archived LeNet notebook is executed too, and quotes its own run
+
+`01-image-classification/archive/01-lenet-mnist-copy1.ipynb` is now executed for real in `~/env_dl_uv`
+(Python 3.12.12, torch 2.14.1, Apple MPS, `seed=42`, three classroom epochs on full MNIST, 37.22 s end to end,
+best test accuracy **98.32%**, reloaded checkpoint 98.32%) and its real output is quoted back into the notebook:
+13 `预期输出` blocks plus 6 figures at `archive/assets/01-lenet-mnist-copy1-1..6.png`, and a preface recording the
+environment, the numbers and the refresh commands. Its cell 0 no longer claims the outputs are unverified history.
+The English twin `english/01-image-classification/archive/01-lenet-mnist-copy1.ipynb` was re-executed as well
+(5.03 s) and carries 7 `Expected output` blocks plus 2 English-labelled figures. Clearing all outputs was verified to
+leave all 14 embedded blocks and all 6 figures visible.
+
+Real defect fixed: that notebook resolves `../data`, `../outputs` and its own `assets/` from the notebook directory,
+exactly as its header states, but the executor always ran notebooks from the course root, so section 10 silently
+printed `Image not found: assets/lenet-7.jpg` and wrote data and weights into `/Users/will/workspace/` outside the
+repository. `english/scripts/execute_and_save.py` gained an opt-in `--cwd root|notebook` (default `root`, every course
+notebook unchanged); with `--cwd notebook` the single-image cell really predicts (`5` at 0.9959) and the checkpoints
+land in `01-image-classification/outputs/lenet_mnist_standard/`.
+
+`scripts/embed_expected_outputs.py` gained `--include-archive` (archive root notebooks only, `legacy-notebooks/` stays
+out) and `--notebook` for targeted refreshes; kernel temp-directory paths in quoted warnings are folded like absolute
+repository paths and get their own explanatory note; inserted cell ids are derived from block content, so re-embedding
+is now byte-idempotent (verified by hashing two consecutive runs).
+
+Verdict on `archive/legacy-notebooks/` (read-only history: not executed, not embedded, untouched):
+`01-lenet-mnist.ipynb` looks runnable in `env_dl_uv` (all cells executed, imports present, MNIST local).
+`02-lenet-cifar10.ipynb` and `extensions/04-lenet-custom-data.ipynb` still depend on `!cp -r /workspace/DataSet/cvdata/...`
+copies, a `data/pipline_train` folder that does not exist here, and LEDNUM `train.txt`/`test.txt` with no public
+download; `03-resnet-cifar10.ipynb` has 15 of 16 cells never executed and `extensions/04` keeps one saved error output.
+The `!cp -r` lines are IPython shell magics, not syntax errors.
+
+Also deleted `archive/assets/.ipynb_checkpoints/lenet-7-checkpoint.jpg` (byte-identical to `assets/lenet-7.jpg`,
+left by a JupyterLab session), which was the only failing `check_docs_assets.py` problem.
+
+Checks after the change: `verify_saved_outputs.py` 28 notebooks / 0 problems, `check_course.py` 95 sources / 0 problems,
+`check_docs_assets.py` 0 problems, `check_parity.py` 0 problems, `build_chinese_course.py --check` 11 mirrors,
+`git diff --check` clean. The previous session's uncommitted edits (kernelspec metadata on four lessons, plus two
+legacy notebooks) were deliberately left untouched; `reports/parity-checks.json` still reports their cell counts
+because the check runs over the working tree.
+
+中文小结：归档的 Copy1 对照版已在 `~/env_dl_uv` 真跑（MPS、`seed=42`、全量 MNIST 3 轮、37.22 s、test 98.32%，
+加载 checkpoint 复测一致），并把 13 个「预期输出」文字块与 6 张图内嵌回 notebook 本体，清空输出后仍可对照；
+英文同名归档同步刷新。修掉一个真问题：这份 notebook 按开头约定以自身目录解析 `../data`、`../outputs`、`assets/`，
+而执行器固定用仓库根，导致第 10 节实际只打印 `Image not found`，数据与权重还落到仓库外。执行器加 `--cwd notebook`，
+内嵌脚本加 `--include-archive`、`--notebook`，内核临时目录绝对路径同样折叠并配准确注释，单元格 id 随内容稳定，
+重复内嵌逐字节幂等。`legacy-notebooks/` 按只读约定未执行未内嵌，仅给出静态判定（外部数据、`pipline_train`、LEDNUM
+缺失，03 有 15/16 单元从未执行，`!cp -r` 是 IPython 魔法不是语法错误）。清掉一个让 assets 检查失败的 Jupyter
+遗留副本。六项校验全绿。

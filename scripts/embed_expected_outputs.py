@@ -10,11 +10,14 @@
 用法（仓库根目录）：
     ~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py                    # 全部任务
     ~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification
+    ~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification \
+        --include-archive --notebook 01-lenet-mnist-copy1                             # 只刷归档课件
 """
 from pathlib import Path
 import argparse
 import base64
 import copy
+import hashlib
 import os
 import re
 
@@ -24,12 +27,15 @@ ROOT = Path(__file__).resolve().parents[1]
 TAG = "course-expected-output"
 FENCE_SAFE = re.compile(r"\n```")
 ABS_PATH = re.compile(r"(?:/Users/[^\s'\"]+?|[A-Za-z]:[\\/]+?)(?=deep-learning-lab)")
+# 告警行里的 ipykernel 临时文件路径同样是机器相关的绝对路径前缀，按同样的方式折叠。
+IPYKERNEL_PATH = re.compile(r"(?:/private)?/(?:var/folders/[^\s'\"`]+?|tmp)/ipykernel_\d+/")
 
 LABELS = {
     "zh": {
         "text": "**预期输出：**",
         "image": "**预期输出（图片）：**",
         "path_note": "（输出里的 `…` 代表运行本 notebook 时所在机器的仓库绝对路径前缀，你在自己机器上执行会看到自己的路径。）",
+        "kernel_path_note": "（输出里的 `…` 是 Jupyter 内核本次运行的临时目录，每台机器、每次运行都不同；告警本身可以忽略。）",
         "figure": "第 {n} 张输出图",
     },
     "en": {
@@ -37,13 +43,15 @@ LABELS = {
         "image": "**Expected output (image):**",
         "path_note": "(Inside the quoted output `…` stands for the repository's absolute path prefix "
                      "on the machine that ran the notebook; yours will show your own path.)",
+        "kernel_path_note": "(Inside the quoted output `…` is the Jupyter kernel's temporary directory for that "
+                            "run, which differs per machine and per run; the warning itself is harmless.)",
         "figure": "Output figure {n}",
     },
 }
 
 
 def fold_paths(text):
-    return ABS_PATH.sub("…/", text)
+    return IPYKERNEL_PATH.sub("…/", ABS_PATH.sub("…/", text))
 
 
 def heading_caption(cells, index, figure_number, lang):
@@ -82,6 +90,7 @@ def build_blocks(nb, job):
             continue
         text_parts = []
         image_parts = []
+        saw_repo_path = saw_kernel_path = False
         for output in cell.outputs:
             kind = output.output_type
             if kind in ("stream", "error"):
@@ -89,10 +98,14 @@ def build_blocks(nb, job):
                     "\n".join(output.get("traceback", []))
                 if raw.strip():
                     text_parts.append(fold_paths(raw.rstrip()))
+                    saw_repo_path = saw_repo_path or bool(ABS_PATH.search(raw))
+                    saw_kernel_path = saw_kernel_path or bool(IPYKERNEL_PATH.search(raw))
             elif kind == "execute_result":
                 plain = output.get("data", {}).get("text/plain")
                 if plain:
                     text_parts.append(fold_paths("".join(plain).rstrip()))
+                    saw_repo_path = saw_repo_path or bool(ABS_PATH.search("".join(plain)))
+                    saw_kernel_path = saw_kernel_path or bool(IPYKERNEL_PATH.search("".join(plain)))
             elif kind == "display_data":
                 png = output.get("data", {}).get("image/png")
                 if not png:
@@ -110,13 +123,22 @@ def build_blocks(nb, job):
         body = []
         if text_parts:
             body.append(labels["text"] + "\n\n```text\n" + clean_text("\n".join(text_parts)) + "\n```")
-            if "…/" in "".join(text_parts):
+            if saw_repo_path:
                 body.append(labels["path_note"])
+            if saw_kernel_path:
+                body.append(labels["kernel_path_note"])
         for part in image_parts:
             body.append(labels["image"] + "\n\n" + part)
         if body:
             blocks[index] = "\n\n".join(body)
     return blocks, figure
+
+
+def block_id(job, key, content):
+    """内容不变则单元 id 不变：重复内嵌不会在 `git diff` 里留下只换 id 的噪音。"""
+    prefix = re.sub(r"[^A-Za-z0-9_-]", "-", job["prefix"])
+    digest = hashlib.sha1(content.encode("utf-8")).hexdigest()[:10]
+    return f"{prefix}-expected-{key}-{digest}"[:64]
 
 
 def apply_job(job):
@@ -131,10 +153,12 @@ def apply_job(job):
         rebuilt.append(cell)
         if index in blocks:
             rebuilt.append(nbformat.v4.new_markdown_cell(
-                blocks[index], metadata={"tags": [TAG]}))
+                blocks[index], metadata={"tags": [TAG]}, id=block_id(job, index, blocks[index])))
     nb.cells = rebuilt
     if job.get("intro"):
-        nb.cells.insert(1, nbformat.v4.new_markdown_cell(job["intro"], metadata={"tags": [TAG]}))
+        intro = job["intro"]
+        nb.cells.insert(1, nbformat.v4.new_markdown_cell(intro, metadata={"tags": [TAG]},
+                                                         id=block_id(job, "intro", intro)))
     nbformat.write(nb, notebook_path)
     return f"{notebook_path.relative_to(ROOT)}：内嵌 {len(blocks)} 处文字块、{figures} 张图"
 
@@ -142,6 +166,32 @@ def apply_job(job):
 # 少数 notebook 的图注/前言是人工撰写的（并且 lesson 报告已按这些图片名引用），
 # 在这里登记后由本脚本统一下发；未登记的 notebook 使用「文件名主干 + 最近标题」自动图注。
 OVERRIDES = {
+    "01-image-classification/archive/01-lenet-mnist-copy1.ipynb": {
+        "captions": {
+            1: "MNIST 训练集类别分布：10 个数字各自的样本数",
+            2: "一个批次反归一化后的样本网格（标题是该图的标签）",
+            3: "本次 3 轮训练的 loss 与 accuracy 曲线，train 与 test 同图对比",
+            4: "test 集混淆矩阵：横轴为预测类别，纵轴为真实类别",
+            5: "收集到的错误样本：标题依次是真值 T、预测 P 与置信度",
+            6: "单图推理 `assets/lenet-7.jpg`：预测 5，置信度 0.9959",
+        },
+        "intro": "\n".join([
+            "> **每个代码单元后面都跟着一个「预期输出」单元**：文字输出逐字摘录，图片导出到本目录 `assets/` "
+            "并以相对路径引用，因此执行 **Kernel → Clear All Outputs** 之后仍然看得见这次实跑的结果。",
+            ">",
+            "> 这里保存的输出来自 **课堂环境 `~/env_dl_uv`（Python 3.12.12 + PyTorch 2.14.1）的实跑**："
+            "Apple 芯片 MPS、`seed=42`、全量 MNIST、课堂默认 3 轮，端到端 37.22 s，最佳 test 准确率 "
+            "**98.32%**（加载 checkpoint 复测同为 98.32%）。",
+            ">",
+            "> 与 `notebooks/` 里的课程 notebook 不同，本文件按开头写明的工作约定运行：**以 notebook 所在目录 "
+            "`archive/` 为工作目录**，于是 `../data`、`../outputs` 落在 `01-image-classification/` 下，"
+            "`assets/` 则是本目录（单图推理用的 `lenet-7.jpg` 就在这里）。",
+            ">",
+            "> 刷新方式（仓库根目录，先实跑、再内嵌）：",
+            "> - `~/env_dl_uv/.venv/bin/python english/scripts/execute_and_save.py --group vision --language zh-CN --cwd notebook --notebook 01-lenet-mnist-copy1`",
+            "> - `~/env_dl_uv/.venv/bin/python scripts/embed_expected_outputs.py --module 01-image-classification --include-archive --notebook 01-lenet-mnist-copy1`",
+        ]),
+    },
     "02-object-detection/notebooks/01-yolo26-rock-paper-scissors.ipynb": {
         "prefix": "rock-paper-scissors",
         "captions": {
@@ -212,7 +262,7 @@ OVERRIDES = {
 }
 
 
-def discover_jobs(module):
+def discover_jobs(module, include_archive=False, only=None):
     """自动发现中英两侧的 notebook，按文件名主干生成 assets 前缀。"""
     jobs = []
     for side, lang in ((ROOT, "zh"), (ROOT / "english", "en")):
@@ -222,7 +272,15 @@ def discover_jobs(module):
         paths = [p for p in sorted(module_dir.rglob("*.ipynb"))
                  if "notebooks" in p.parts and "archive" not in p.parts
                  and ".ipynb_checkpoints" not in p.parts]
+        if include_archive:
+            # 归档课件与 `execute_and_save.py` / `verify_saved_outputs.py` 口径一致：
+            # archive/ 根下的课件参与实跑与内嵌，legacy-notebooks/ 仍是只读历史，不执行也不内嵌。
+            paths.extend(sorted(p for p in (module_dir / "archive").rglob("*.ipynb")
+                                if "legacy-notebooks" not in p.parts
+                                and ".ipynb_checkpoints" not in p.parts))
         for path in paths:
+            if only and path.stem not in set(only):
+                continue
             owner = path.parent
             while owner.name in ("notebooks", "extensions"):
                 owner = owner.parent
@@ -246,11 +304,15 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--module", action="append",
                         help="模块目录名，可重复；默认覆盖三个模块。")
+    parser.add_argument("--include-archive", action="store_true",
+                        help="一并处理模块 archive/ 根下的课件；archive/legacy-notebooks/ 始终跳过。")
+    parser.add_argument("--notebook", action="append",
+                        help="只处理文件名主干匹配的 notebook，可重复。")
     args = parser.parse_args()
     modules = args.module or ["01-image-classification", "02-object-detection",
                               "03-sentiment-analysis"]
     for module in modules:
-        for job in discover_jobs(module):
+        for job in discover_jobs(module, args.include_archive, args.notebook):
             print(apply_job(job))
     return 0
 
