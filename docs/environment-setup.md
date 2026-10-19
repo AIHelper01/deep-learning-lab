@@ -54,9 +54,10 @@ Jupyter installation, register it once:
 uv run python -m ipykernel install --user --name deep-learning-lab --display-name deep-learning-lab
 ```
 
-The uv project `~/env_dl_uv` outside the repository (kernel name `env_dl_uv`) is the interpreter
-that actually produced every saved `Expected output` block and run report now committed here, on
-the same locked versions; it stays as the classroom reference and a new machine does not need it.
+The uv project `~/env_dl_uv` outside the repository (kernel name `env_dl_uv`) is retired: it is
+the interpreter that actually produced every saved `Expected output` block and run report now
+committed here, on the same locked versions. Nothing executes there any more, and a new machine
+does not need it.
 English notebooks resolve `english/COURSE_ROOT` and Chinese notebooks resolve
 `CHINESE_COURSE_ROOT` at the repository root, so opening the course from either directory works.
 

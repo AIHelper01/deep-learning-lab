@@ -7,7 +7,7 @@
 | 项目 | 值 |
 |---|---|
 | 日期 | 2026-10-18 |
-| 内核 | `env_dl_uv`（uv 项目，见[环境准备](../../docs/environment-setup.zh-CN.md)） |
+| 内核 | `env_dl_uv`（当时的课堂 uv 项目，现已退役；现行环境见[环境准备](../../docs/environment-setup.zh-CN.md)） |
 | Python / torch / ultralytics | 3.12.12 / 2.14.1 / 8.4.177 |
 | 设备与参数 | Apple 芯片 **MPS**，`epochs=5`、`imgsz=320`、`batch=8`、`seed=42`（课堂默认参数，非 smoke） |
 | 端到端耗时 | 940.47 s（其中训练 5 轮累计 897 s，约 180 s/轮） |

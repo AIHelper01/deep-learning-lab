@@ -3,9 +3,10 @@
 Every number here comes from a real Jupyter kernel run with outputs saved into the notebook, and every number is
 labelled with its run mode. Two environments produced the evidence:
 
-- **Current:** the single classroom environment outside the repository, `~/env_dl_uv` (Python 3.12.12 on an Apple
+- **Most recent:** the single classroom environment outside the repository, `~/env_dl_uv` (Python 3.12.12 on an Apple
   Silicon Mac: MPS for PyTorch and Ultralytics, CPU for Paddle), which produced all Chinese lessons plus the English
-  and Chinese detection runs on 2026-10-18.
+  and Chinese detection runs on 2026-10-18. That environment is now retired: the course runs from the repository
+  root's own `.venv`, on the same locked versions.
 - **Earlier:** four per-module uv environments on a Windows machine, which produced the English image-classification
   and NLP evidence (their reports record `E:\...` executables).
 

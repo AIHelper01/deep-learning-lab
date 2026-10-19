@@ -39,7 +39,7 @@ The root launcher still defaults to `en` / `vision`, a leftover from the English
 
 The Chinese tree locates its root through the `CHINESE_COURSE_ROOT` marker file at the repository root, and its `sys.path` combines the repository `common/` (Chinese helpers) with `english/common/` (shared loaders); model caches are shared with the English course. In the Chinese mirrored BOOT cell, `COURSE` is the repository root, so `DATA`/`OUTPUT` land inside the Chinese module tree.
 
-After `uv sync`, the repository root `.venv` is that single environment for every module and both languages. Execute notebooks with `uv run python english/scripts/execute_and_save.py --group <vision|pytorch|paddle|detection> [--language zh-CN]`; the runner injects the tagged runtime cell, keeps per-cell saved outputs, and writes reports under `english/reports/`. The uv project `~/env_dl_uv` outside the repository (kernel `env_dl_uv`, same locked versions) is the interpreter that produced the saved outputs now committed here; keep it as the classroom reference, not as the documented setup path.
+After `uv sync`, the repository root `.venv` is that single environment for every module and both languages. Execute notebooks with `uv run python english/scripts/execute_and_save.py --group <vision|pytorch|paddle|detection> [--language zh-CN]`; the runner injects the tagged runtime cell, keeps per-cell saved outputs, and writes reports under `english/reports/`. The uv project `~/env_dl_uv` outside the repository (kernel `env_dl_uv`, same locked versions) is retired: it is the interpreter that produced the saved outputs now committed here, so treat it as provenance only - never execute or install into it, and never document it as a setup path.
 
 ## Notebooks and evidence
 

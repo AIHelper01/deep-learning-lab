@@ -21,7 +21,7 @@ The default is **English image classification**. The launcher syncs the uv proje
 .\start-notebooks.ps1 -Language zh-CN -Module vision
 ```
 
-The course is **one uv project: the repository root**. English requires uv (or `python -m uv`); `uv sync` there installs all four modules for both language editions into one `.venv`, and first setup may download Python and dependencies. The classroom interpreter `~/env_dl_uv` carries the same locked versions and is what actually produced the saved outputs; see [setup](docs/environment-setup.md).
+The course is **one uv project: the repository root**. English requires uv (or `python -m uv`); `uv sync` there installs all four modules for both language editions into one `.venv`, and first setup may download Python and dependencies. The retired classroom interpreter `~/env_dl_uv` carries the same locked versions and is what actually produced the saved outputs, so nothing executes there any more; see [setup](docs/environment-setup.md).
 
 Execute a lesson and keep its real output with:
 
@@ -56,7 +56,7 @@ notebook as `**Expected output:**` / `**预期输出：**` blocks and `assets/*.
 the official exports: rock-paper-scissors v1 reached test mAP50 0.9410 / mAP50-95 0.7467 in the English ten-epoch
 lesson run, and the vehicle-counting lesson reached test mAP50 0.6983 / mAP50-95 0.4071 with real tracking and
 line-crossing counts that matched the video ground truth exactly. Classroom runs use Apple Silicon MPS in the
-single `~/env_dl_uv` environment; CUDA has not been validated. Historical mirror scores describe a different
+single course environment; CUDA has not been validated. Historical mirror scores describe a different
 dataset. See [execution evidence and limits](english/reports/README.md).
 
 - `scripts/check_docs_assets.py`: local link reachability, heading anchors, zero remote images, `assets/<name>-<index>` naming, bilingual `docs/` pairing, and - across every live document, notebook and kernelspec - no leftover command or kernel pointing at a retired interpreter.

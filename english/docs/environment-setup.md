@@ -10,8 +10,9 @@ The lock pins Python 3.12, PyTorch 2.14.1, torchvision 0.29.1, PaddlePaddle 3.3.
 Ultralytics 8.4.177, the versions used for the current validation, and records macOS
 arm64, manylinux x86_64, and Windows amd64 wheels (see
 [One kernel for the whole course](../../docs/environment-setup.md#one-kernel-for-the-whole-course)).
-The classroom interpreter `~/env_dl_uv`, kernel `env_dl_uv`, carries the same locked
-versions and is what actually produced the saved outputs in this repository.
+There is no second environment: `~/env_dl_uv` and its `env_dl_uv` kernel are retired and
+kept only as provenance, because they produced the saved outputs committed here, on the
+same locked versions.
 
 From the project root in PowerShell, start the image-classification course, which the launcher
 selects by default, with:
@@ -46,8 +47,8 @@ module directory without `--project`.
 
 The notebooks now retain actual executed output, including embedded charts. The first
 code cell identifies the environment and run mode. When running them again, use the
-kernel from the root `.venv`, or the equivalent `env_dl_uv` classroom kernel; selecting a
-different global kernel bypasses the lockfile.
+kernel from the root `.venv`; any other kernel, including the retired `env_dl_uv` classroom
+kernel, bypasses the lockfile.
 Model training selects CUDA first, then Apple Silicon MPS, then CPU; see
 [device selection](../../docs/environment-setup.md#device-selection). All saved outputs in this
 repository were produced with that selection on the machine named in each report.

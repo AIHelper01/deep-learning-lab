@@ -71,7 +71,7 @@ uv run python -m ipykernel install --user --name deep-learning-lab --display-nam
 ```
 
 仓库外的 `~/env_dl_uv`（内核名 `env_dl_uv`）是本仓库现有全部「预期输出」与执行报告的实际运行环境，
-依赖与 `uv.lock` 一致，保留作课堂机上的参照；新机器不需要它，用上面的 `.venv` 即可。英文 notebook
+它已退役，如今只作溯源记录，不再承接任何执行；新机器也不需要它，用上面的 `.venv` 即可。英文 notebook
 自行定位 `english/COURSE_ROOT`，中文 notebook 定位仓库根的 `CHINESE_COURSE_ROOT`，因此从仓库根目录或
 `english/` 目录打开都能运行。
 

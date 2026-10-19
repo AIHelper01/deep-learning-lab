@@ -11,7 +11,7 @@ the outputs saved in that notebook, and the figures come from the same run; they
 | Item | Value |
 |---|---|
 | Date | 2026-10-18 |
-| Kernel | `env_dl_uv` (uv project, see [environment setup](../../docs/environment-setup.md)) |
+| Kernel | `env_dl_uv` (the classroom uv project at the time, now retired; current setup: [environment setup](../../docs/environment-setup.md)) |
 | Python / torch / ultralytics | 3.12.12 / 2.14.1 / 8.4.177 |
 | Device and parameters | Apple Silicon **MPS**, `epochs=5`, `imgsz=320`, `batch=8`, `seed=42` (classroom defaults, not a smoke test) |
 | End-to-end time | 940.21 s (the five training epochs took 896 s of it, about 179 s per epoch) |

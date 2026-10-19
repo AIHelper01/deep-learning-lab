@@ -9,7 +9,7 @@
 
 [Compact MNIST comparison](archive/01-lenet-mnist-copy1.ipynb) is optional.
 Superseded Chinese notebooks are archived in [archive/legacy-notebooks/](archive/legacy-notebooks/README.md).
-The comparison notebook is archived but still executed in `~/env_dl_uv` and carries its own
+The comparison notebook is archived but is executed in the course environment and carries its own
 `**Expected output:**` blocks. Unlike the lessons above, it runs from the notebook's own directory
 (`--cwd notebook`), and its blocks are refreshed with `--include-archive`. The legacy lessons stay out of
 default course runs and output verification; `--include-legacy` re-executes them with the same

@@ -3,6 +3,57 @@
 Updated: 2026-10-19 (Asia/Shanghai). Session 21 is committed on `main` together with its entry and has not been pushed; Sessions 18, 19 and 20 are committed together as `750f381` on main and have not been pushed; Session 15 is committed on main together with its entry and has not been pushed.
 Each earlier session states its own commit state in its closing line.
 
+## Session 23 - `~/env_dl_uv` is retired: provenance in the docs, never an option
+
+Session 22 removed every retired *command*; this session removed the last retired *environment* from the
+setup story. The rule now written everywhere: the repository root's `.venv` is the only environment, and
+`~/env_dl_uv` survives only as the sentence that says which interpreter produced the committed evidence.
+
+Rewritten (13 files, 18 mentions reviewed):
+
+- `english/docs/environment-setup.md` no longer offers the `env_dl_uv` kernel as an alternative when
+  re-running notebooks - any kernel other than the root `.venv` now reads as bypassing the lockfile - and
+  its "classroom interpreter" paragraph became "there is no second environment".
+- `docs/environment-setup.md` / `.zh-CN.md`: "stays as the classroom reference" became "retired; nothing
+  executes there any more", keeping the fact that it produced every `Expected output` block and report.
+- `README.md` / `README.zh-CN.md`, and the four module READMEs (`01-image-classification`,
+  `02-object-detection`, both sides): the outside environment is no longer called the equivalent reference
+  environment; the vision READMEs now just say the archived lessons re-run in the course environment.
+- Both vehicle-counting run reports label their `env_dl_uv` kernel row as "the classroom uv project at the
+  time, now retired" and link to the current setup instead of implying it.
+- `english/reports/README.md` relabels its first bullet **Current** -> **Most recent** and states the
+  environment is retired and the course runs from the repository root's `.venv` on the same locked versions.
+- `AGENTS.md` now instructs future sessions to treat it as provenance only: never execute into it, install
+  into it, or document it as a setup path.
+
+Deliberately unchanged: `execution_environment.executable` in the 30 notebooks, the reports JSON, the
+"run inside `~/env_dl_uv`" sentences in the run reports, and everything under `archive/` - those record
+where the committed outputs actually came from. The directory and its registered kernel still exist on this
+machine, outside the repository; removing them is a destructive act on the user's own box
+(`jupyter kernelspec remove env_dl_uv`, then delete `~/env_dl_uv`), so it was left to the user.
+
+Checks after the change, all green: `check_docs_assets.py` (0 problems, 64 documents, 29 live notebooks
+kernel-checked), `check_parity.py` (42 notebooks, 0 problems), `verify_saved_outputs.py` (30 notebooks,
+0 problems), `english/scripts/check_course.py` (92 sources / 16 notebooks, 0 problems),
+`build_english_course.py --check` (1 mirror), `build_chinese_course.py --check` (11 mirrors),
+`git diff --check` clean. No notebook was re-executed; every edit is document prose.
+
+Commit state: this session's 13 files and this entry go into one commit on `main`; nothing is pushed.
+
+中文小结：Session 22 清掉了已淘汰的*命令*，这一轮把已淘汰的*环境*从安装路径里彻底摘掉。现在的统一口径是：仓库根
+`.venv` 是唯一环境，`~/env_dl_uv` 只剩"说明现有证据由哪个解释器跑出"这一句话的功能。改了 13 个文件（复核 18 处提及）：
+英文环境指南不再把 `env_dl_uv` 内核列为可选项（改用其它内核即等于绕过 `uv.lock`），并把"课堂解释器"段落改成
+"不存在第二个环境"；两篇环境指南的"保留作课堂参照"改为"已退役，不再承接任何执行"，同时保留它产出了全部「预期输出」
+与报告这一事实；中英首页与 01/02 两模块四份 README 不再称它为等价参照环境；两份车流量实跑报告的内核行标注
+"当时的课堂 uv 项目，现已退役"并改指现行环境；`english/reports/README.md` 第一条由 **Current** 改为
+**Most recent** 并补上退役说明；`AGENTS.md` 明确要求后续会话只把它当溯源，不得在里面执行、安装或写进文档。
+刻意不动：30 本 notebook 的 `execution_environment.executable`、reports JSON、实跑报告里"在 `~/env_dl_uv` 里跑的"
+这类记录，以及 `archive/` 全部内容——它们记的是证据的真实出处。仓库外的目录与已注册内核仍在这台机器上，删除属于
+用户本机上的破坏性操作（`jupyter kernelspec remove env_dl_uv` 后再删 `~/env_dl_uv`），没有替用户动手。校验全绿：
+文档检查 0 问题（64 篇、29 本现行内核）、42 本对齐 0 问题、30 本输出一致性 0 问题、92 源/16 notebook 0 问题、
+1 + 11 份镜像校验通过、`git diff --check` 干净；本轮只改文档文案，没有重跑 notebook。13 个文件与本篇进同一个
+`main` 提交，未推送。
+
 ## Session 22 - the shipped course text stops pointing at the deleted environments
 
 Session 21 moved the uv project to the repository root and rewrote the documentation, but the courseware

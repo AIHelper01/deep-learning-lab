@@ -15,7 +15,7 @@
 
 ## 运行
 
-中英文共用同一套依赖与同一份只读数据。依赖由仓库根的 `pyproject.toml` + `uv.lock` 锁定，`uv sync` 一次即覆盖两个语言版本（课堂机器上的等价参照环境是仓库外的 `~/env_dl_uv`，内核名 `env_dl_uv`）。首次导入正式数据包，在仓库根目录运行：
+中英文共用同一套依赖与同一份只读数据。依赖由仓库根的 `pyproject.toml` + `uv.lock` 锁定，`uv sync` 一次即覆盖两个语言版本，两侧 notebook 的内核都是根 `.venv`。首次导入正式数据包，在仓库根目录运行：
 
 ```bash
 # 课堂机器（macOS/Linux）：先按 data/README.md 把压缩包放进 DataSet 暂存区，再导入

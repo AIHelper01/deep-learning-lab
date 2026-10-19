@@ -20,8 +20,7 @@ YOLO26 export: 3,939 training / 338 validation / 186 test images. Visually verif
 ## Run
 
 Both languages share one dependency set and one read-only dataset, pinned by `pyproject.toml` + `uv.lock`
-in the repository root (`uv sync` once covers both; the classroom `~/env_dl_uv` kernel is the equivalent
-reference environment). Import the official archives once from the repository root; importers refuse to
+in the repository root (`uv sync` once covers both, and the notebooks' kernel is the root `.venv`). Import the official archives once from the repository root; importers refuse to
 overwrite an existing destination, and the verified export needs no second import (see
 [data/README.md](data/README.md) for the cp and download methods of each dataset):
 

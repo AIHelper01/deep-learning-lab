@@ -33,7 +33,7 @@ uv run python english/scripts/verify_saved_outputs.py # 中英两侧 28 本 note
 - [数据获取与放置路径](docs/datasets.zh-CN.md)
 - [目录整理记录](docs/migration/reorganization.md)
 
-依赖只在仓库根声明并锁定一次，模块目录不再各自保存 `pyproject.toml`、`uv.lock` 或 `requirements.txt`；仓库外的 `~/env_dl_uv` 只是课堂机上版本一致的参照环境。运行时的
+依赖只在仓库根声明并锁定一次，模块目录不再各自保存 `pyproject.toml`、`uv.lock` 或 `requirements.txt`；仓库外的 `~/env_dl_uv` 已退役，只是产出现有全部「预期输出」与执行报告的历史解释器，不再承接任何执行。运行时的
 工作目录是 Notebook 所在目录；数据放在各模块 `data/`，训练产物放在 `outputs/`，讲解图片放在 `assets/`。
 
 ## 数据：先放暂存区，再拷进模块
