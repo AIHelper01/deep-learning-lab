@@ -1,4 +1,10 @@
-"""Static checks for the English teaching edition; no training or downloads."""
+"""Static checks for the English teaching edition; no training or downloads.
+
+Language rule (one-way, see AGENTS.md): the English edition must be pure English everywhere
+a learner reads or types - code cells, Markdown prose, and the saved outputs shipped as
+evidence. This scanner reads whole .ipynb files, so cell outputs are covered too. Chinese
+masters may mix English freely; `scripts/check_parity.py` only counts those fragments.
+"""
 from pathlib import Path
 import ast
 import json

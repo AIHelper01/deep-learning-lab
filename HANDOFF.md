@@ -3,6 +3,46 @@
 Updated: 2026-10-19 (Asia/Shanghai). Session 21 is committed on `main` together with its entry and has not been pushed; Sessions 18, 19 and 20 are committed together as `750f381` on main and have not been pushed; Session 15 is committed on main together with its entry and has not been pushed.
 Each earlier session states its own commit state in its closing line.
 
+## Session 24 - the language rule is one-way, and English purity includes outputs
+
+The user set the rule explicitly, which closes the oldest open item in this file: mixing English into the
+Chinese lessons is fine, but the English edition must be pure English in everything a learner reads or
+types - code cells, prose, and saved outputs - and text baked into images stays out of scope for now. The 81
+English-only output fragments counted inside Chinese masters are therefore accepted policy, not debt, and
+must not be "fixed" by re-executing lessons.
+
+Written down:
+
+- `AGENTS.md` gained a **Language rule, one-way** bullet under Project direction: what the English side must
+  satisfy, which two checkers enforce it, that `chinese_notebooks_with_english_outputs` is informational, and
+  that image text is never a reason to re-run a lesson.
+- `scripts/check_parity.py` now says inline, at the branch that counts Chinese-side English fragments, that
+  the asymmetry is by design and points at the AGENTS.md rule.
+- `english/scripts/check_course.py`'s docstring states the rule and notes that it reads whole `.ipynb`
+  files, which is exactly why saved outputs fall under the CJK ban.
+
+Verified today, without executing anything: a direct scan of all 16 English notebooks - code sources,
+Markdown sources, and every saved output payload with image payloads excluded per the exemption - found zero
+CJK characters, so inputs, prose and outputs are pure English. `english/scripts/check_course.py` reports
+92 sources / 16 notebooks with 0 problems, and `scripts/check_parity.py` reports 42 notebooks with 0
+problems while still counting 81 accepted Chinese-side fragments. `git diff --check` clean.
+
+Still open: re-keying `scripts/build_chinese_course.py` so `01-image-classification` and
+`03-sentiment-analysis` are truly Chinese-mastered, and the root launcher's `en` default.
+
+Commit state: this session's 3 files and this entry go into one commit on `main`; nothing is pushed.
+
+中文小结：用户定了语言规则，本文件里挂得最久的那条开放项就此关闭。规则是单向的：中文母本夹杂英文没问题；英文侧凡是
+学习者会读、会敲的东西都必须纯英文——代码单元、正文、以及作为证据保存下来的输出；图片里的文字本轮豁免。因此中文母本里
+那 81 处英文输出片段是**认可的现状**而不是欠账，后续不得为重跑 notebook 去"修"它。落点：`AGENTS.md` 的项目方向一节
+新增 **Language rule, one-way** 条目（英文侧标准、由哪两个检查兜底、`chinese_notebooks_with_english_outputs` 只作参考、
+图片文字不构成重跑理由）；`scripts/check_parity.py` 在计数分支就地注明这是设计使然并指回该规则；
+`english/scripts/check_course.py` 的 docstring 写明规则，并说明它按整个 `.ipynb` 扫描，所以已保存输出天然在禁汉字范围内。
+本轮未执行任何课件即完成验证：直接扫 16 本英文 notebook 的代码、Markdown 与全部已保存输出（按豁免排除图片载荷），
+CJK 为 0，输入/正文/输出均纯英文；`check_course.py` 92 源 / 16 notebook 0 问题，`check_parity.py` 42 本 0 问题、
+仍记录 81 处被认可的中文侧片段；`git diff --check` 干净。仍开放：把 `scripts/build_chinese_course.py` 的表重新以中文为键，
+让 01/03 两模块真正做到中文母本；以及根启动器默认语言仍是 `en`。3 个文件与本篇进同一个 `main` 提交，未推送。
+
 ## Session 23 - `~/env_dl_uv` is retired: provenance in the docs, never an option
 
 Session 22 removed every retired *command*; this session removed the last retired *environment* from the

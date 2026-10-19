@@ -210,6 +210,7 @@ def check_notebook(language, path, relative, problems, rows, archived=False):
             if language == "zh" and archived:
                 continue
             if language == "zh" and not has_cjk:
+                # 中文母本允许夹杂英文（图表文案、数据集词表、库输出），只计数、不报错：见 AGENTS.md「Language rule, one-way」。
                 english_strings.append(text[:70])
             if language == "en" and has_cjk:
                 problems.append(f"Chinese text in English notebook output: {relative} cell {index}: {text[:40]}")
