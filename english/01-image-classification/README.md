@@ -25,9 +25,9 @@ test data back for final evaluation. The default short runs prioritize teaching 
 ## Relationship to the Chinese course
 
 The repository rule is that the Chinese lessons are the masters and this side is the derived mirror
-(see `AGENTS.md`), but this module is still mid-migration: the tables in
-`scripts/build_chinese_course.py` key on the English text, so today these notebooks are the effective
-translation source. Both sides match cell by cell and differ only in narration, console text, plot
+(see `AGENTS.md`): the tables in
+`scripts/build_chinese_course.py` (data file `scripts/course_en.py`) key on the Chinese text and
+derive these notebooks from the Chinese lessons. Both sides match cell by cell and differ only in narration, console text, plot
 labels and class names. Before editing a lesson, read the Migration status section of `AGENTS.md` and
 do not regenerate either side from the wrong direction.
 

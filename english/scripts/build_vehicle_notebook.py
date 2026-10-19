@@ -54,7 +54,7 @@ DataSet (classroom mirror `/workspace/DataSet/yolo`); from the repository root:
 
 ```powershell
 uv run python .\\english\\scripts\\import_vehicle_counting.py --from-staging
-.\\start-notebooks.ps1 -Module detection
+.\\start-notebooks.ps1 -Language en -Module detection
 ```
 
 On macOS/Linux the same root uv project replaces the launcher: run `uv sync` once in the repository root;

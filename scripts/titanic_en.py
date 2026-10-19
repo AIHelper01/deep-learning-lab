@@ -1,6 +1,6 @@
 """00-machine-learning 中文母本的英文译文表，供 `scripts/build_english_course.py` 使用。
 
-- `MD_EN`：整元 Markdown 译文，键是中文母本单元的第一行（沿用 `build_chinese_course.py` 的键规则）。
+- `MD_EN`：整元 Markdown 译文，键是中文母本单元的第一行（与 `build_english_course.py`、`course_en.py` 同一键规则）。
 - `LINE_EN`：代码单元的逐行译文，键是去掉缩进后的中文原行。
 两侧都要求「原文精确匹配」：中文母本一改而译文没跟上，构建直接报错，不会静默留下过期英文。
 表格由课件原文生成，请勿手工编辑键；新增中文单元/中文行时，补上对应译文即可。

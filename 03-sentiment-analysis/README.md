@@ -21,8 +21,8 @@
 ## 与英文课程的关系
 
 `pytorch/notebooks/` 与 `paddle/notebooks/` 与英文侧同名课程逐单元对应：单元数量与训练逻辑一致，
-中文讲解 + 中文控制台输出 + 中文图表；数据与分词按上面说明使用中文语料。仓库规则是中文为母本，但本模块
-`../scripts/build_chinese_course.py` 的译文表仍以英文原文为键，改课前先看 `../AGENTS.md` 的 Migration status。
+中文讲解 + 中文控制台输出 + 中文图表；数据与分词按上面说明使用中文语料。本模块是母本：英文镜像由
+`../scripts/build_chinese_course.py`（译文表 `../scripts/course_en.py`，以中文原文为键）派生，改课前先看 `../AGENTS.md` 的 Migration status。
 可选预训练课两侧各自如实命名：中文侧 `04-pretrained-chinese-sentiment.ipynb` 用京东评论二分类检查点，
 英文侧 `04-pretrained-english-sentiment.ipynb` 用 SST-2 检查点，配对关系登记在 `scripts/check_parity.py` 的别名表。
 

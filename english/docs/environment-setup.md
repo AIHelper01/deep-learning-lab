@@ -14,16 +14,17 @@ There is no second environment: `~/env_dl_uv` and its `env_dl_uv` kernel are ret
 kept only as provenance, because they produced the saved outputs committed here, on the
 same locked versions.
 
-From the project root in PowerShell, start the image-classification course, which the launcher
-selects by default, with:
+From the project root in PowerShell, start the English image-classification course with:
 
 ```powershell
-.\start-notebooks.ps1
+.\start-notebooks.ps1 -Language en -Module vision
 ```
 
 Use `-Module pytorch`, `-Module paddle`, or `-Module detection` for the other modules.
-The legacy `english/start-notebooks.ps1` is now a shim that forwards here, and also defaults
-to `vision`.
+The root launcher itself defaults to the Chinese masters (`-Language zh-CN -Module vision`),
+because the Chinese lessons at the repository root are the masters. The legacy
+`english/start-notebooks.ps1` is now a shim that forwards here and keeps the `en` default
+with `vision`.
 For the separate Chinese course, see the [language-aware launcher guide](../../docs/environment-setup.md).
 The launcher uses `uv` when available on PATH and otherwise uses `python -m uv`.
 It explicitly selects the PyPI index recorded by the lockfile, avoiding a machine-specific

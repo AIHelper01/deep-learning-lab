@@ -30,11 +30,11 @@ uv sync --locked                                          # macOS / Linux
 之后用启动器打开任意模块的 JupyterLab：
 
 ```powershell
-.\start-notebooks.ps1                                     # 英文 / 图像分类
-.\start-notebooks.ps1 -Module pytorch
-.\start-notebooks.ps1 -Module paddle
-.\start-notebooks.ps1 -Module detection
-.\start-notebooks.ps1 -Language zh-CN -Module vision      # 中文课程
+.\start-notebooks.ps1                                     # 默认：中文 / 图像分类（母本）
+.\start-notebooks.ps1 -Module pytorch                     # 中文 / NLP（PyTorch）
+.\start-notebooks.ps1 -Module paddle                      # 中文 / NLP（Paddle）
+.\start-notebooks.ps1 -Module detection                   # 中文 / 目标检测
+.\start-notebooks.ps1 -Language en -Module vision         # 英文课程
 .\start-notebooks.ps1 -DryRun                             # 只看路由，不装不启动
 ```
 
@@ -111,7 +111,7 @@ Ultralytics 的训练入口在 `deterministic=True`（默认值）时会调用
 | 整本执行并保留真实输出 | `uv run python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection\|ml [--language zh-CN] [--notebook <名>] [--cwd root\|notebook\|module] [--include-legacy]` |
 | 把实跑结果写回 notebook（`预期输出` + `assets` 图片） | `uv run python scripts/embed_expected_outputs.py [--module <模块>] [--notebook <名>] [--include-archive] [--include-legacy]` |
 | 由中文母本派生英文镜像 | `uv run python scripts/build_english_course.py [--check] [--force]` |
-| 重新生成中文镜像（视觉/NLP，暂时仍是英文 → 中文） | `uv run python scripts/build_chinese_course.py` |
+| 由中文母本派生视觉/NLP 英文镜像 | `uv run python scripts/build_chinese_course.py [--check] [--force]` |
 | 中文检测课文案本地化 | `uv run python scripts/localize_chinese_detection.py` |
 | 中英对齐与输出语言检查 | `uv run python scripts/check_parity.py` |
 | 英文课程静态检查（禁止 `english/` 出现中文） | `uv run python english/scripts/check_course.py` |

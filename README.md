@@ -9,15 +9,18 @@ Deep learning lessons written in Chinese first, with an English mirror of every 
 From the repository root in PowerShell:
 
 ```powershell
-.\start-notebooks.ps1
+.\start-notebooks.ps1 -Language en -Module vision
 ```
 
-The default is **English image classification**. The launcher syncs the uv project in the repository root and opens JupyterLab. Start with [LeNet on MNIST](english/01-image-classification/notebooks/01-lenet-mnist.ipynb).
+The repository root holds the Chinese masters, so the bare launcher opens **Chinese image
+classification**; pass `-Language en` for the English edition. The launcher syncs the uv project in
+the repository root and opens JupyterLab. English learners can start with
+[LeNet on MNIST](english/01-image-classification/notebooks/01-lenet-mnist.ipynb).
 
 ```powershell
-.\start-notebooks.ps1 -Module pytorch
-.\start-notebooks.ps1 -Module paddle
-.\start-notebooks.ps1 -Module detection
+.\start-notebooks.ps1 -Language en -Module pytorch
+.\start-notebooks.ps1 -Language en -Module paddle
+.\start-notebooks.ps1 -Language en -Module detection
 .\start-notebooks.ps1 -Language zh-CN -Module vision
 ```
 
@@ -45,7 +48,7 @@ Follow the [learning path](docs/learning-path.md), [environment setup](docs/envi
 
 ## Language compatibility
 
-English is the default documentation and launcher language. English lessons remain in `english/`; the Chinese modules retain their existing root-level paths so existing notebooks, environments, and local data continue to work. Choose a course by language; changing language does not translate a notebook or switch its dataset in place.
+English is the default documentation language; the root launcher defaults to `zh-CN` because the Chinese lessons at the repository root are the masters. English lessons remain in `english/`; the Chinese modules retain their existing root-level paths so existing notebooks, environments, and local data continue to work. Choose a course by language; changing language does not translate a notebook or switch its dataset in place.
 
 Classification/NLP keep language-specific data processing, vocabularies and caches, and sentiment datasets differ by language, while detection shares YOLO26n and the official RPS v1 export; see the [adaptation map](english/docs/adaptation-map.md). Both languages now run in the same interpreter, and every delivered Chinese notebook was re-executed in it on 2026-10-18; the archived `archive/legacy-notebooks/` lessons stay out of default runs and are re-executed only through the explicit `--include-legacy` opt-in. Model outputs always stay separate by language.
 
@@ -72,7 +75,7 @@ Edit delivered notebooks in place to preserve their saved outputs. English autho
 ## How the two languages stay aligned
 
 - The Chinese lessons at the repository root are the masters, and `english/` holds the derived mirrors; a mirror records its source in `metadata.derived_from`. Edit the Chinese notebook, then regenerate the English side with `scripts/build_english_course.py`, whose tables key on exact Chinese text so an unmirrored edit fails the build instead of leaving stale English prose.
-- Migration caveat: `01-image-classification` and `03-sentiment-analysis` are still generated in the old direction by `scripts/build_chinese_course.py` (English -> Chinese), and `english/02-object-detection/dataset-formats/` is still English-authored. Until those tables are re-keyed onto the Chinese side, the English notebooks are the effective master for those two modules - see Migration status in [AGENTS.md](AGENTS.md).
+- Migration caveat: all vision and NLP lessons are now Chinese-mastered - `scripts/build_chinese_course.py` derives their English mirrors from the Chinese lessons through the Chinese-keyed tables in `scripts/course_en.py` (the script name is historical; it writes only under `english/`). Only `english/02-object-detection/dataset-formats/` is still English-authored, with the Chinese guide mirroring it - see Migration status in [AGENTS.md](AGENTS.md).
 - The Chinese NLP lessons are not a translation of IMDb: they train on ChnSentiCorp Chinese reviews with jieba segmentation via `common/sentiment_cn.py`, which keeps the English module's loader interface.
 - `CHINESE_COURSE_ROOT` marks the Chinese course root; `scripts/check_parity.py` checks ASCII paths, one-to-one file pairing, cell counts per notebook, and the language of user-visible output, and records every exception with a reason. Committed `README.md` files inside `data/` and `outputs/` count as course documents and must pair as well, so a route folder cannot exist on one side only.
 - `scripts/embed_expected_outputs.py` writes each executed run back into its notebook as `**Expected output:**` / `**预期输出：**` blocks plus `assets/<notebook>-N.png` figures, so a cleared notebook still shows real results.

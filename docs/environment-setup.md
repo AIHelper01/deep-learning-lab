@@ -7,10 +7,10 @@ The whole course is **one uv project: the repository root** (`pyproject.toml` + 
 From the repository root in PowerShell:
 
 ```powershell
-.\start-notebooks.ps1                         # English / vision
-.\start-notebooks.ps1 -Module pytorch
-.\start-notebooks.ps1 -Module paddle
-.\start-notebooks.ps1 -Module detection
+.\start-notebooks.ps1 -Language en            # English / vision
+.\start-notebooks.ps1 -Language en -Module pytorch
+.\start-notebooks.ps1 -Language en -Module paddle
+.\start-notebooks.ps1 -Language en -Module detection
 ```
 
 The launcher runs `uv sync --locked` in the repository root, then `uv run jupyter lab --notebook-dir <module>/notebooks`. It falls back to `python -m uv` when uv is not on PATH. First setup requires network access if dependencies are not cached, and the JupyterLab server offers exactly the one root kernel.
@@ -30,7 +30,7 @@ Chinese notebooks need no separate environment on any platform: the single root 
 
 Notebooks locate the course root through the `CHINESE_COURSE_ROOT` and `english/COURSE_ROOT` marker files, so a kernel whose working directory is either the notebook directory or the repository root works. For extensions or archived notebooks, start Jupyter from that notebook's directory as described in the Chinese guide. Chinese YOLO26 detection uses the same pinned dependencies and the official RPS v1 dataset as the English lesson, and both languages run in the one root interpreter. Launch it with `.\start-notebooks.ps1 -Language zh-CN -Module detection`; outputs remain in the Chinese module.
 
-The legacy `english/start-notebooks.ps1` remains available as a thin shim that forwards to the root launcher, and also defaults to image classification.
+The root launcher defaults to `-Language zh-CN -Module vision`, matching the Chinese masters at the repository root. The legacy `english/start-notebooks.ps1` remains available as a thin shim that forwards to the root launcher and keeps the `en` default with image classification.
 
 The [dataset-format topic](../english/02-object-detection/dataset-formats/README.md) reuses the root environment for its conversion scripts; training does not require conversion.
 
@@ -101,7 +101,7 @@ state the consequence instead - a rerun matches the recorded metrics in aggregat
 | Execute a notebook and keep real outputs | `uv run python english/scripts/execute_and_save.py --group vision\|pytorch\|paddle\|detection\|ml [--language zh-CN] [--notebook <name>] [--cwd root\|notebook\|module] [--include-legacy]` |
 | Quote executed results back into the notebook (`Expected output` + `assets` figures) | `uv run python scripts/embed_expected_outputs.py [--module <module>] [--notebook <name>] [--include-archive] [--include-legacy]` |
 | Derive the English mirror from a Chinese master | `uv run python scripts/build_english_course.py [--check] [--force]` |
-| Regenerate the Chinese mirrors (vision/NLP, still English -> Chinese) | `uv run python scripts/build_chinese_course.py` |
+| Derive the vision/NLP English mirrors from the Chinese masters | `uv run python scripts/build_chinese_course.py [--check] [--force]` |
 | Keep the Chinese detection lesson's console text Chinese | `uv run python scripts/localize_chinese_detection.py` |
 | Chinese/English pairing and output-language audit | `uv run python scripts/check_parity.py` |
 | English course static checks (no CJK inside `english/`) | `uv run python english/scripts/check_course.py` |

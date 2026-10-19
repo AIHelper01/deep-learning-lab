@@ -3,6 +3,108 @@
 Updated: 2026-10-19 (Asia/Shanghai). Session 21 is committed on `main` together with its entry and has not been pushed; Sessions 18, 19 and 20 are committed together as `750f381` on main and have not been pushed; Session 15 is committed on main together with its entry and has not been pushed.
 Each earlier session states its own commit state in its closing line.
 
+## Session 25 - the last two open items close: 01/03 are Chinese-mastered, and the root launcher defaults to zh-CN
+
+Both items the previous sessions carried as "still open" are done.
+
+**1. `scripts/build_chinese_course.py` is re-keyed onto the Chinese side.** The script had
+generated the Chinese tree from the English notebooks (EN -> ZH) with tables keyed on exact English
+text, which made the English files the effective master for `01-image-classification` and
+`03-sentiment-analysis` against the repository rule. It now works in the documented direction: it
+reads the Chinese masters at the repository root and derives the `english/` mirrors, keyed on exact
+Chinese text (Markdown by first line, code by de-indented line) in the new data file
+`scripts/course_en.py`. The name is historical - despite the name the script only writes under
+`english/`; `00-machine-learning` keeps its own builder `scripts/build_english_course.py`.
+
+What `course_en.py` contains (derived cell-by-cell from the committed EN/ZH pairs, then frozen):
+one `BOOT_BLOCK` whole-cell pair (the Chinese-course bootstrap becomes the English one), the
+three-line `FONT_BLOCK_LINES` the Chinese lessons inject (removed on the English side), 28 global +
+4 per-file Markdown translations, 51 global + 6 per-file code-line translations (the per-file rows
+cover the two lines whose English wording differs between the vision and NLP lessons - "train loss"
+vs "training loss" - and the `sentiment_cn` -> `course_data` data-source lines), and 2 structural
+whole-cell pairs (`04-lenet-custom-data`'s Chinese class-name mapping, and the optional
+pretrained-model lesson where the Chinese checkpoint/dataset differs from the English one).
+Strictness matches `build_english_course.py`: a master cell with no table entry fails the build, an
+unused entry fails the build, generated cells (`course-runtime-info`, `course-expected-output`) are
+excluded, and any CJK surviving into derived English fails. `--only` skips the global unused-rule
+audit the way the old script did.
+
+Writing is evidence-aware, because the English mirrors ship executed. `--check` verifies table
+coverage and that each committed English mirror still equals its master-derived text. The default
+run syncs in place: cells whose text already matches keep their saved outputs and the generated
+runtime/expected-output cells untouched; a cell whose text changed gets the new text and its stale
+outputs cleared, with a printed reminder to re-execute and re-embed. `--force` rebuilds a whole
+mirror from the master (outputs cleared). Metadata follows the `00-machine-learning` reference
+pattern: English mirrors now carry `language: en` and `derived_from` pointing at the Chinese master;
+each side keeps its own `kernelspec` and its own `execution_environment`.
+
+Proof, all without re-executing a lesson: the first sync run wrote zero notebook cells - the
+11 committed English mirrors already equal what the Chinese masters derive, byte for byte - so the
+re-key changes direction, not content. The only notebook changes are the two new metadata keys in
+the 11 English mirrors (cell-by-cell diff reviewed). The 04-pretrained pair keeps its asymmetric
+file names through `EN_NAME_OVERRIDES`, matching `check_parity.py`'s alias table.
+
+**2. The root launcher defaults to the Chinese masters.** `start-notebooks.ps1` defaulted to
+`-Language en`, a leftover from the English-first period that AGENTS.md itself flagged. It now
+defaults to `zh-CN` (module default stays `vision`), because the repository root *is* the Chinese
+course (`CHINESE_COURSE_ROOT`); `english/start-notebooks.ps1` keeps the `en` default as the
+English-first shim, and the shim test line is unchanged. `tests/check-launcher.ps1` pins the new
+routing (default = zh-CN vision; English routes now pass `-Language en` explicitly; the Chinese
+route loop gained `paddle`, which always routed fine). Documents that sold the bare command as
+English were rewritten: `README.md` (launcher block + the "English is the default ... launcher
+language" sentence), `docs/environment-setup.md` (both command blocks), the same command block in
+`docs/environment-setup.zh-CN.md`, `english/docs/environment-setup.md`, `english/README.md` step 1,
+the vehicle lesson's launch line on the English side (notebook cell patched in place plus the
+identical string in `english/scripts/build_vehicle_notebook.py`, so the derived mirror and its
+builder stay in step), and AGENTS.md (launcher examples, the "leftover" sentence, and the
+Migration-status bullet that had described the old direction). The four module READMEs that
+declared 01/03 "mid-migration" now state the Chinese-mastered direction.
+
+Checks after the change: `scripts/build_chinese_course.py --check` 11 masters green and the
+documented default sync re-run is a no-op (writes 0 files), `scripts/build_english_course.py
+--check` 1 mirror green, `check_parity.py` 42 notebooks / 0 problems, `check_docs_assets.py` 0
+problems (64 documents, 29 live kernels - it reads kernelspecs, which is how the first draft's
+mistake of copying the master's `kernelspec` into the mirrors got caught and reverted),
+`english/scripts/check_course.py` 92 sources / 16 notebooks / 0 problems,
+`english/scripts/verify_saved_outputs.py` 30 notebooks / 0 problems, `git diff --check` clean.
+Limitation: `pwsh` is not installed on this machine, so `tests/check-launcher.ps1` itself was not
+executed; the launcher and test edits were reviewed against the previous assertions, and running
+`pwsh -NoProfile -File tests/check-launcher.ps1` on a machine with PowerShell is the remaining
+verification for the launcher default.
+
+Still open: `english/02-object-detection/dataset-formats/` remains English-authored with the Chinese
+guide mirroring it (Migration status keeps that bullet), and the 11 Chinese masters still carry a
+historical `metadata.translated_from` line pointing at the English file - now inert (the builder
+strips it from derived metadata), left in place rather than churning 11 masters for one dead key.
+
+Commit state: this session's 27 files (script rewrite, new `scripts/course_en.py`, launcher +
+test, 12 documentation files, 12 English notebook metadata/markdown touches, this entry) go into one
+commit on `main`; nothing is pushed.
+
+中文小结：上一轮挂着的两条开放项全部关闭。一、`scripts/build_chinese_course.py` 改为以中文为键、
+按课程规则从中文母本派生 `english/` 镜像：译文表放进新数据文件 `scripts/course_en.py`（由中英对照
+逐元推导后固化：1 个引导单元整元对、字体三行删除规则、28+4 条 Markdown 整元译文、51+6 条代码行译文、
+2 个结构性整元对），文件级表覆盖训练日志措辞（train/training loss）与 `sentiment_cn`->`course_data`
+两侧本就不同的数据行。严格性与 `build_english_course.py` 对齐：母本缺译文报错、表项没用上报错、
+运行信息/预期输出单元不参与镜像、英文侧残留中文报错；`--only` 时跳过全局未用审计。写出按证据分级：
+`--check` 只校验译文覆盖与镜像同步；默认同步逐元对照，文案仍一致的单元连同已保存输出原样保留，
+变了才改文案、清旧输出并提示重跑内嵌；`--force` 整本重建。元数据对齐 00 课参照模式：英文镜像补
+`language: en` 与 `derived_from`，各自保留自己的 kernelspec 与 execution_environment。证据：首次同步
+零个单元格写入——11 本英文镜像与中文母本派生结果逐字节一致，翻转的只是方向不是内容；notebook 侧
+唯一变化是 11 本英文镜像多了两个元数据键（逐元核对）。脚本名是历史遗留，实际只写 `english/`，
+AGENTS.md 已注明。二、根启动器默认语言从 `en` 翻成 `zh-CN`（仓库根就是中文课程根），
+`english/start-notebooks.ps1` 兼容壳保持 `en`；启动器测试按新路由改写（默认=中文 vision，英文路由显式
+`-Language en`，中文路由循环补上 paddle）。把裸命令当英文卖的全部文档已重写（中英 README、三份环境
+指南、英文侧车流量课件的启动命令行——课件单元就地打补丁并同步改 `build_vehicle_notebook.py` 里同一
+字符串，保证生成器与镜像一致）、AGENTS.md 的启动器示例、"遗留默认值"句子与 Migration status；
+四个声明 01/03"迁移中"的模块 README 改为"已中文母本"。校验全绿：反向构建 `--check` 11 本、再跑一次
+默认同步零写入；00 课构建 `--check` 绿；对齐 42 本 0 问题；文档 0 问题（64 篇、29 本现行内核——
+第一版误把母本 kernelspec 抄进英文镜像，就是被这项检查发现后回炉的）；英文课程检查 92 源/16 本 0 问题；
+已保存输出核验 30 本 0 问题；`git diff --check` 干净。局限：本机没有 pwsh，
+`tests/check-launcher.ps1` 未能实际执行，启动器默认值请在使用 PowerShell 的机器上跑该测试收尾。
+仍开放：`english/02-object-detection/dataset-formats/` 仍是英文母写；11 本中文母本里历史遗留的
+`metadata.translated_from` 已成死键（派生时已剔除），本轮不为一个惰性键去动 11 本母本。27 个文件进同一个 `main` 提交，未推送。
+
 ## Session 24 - the language rule is one-way, and English purity includes outputs
 
 The user set the rule explicitly, which closes the oldest open item in this file: mixing English into the

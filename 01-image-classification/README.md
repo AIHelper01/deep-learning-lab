@@ -18,9 +18,9 @@
 
 ## 与英文课程的关系
 
-仓库规则是中文课件为母本、`english/` 为派生镜像（见 `../AGENTS.md`），但本模块仍在迁移状态里：
-`../scripts/build_chinese_course.py` 的译文表以英文原文为键，所以这两侧目前仍以
-`../english/01-image-classification/notebooks/` 作为实际的翻译来源。两侧单元数量、实验配置、随机种子、
+仓库规则是中文课件为母本、`english/` 为派生镜像（见 `../AGENTS.md`），本模块已完全按此方向工作：
+`../scripts/build_chinese_course.py` 以中文原文为键（译文表 `../scripts/course_en.py`）
+从本模块派生 `../english/01-image-classification/notebooks/` 的英文镜像。两侧单元数量、实验配置、随机种子、
 训练逻辑完全一致，只有讲解语言、控制台文案、图表标签和类别名（`零…九`、`飞机…卡车`）不同。
 改课之前先读 `../AGENTS.md` 的 Migration status，不要在错误的方向上重新生成。
 中文图表字体由 `../common/course_zh.py` 探测并设置。

@@ -1,6 +1,8 @@
+# The repository root is the Chinese course root (the masters), so the root
+# launcher defaults to -Language zh-CN; the english/ shim keeps 'en'.
 param(
     [ValidateSet('en', 'zh-CN')]
-    [string]$Language = 'en',
+    [string]$Language = 'zh-CN',
     [ValidateSet('vision', 'pytorch', 'paddle', 'detection')]
     [string]$Module = 'vision',
     [switch]$DryRun
